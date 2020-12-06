@@ -46,18 +46,18 @@ const AboutPage = () => {
             <div className={css.contentMain}>
               <h2>
                 Each yoga practitioner is an individual, and each one of us needs different care.
-                Working together with an experienced yoga teacher offers the possibility to rise
+                Working together with an experienced fishing guide offers the possibility to rise
                 our practise to a whole new level.
               </h2>
 
               <p>
                 Whether it is the alignment of asanas or being able to set the focus of the class,
                 we all have our own struggles and goals. Some of these cannot be addressed in a
-                regular class of twenty yogis. Working together with the experienced yoga teachers
+                regular class of twenty yogis. Working together with the experienced fishing guides
                 from Yogatime, you can together create just the right class for you.
               </p>
 
-              <h3 className={css.subtitle}>Are you a yoga teacher?</h3>
+              <h3 className={css.subtitle}>Are you a fishing guide?</h3>
 
               <p>
                 Yogatime offers you a platform through which you can reach thousands of yoga

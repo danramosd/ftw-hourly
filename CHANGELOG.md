@@ -388,7 +388,7 @@ from Flex docs: https://www.sharetribe.com/docs/guides/how-to-set-up-csp-for-ftw
 
 ## [v5.0.0] 2019-11-21
 
-This release creates lots of changes to the default logic (only one listing aka teacher profile
+This release creates lots of changes to the default logic (only one listing aka guide profile
 allowed), translations files (Saunatime is changed to Yogatime), and it also adds
 AvailabilityExceptions to EditListingAvailabilityPanel. If you have started with the original Flex
 Template for Web, you need to be extra careful when you switch to this release, since there are pull

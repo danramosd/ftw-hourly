@@ -131,11 +131,11 @@ exports[`SearchPageComponent matches snapshot 1`] = `
                 },
                 Object {
                   "key": "200h",
-                  "label": "Registered yoga teacher 200h",
+                  "label": "Registered fishing guide 200h",
                 },
                 Object {
                   "key": "500h",
-                  "label": "Registered yoga teacher 500h",
+                  "label": "Registered fishing guide 500h",
                 },
               ],
             },
