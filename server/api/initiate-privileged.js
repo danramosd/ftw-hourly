@@ -18,20 +18,14 @@ module.exports = (req, res) => {
     })
     .then(trustedSdk => {
       const { params } = bodyParams;
-      console.log(' got params', params);
-      const bookingStart = new Date(params.bookingEnd);
-      const bookingEnd = new Date(params.bookingStart);
       // Add lineItems to the body params
       const body = {
         ...bodyParams,
         params: {
           ...params,
           lineItems,
-          bookingStart: new Date('2021-01-11T00:00:00.000Z'),
-          bookingEnd: new Date('2021-01-12T00:08:00.000Z'),
         },
       };
-      console.log('body', body, trustedSdk.transactions.initiateSpeculative);
 
       if (isSpeculative) {
         return trustedSdk.transactions.initiateSpeculative(body, queryParams);
@@ -40,7 +34,6 @@ module.exports = (req, res) => {
     })
     .then(apiResponse => {
       const { status, statusText, data } = apiResponse;
-      console.log('api response', status, statusText, data);
 
       res
         .status(status)
