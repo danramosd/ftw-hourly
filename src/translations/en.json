@@ -422,7 +422,7 @@
   "ListingPage.errorLoadingListingMessage": "Could not load guide profile. Please try again.",
   "ListingPage.errorLoadingListingTitle": "Error in loading guide profile",
   "ListingPage.featuresTitle": "Yoga styles",
-  "ListingPage.finishListing": "Finish guide profile",
+  "ListingPage.finishListing": "Finish trip description",
   "ListingPage.hostedBy": "Hosted by {name}",
   "ListingPage.loadingListingMessage": "Loading guide profile...",
   "ListingPage.loadingListingTitle": "Loading guide profile...",
