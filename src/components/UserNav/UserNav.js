@@ -49,6 +49,21 @@ const UserNav = props => {
     {
       ...listingTab(listing, selectedPageName),
     },
+    // {
+    //   text: <FormattedMessage id="UserNav.newTrip" />,
+    //   selected: selectedPageName === 'NewListingPage',
+    //   disabled: false,
+    //   linkProps: {
+    //     name: 'NewListingPage',
+    //   },
+    // },
+    {
+      text: <FormattedMessage id="UserNav.yourTrips" />,
+      selected: selectedPageName === 'ManageListingsPage',
+      linkProps: {
+        name: 'ManageListingsPage',
+      },
+    },
     {
       text: <FormattedMessage id="UserNav.profileSettingsPage" />,
       selected: selectedPageName === 'ProfileSettingsPage',
