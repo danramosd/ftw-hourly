@@ -43,7 +43,7 @@ describe('SearchPageComponent', () => {
       sendVerificationEmailInProgress: false,
       onResendVerificationEmail: noop,
       certificateConfig: [{ key: 'cat1', label: 'Cat 1' }, { key: 'cat2', label: 'Cat 2' }],
-      yogaStylesConfig: [{ key: 'dog1', label: 'Dog 1' }, { key: 'dog2', label: 'Dog 2' }],
+      fishingStylesConfig: [{ key: 'dog1', label: 'Dog 1' }, { key: 'dog2', label: 'Dog 2' }],
       dateRangeLengthFilterConfig: {
         active: true,
         options: [

@@ -24,14 +24,14 @@ const commonProps = {
 };
 
 const optionalProps = {
-  name: 'yogaStyles-optional',
-  id: 'yogaStyles-optional',
+  name: 'fishingStyles-optional',
+  id: 'fishingStyles-optional',
   ...commonProps,
 };
 
 const requiredProps = {
-  name: 'yogaStyles-required',
-  id: `${formNameRequired}.yogaStyles-required`,
+  name: 'fishingStyles-required',
+  id: `${formNameRequired}.fishingStyles-required`,
   ...commonProps,
   validate: requiredFieldArrayCheckbox('this is required'),
 };

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import SelectMultipleFilter from './SelectMultipleFilter';
 import { stringify, parse } from '../../util/urlHelpers';
 
-const URL_PARAM = 'pub_yogaStyles';
+const URL_PARAM = 'pub_fishingStyles';
 
 const options = [
   { key: 'ashtanga', label: 'Ashtanga' },
@@ -24,15 +24,15 @@ const YogaStylesFilterPopup = withRouter(props => {
   const { history, location } = props;
 
   const params = parse(location.search);
-  const yogaStyles = params[URL_PARAM];
-  const initialValues = { [URL_PARAM]: !!yogaStyles ? yogaStyles : null };
+  const fishingStyles = params[URL_PARAM];
+  const initialValues = { [URL_PARAM]: !!fishingStyles ? fishingStyles : null };
 
   return (
     <SelectMultipleFilter
       id="SelectMultipleFilterPopupExample"
-      name="yogaStyles"
+      name="fishingStyles"
       queryParamNames={[URL_PARAM]}
-      label="yogaStyles"
+      label="fishingStyles"
       onSubmit={values => handleSubmit(values, history)}
       showAsPopup={true}
       liveEdit={false}
@@ -53,15 +53,15 @@ const YogaStylesFilterPlain = withRouter(props => {
   const { history, location } = props;
 
   const params = parse(location.search);
-  const yogaStyles = params[URL_PARAM];
-  const initialValues = { [URL_PARAM]: !!yogaStyles ? yogaStyles : null };
+  const fishingStyles = params[URL_PARAM];
+  const initialValues = { [URL_PARAM]: !!fishingStyles ? fishingStyles : null };
 
   return (
     <SelectMultipleFilter
       id="SelectMultipleFilterPlainExample"
-      name="yogaStyles"
+      name="fishingStyles"
       queryParamNames={[URL_PARAM]}
-      label="yogaStyles"
+      label="fishingStyles"
       onSubmit={values => {
         handleSubmit(values, history);
       }}

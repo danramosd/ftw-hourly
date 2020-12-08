@@ -1,17 +1,17 @@
 import EditListingFeaturesForm from './EditListingFeaturesForm';
 
-const NAME = 'yogaStyles';
+const NAME = 'fishingStyles';
 
 const initialValueArray = ['hatha', 'vinyasa', 'yin'];
 const initialValues = { [NAME]: initialValueArray };
 
 const filterConfig = [
   {
-    id: 'yogaStyles',
+    id: 'fishingStyles',
     label: 'Yoga styles',
     type: 'SelectMultipleFilter',
     group: 'secondary',
-    queryParamNames: ['pub_yogaStyles'],
+    queryParamNames: ['pub_fishingStyles'],
     config: {
       mode: 'has_all',
       options: [

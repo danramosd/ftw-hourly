@@ -42,11 +42,11 @@ const filterConfig = [
     },
   },
   {
-    id: 'yogaStyles',
-    label: 'yogaStyles',
+    id: 'fishingStyles',
+    label: 'fishingStyles',
     type: 'SelectMultipleFilter',
     group: 'secondary',
-    queryParamName: 'pub_yogaStyles',
+    queryParamName: 'pub_fishingStyles',
     config: {
       mode: 'has_all',
       options: [

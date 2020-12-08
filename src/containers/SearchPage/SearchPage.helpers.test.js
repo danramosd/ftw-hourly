@@ -7,7 +7,7 @@ import {
 
 const urlParams = {
   pub_certificate: '200h',
-  pub_yogaStyles: 'vinyasa,yin',
+  pub_fishingStyles: 'vinyasa,yin',
 };
 
 const filters = [
@@ -32,11 +32,11 @@ const filters = [
     },
   },
   {
-    id: 'yogaStyles',
+    id: 'fishingStyles',
     label: 'Yoga styles',
     type: 'SelectMultipleFilter',
     group: 'secondary',
-    queryParamNames: ['pub_yogaStyles'],
+    queryParamNames: ['pub_fishingStyles'],
     config: {
       mode: 'has_all',
       options: [{ key: 'vinyasa' }, { key: 'yin' }],
@@ -108,7 +108,7 @@ describe('SearchPage.helpers', () => {
     });
 
     it('drops an invalid filter param value', () => {
-      const params = { pub_certificate: '200h', pub_yogaStyles: 'invalid1,invalid2' };
+      const params = { pub_certificate: '200h', pub_fishingStyles: 'invalid1,invalid2' };
       const validParams = validFilterParams(params, filters, sortConfig);
       expect(validParams).toEqual({ pub_certificate: '200h' });
     });
@@ -132,7 +132,7 @@ describe('SearchPage.helpers', () => {
     });
 
     it('drops an invalid filter param value', () => {
-      const params = { pub_certificate: '200h', pub_yogaStyles: 'invalid1,invalid2' };
+      const params = { pub_certificate: '200h', pub_fishingStyles: 'invalid1,invalid2' };
       const validParams = validURLParamsForExtendedData(params, filters, sortConfig);
       expect(validParams).toEqual({ pub_certificate: '200h' });
     });
@@ -161,7 +161,7 @@ describe('SearchPage.helpers', () => {
     });
 
     it('drops an invalid filter param value', () => {
-      const params = { pub_certificate: '200h', pub_yogaStyles: 'invalid1,invalid2' };
+      const params = { pub_certificate: '200h', pub_fishingStyles: 'invalid1,invalid2' };
       const validParams = pickSearchParamsOnly(params, filters, sortConfig);
       expect(validParams).toEqual({ pub_certificate: '200h' });
     });

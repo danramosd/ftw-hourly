@@ -92,11 +92,11 @@ export const filters = [
     config: {},
   },
   {
-    id: 'yogaStyles',
+    id: 'fishingStyles',
     label: 'Yoga styles',
     type: 'SelectMultipleFilter',
     group: 'secondary',
-    queryParamNames: ['pub_yogaStyles'],
+    queryParamNames: ['pub_fishingStyles'],
     config: {
       // Optional modes: 'has_all', 'has_any'
       // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
@@ -107,12 +107,16 @@ export const filters = [
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
       options: [
-        { key: 'ashtanga', label: 'Ashtanga' },
-        { key: 'hatha', label: 'Hatha' },
-        { key: 'kundalini', label: 'Kundalini' },
-        { key: 'restorative', label: 'Restorative' },
-        { key: 'vinyasa', label: 'Vinyasa' },
-        { key: 'yin', label: 'Yin' },
+        { key: 'artificial', label: 'Artificial' },
+        { key: 'float', label: 'Float' },
+        { key: 'fly', label: 'Fly fishing' },
+        { key: 'ice', label: 'Ice fishing' },
+        { key: 'lake', label: 'Lake' },
+        { key: 'bait', label: 'Live Bait' },
+        { key: 'river', label: 'River' },
+        { key: 'spin', label: 'Spin fishing' },
+
+        { key: 'trolling', label: 'Trolling' },
       ],
     },
   },
