@@ -385,7 +385,7 @@ export class ListingPageComponent extends Component {
     );
 
     const yogaStylesOptions = findOptionsForSelectFilter('yogaStyles', filterConfig);
-    const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
+    // const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
 
     return (
       <Page
@@ -430,8 +430,8 @@ export class ListingPageComponent extends Component {
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
-                    listingCertificate={publicData ? publicData.certificate : null}
-                    certificateOptions={certificateOptions}
+                    // listingCertificate={publicData ? publicData.certificate : null}
+                    // certificateOptions={certificateOptions}
                     hostLink={hostLink}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}

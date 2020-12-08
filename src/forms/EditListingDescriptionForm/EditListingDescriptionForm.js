@@ -18,7 +18,7 @@ const EditListingDescriptionFormComponent = props => (
     {...props}
     render={formRenderProps => {
       const {
-        certificateOptions,
+        // certificateOptions,
         className,
         disabled,
         ready,
@@ -109,12 +109,12 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
 
-          <CustomCertificateSelectFieldMaybe
+          {/* <CustomCertificateSelectFieldMaybe
             id="certificate"
             name="certificate"
             certificateOptions={certificateOptions}
             intl={intl}
-          />
+          /> */}
 
           <Button
             className={css.submitButton}
@@ -147,12 +147,12 @@ EditListingDescriptionFormComponent.propTypes = {
     showListingsError: propTypes.error,
     updateListingError: propTypes.error,
   }),
-  certificateOptions: arrayOf(
-    shape({
-      key: string.isRequired,
-      label: string.isRequired,
-    })
-  ),
+  // certificateOptions: arrayOf(
+  //   shape({
+  //     key: string.isRequired,
+  //     label: string.isRequired,
+  //   })
+  // ),
 };
 
 export default compose(injectIntl)(EditListingDescriptionFormComponent);
