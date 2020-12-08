@@ -72,7 +72,7 @@ const Footer = props => {
               </NamedLink>
               <div className={css.organizationInfo}>
                 <p className={css.organizationDescription}>
-                  <FormattedMessage id="Footer.organizationDescription" />
+                  {/* <FormattedMessage id="Footer.organizationDescription" /> */}
                 </p>
                 <p className={css.organizationCopyright}>
                   <NamedLink name="LandingPage" className={css.copyrightLink}>
