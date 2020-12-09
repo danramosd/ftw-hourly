@@ -33,13 +33,14 @@ export class BookingTimeFormComponent extends Component {
     const { bookingStartTime, bookingEndTime } = formValues.values;
     const startDate = bookingStartTime ? timestampToDate(bookingStartTime) : null;
     const endDate = bookingEndTime ? timestampToDate(bookingEndTime) : null;
+    const people = 1;
 
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
 
     if (bookingStartTime && bookingEndTime && !this.props.fetchLineItemsInProgress) {
       this.props.onFetchTransactionLineItems({
-        bookingData: { startDate, endDate },
+        bookingData: { startDate, endDate, people },
         listingId,
         isOwnListing,
       });
@@ -49,6 +50,7 @@ export class BookingTimeFormComponent extends Component {
   render() {
     const { rootClassName, className, price: unitPrice, ...rest } = this.props;
     const classes = classNames(rootClassName || css.root, className);
+    console.log('props', this.props);
 
     if (!unitPrice) {
       return (

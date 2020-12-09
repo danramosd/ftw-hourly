@@ -2,3 +2,9 @@ enable multiple listings - https://www.sharetribe.com/docs/ftw-introduction/ftw-
 
 
 design files - https://www.sharetribe.com/docs/design-toolkit/design-files/
+
+
+
+
+base price for the trip: $500
+Additional person $300

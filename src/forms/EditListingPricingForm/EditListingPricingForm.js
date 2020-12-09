@@ -9,7 +9,8 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { Button, Form, FieldCurrencyInput } from '../../components';
+import { Button, Form, FieldCurrencyInput, FieldTextInput } from '../../components';
+
 import css from './EditListingPricingForm.module.css';
 
 const { Money } = sdkTypes;
@@ -35,6 +36,7 @@ export const EditListingPricingFormComponent = props => (
       const unitType = config.bookingUnitType;
       const isNightly = unitType === LINE_ITEM_NIGHT;
       const isDaily = unitType === LINE_ITEM_DAY;
+      const { pricing } = props.initialValues;
 
       const translationKey = isNightly
         ? 'EditListingPricingForm.pricePerNight'
@@ -76,7 +78,7 @@ export const EditListingPricingFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
-
+      const required = validators.required('This field is required');
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -89,6 +91,7 @@ export const EditListingPricingFormComponent = props => (
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
             </p>
           ) : null}
+
           <FieldCurrencyInput
             id="price"
             name="price"
@@ -99,6 +102,51 @@ export const EditListingPricingFormComponent = props => (
             currencyConfig={config.currencyConfig}
             validate={priceValidators}
           />
+
+          <table>
+            <thead>
+              <tr>
+                <th>Hours</th>
+                <th>People</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pricing.map((price, index) => {
+                return (
+                  <tr key={`${price.people}-${price.hours}`}>
+                    <td>
+                      <FieldTextInput
+                        type="number"
+                        name={`pricing[${index}].hours`}
+                        id="hours"
+                        label="Hours"
+                        validate={required}
+                      />
+                    </td>
+                    <td>
+                      <FieldTextInput
+                        type="number"
+                        name={`pricing[${index}].people`}
+                        id="people"
+                        label="People"
+                        validate={required}
+                      />
+                    </td>
+                    <td>
+                      <FieldCurrencyInput
+                        name={`pricing[${index}].price`}
+                        className={css.priceInput}
+                        placeholder={pricePlaceholderMessage}
+                        currencyConfig={config.currencyConfig}
+                        validate={priceValidators}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
 
           <Button
             className={css.submitButton}

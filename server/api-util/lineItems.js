@@ -1,11 +1,37 @@
 const { calculateQuantityFromHours, calculateTotalFromLineItems } = require('./lineItemHelpers');
 const { types } = require('sharetribe-flex-sdk');
 const { Money } = types;
-
+const get = require('lodash/get');
 // This bookingUnitType needs to be one of the following:
 // line-item/night, line-item/day or line-item/units
 const bookingUnitType = 'line-item/units';
 const PROVIDER_COMMISSION_PERCENTAGE = -10;
+
+const resolveCleaningFeePrice = listing => {
+  const { publicData } = listing.attributes;
+  console.log('publicData', publicData);
+
+  return new Money(2000, 'USD');
+  // const costPerPerson = publicData && publicData.pricing;
+  // const { amount, currency } = cleaningFee;
+
+  // if (amount && currency) {
+  //   return new Money(amount, currency);
+  // }
+
+  // return null;
+};
+
+const resolveAdditionalPeople = (listing, people) => {
+  const pricing = get(listing, 'attributes.publicData.pricing');
+  if (pricing) {
+    const priceMatch = pricing.find(price => price.people === people);
+    console.log('priceMatch', priceMatch, pricing);
+
+    return new Money(priceMatch.price, 'USD');
+  }
+  return null;
+};
 
 /** Returns collection of lineItems (max 50)
  *
@@ -27,9 +53,10 @@ const PROVIDER_COMMISSION_PERCENTAGE = -10;
  * @param {Object} bookingData
  * @returns {Array} lineItems
  */
+
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
-  const { startDate, endDate } = bookingData;
+  const { startDate, endDate, people } = bookingData;
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
@@ -47,14 +74,40 @@ exports.transactionLineItems = (listing, bookingData) => {
     includeFor: ['customer', 'provider'],
   };
 
+  const cleaningFeePrice = resolveCleaningFeePrice(listing);
+  const additionalPersonPrice = resolveAdditionalPeople(listing, people);
+  const cleaningFee = cleaningFeePrice
+    ? [
+        {
+          code: 'line-item/cleaning-fee',
+          unitPrice: cleaningFeePrice,
+          quantity: 1,
+          includeFor: ['customer', 'provider'],
+        },
+      ]
+    : [];
+
+  const additionalPersonFee = additionalPersonPrice
+    ? [
+        {
+          code: 'line-item/additional-person',
+          unitPrice: additionalPersonPrice,
+          quantity: 1,
+          includeFor: ['customer', 'provider'],
+        },
+      ]
+    : [];
+
   const providerCommission = {
     code: 'line-item/provider-commission',
-    unitPrice: calculateTotalFromLineItems([booking]),
+    // unitPrice: calculateTotalFromLineItems([booking]),
+    unitPrice: calculateTotalFromLineItems([booking, ...additionalPersonFee]),
     percentage: PROVIDER_COMMISSION_PERCENTAGE,
     includeFor: ['provider'],
   };
 
-  const lineItems = [booking, providerCommission];
+  // const lineItems = [booking, providerCommission];
+  const lineItems = [booking, ...additionalPersonFee, providerCommission];
 
   return lineItems;
 };
