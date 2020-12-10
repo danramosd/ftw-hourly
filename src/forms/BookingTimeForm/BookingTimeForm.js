@@ -10,6 +10,7 @@ import config from '../../config';
 import { IconSpinner, Form, PrimaryButton } from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
+import FieldSelect from '../../components/FieldSelect/FieldSelect';
 
 import css from './BookingTimeForm.module.css';
 
@@ -30,17 +31,18 @@ export class BookingTimeFormComponent extends Component {
   // In case you add more fields to the form, make sure you add
   // the values here to the bookingData object.
   handleOnChange(formValues) {
-    const { bookingStartTime, bookingEndTime } = formValues.values;
+    const { bookingStartTime, bookingEndTime, people } = formValues.values;
     const startDate = bookingStartTime ? timestampToDate(bookingStartTime) : null;
     const endDate = bookingEndTime ? timestampToDate(bookingEndTime) : null;
-    const people = 1;
+
+    console.log('formValues.values', formValues.values);
 
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
 
     if (bookingStartTime && bookingEndTime && !this.props.fetchLineItemsInProgress) {
       this.props.onFetchTransactionLineItems({
-        bookingData: { startDate, endDate, people },
+        bookingData: { startDate, endDate, people: Number(people) },
         listingId,
         isOwnListing,
       });
@@ -171,6 +173,22 @@ export class BookingTimeFormComponent extends Component {
                   this.handleOnChange(values);
                 }}
               />
+              <FieldSelect id="people" name="people" className={css.field}>
+                <option disabled value="">
+                  Additional People
+                </option>
+
+                <option value={0}>0</option>
+                <option value={1}>1</option>
+                {/* {countryCodes.map(country => {
+            return (
+              <option key={country.code} value={country.code}>
+                {country.name}
+              </option>
+            );
+          })} */}
+              </FieldSelect>
+
               {monthlyTimeSlots && timeZone ? (
                 <FieldDateAndTimeInput
                   {...dateInputProps}

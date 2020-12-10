@@ -23,11 +23,14 @@ const resolveCleaningFeePrice = listing => {
 };
 
 const resolveAdditionalPeople = (listing, people) => {
+  if (!people) {
+    return null;
+  }
   const pricing = get(listing, 'attributes.publicData.pricing');
   if (pricing) {
-    const priceMatch = pricing.find(price => price.people === people);
-    console.log('priceMatch', priceMatch, pricing);
+    console.log('pricing', pricing);
 
+    const priceMatch = pricing.find(price => price.people === people);
     return new Money(priceMatch.price, 'USD');
   }
   return null;
@@ -74,18 +77,18 @@ exports.transactionLineItems = (listing, bookingData) => {
     includeFor: ['customer', 'provider'],
   };
 
-  const cleaningFeePrice = resolveCleaningFeePrice(listing);
+  // const cleaningFeePrice = resolveCleaningFeePrice(listing);
   const additionalPersonPrice = resolveAdditionalPeople(listing, people);
-  const cleaningFee = cleaningFeePrice
-    ? [
-        {
-          code: 'line-item/cleaning-fee',
-          unitPrice: cleaningFeePrice,
-          quantity: 1,
-          includeFor: ['customer', 'provider'],
-        },
-      ]
-    : [];
+  // const cleaningFee = cleaningFeePrice
+  //   ? [
+  //       {
+  //         code: 'line-item/cleaning-fee',
+  //         unitPrice: cleaningFeePrice,
+  //         quantity: 1,
+  //         includeFor: ['customer', 'provider'],
+  //       },
+  //     ]
+  //   : [];
 
   const additionalPersonFee = additionalPersonPrice
     ? [
