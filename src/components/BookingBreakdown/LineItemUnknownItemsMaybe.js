@@ -19,6 +19,7 @@ import css from './BookingBreakdown.module.css';
 
 const LineItemUnknownItemsMaybe = props => {
   const { transaction, isProvider, intl } = props;
+  console.log('unknown', transaction);
 
   // resolve unknown non-reversal line items
   const allItems = transaction.attributes.lineItems.filter(

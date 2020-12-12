@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
@@ -15,153 +15,220 @@ import css from './EditListingPricingForm.module.css';
 
 const { Money } = sdkTypes;
 
-export const EditListingPricingFormComponent = props => (
-  <FinalForm
-    {...props}
-    render={formRenderProps => {
-      const {
-        className,
-        disabled,
-        ready,
-        handleSubmit,
-        intl,
-        invalid,
-        pristine,
-        saveActionMsg,
-        updated,
-        updateInProgress,
-        fetchErrors,
-      } = formRenderProps;
+export const EditListingPricingFormComponent = props => {
+  const [pricing, setPricingRow] = useState([]);
+  // console.log('pricing props', props.initialValues.pricing, pricing);
 
-      const unitType = config.bookingUnitType;
-      const isNightly = unitType === LINE_ITEM_NIGHT;
-      const isDaily = unitType === LINE_ITEM_DAY;
-      const { pricing } = props.initialValues;
+  useEffect(() => {
+    const inheritedPricing = props.initialValues.pricing;
+    setPricingRow(inheritedPricing);
+  }, []);
 
-      const translationKey = isNightly
-        ? 'EditListingPricingForm.pricePerNight'
-        : isDaily
-        ? 'EditListingPricingForm.pricePerDay'
-        : 'EditListingPricingForm.pricePerUnit';
+  const addPricingRow = () => {
+    const row = { people: 1, hours: 1, price: 100 };
+    setPricingRow([...pricing, row]);
+  };
 
-      const pricePerUnitMessage = intl.formatMessage({
-        id: translationKey,
-      });
+  const removePricingRow = index => () => {
+    const newPricing = pricing.filter((_, counter) => index !== counter);
+    setPricingRow(newPricing);
+  };
 
-      const pricePlaceholderMessage = intl.formatMessage({
-        id: 'EditListingPricingForm.priceInputPlaceholder',
-      });
+  return (
+    <FinalForm
+      {...props}
+      render={formRenderProps => {
+        const {
+          className,
+          disabled,
+          ready,
+          handleSubmit,
+          intl,
+          invalid,
+          pristine,
+          saveActionMsg,
+          updated,
+          updateInProgress,
+          fetchErrors,
+        } = formRenderProps;
 
-      const priceRequired = validators.required(
-        intl.formatMessage({
-          id: 'EditListingPricingForm.priceRequired',
-        })
-      );
-      const minPrice = new Money(config.listingMinimumPriceSubUnits, config.currency);
-      const minPriceRequired = validators.moneySubUnitAmountAtLeast(
-        intl.formatMessage(
-          {
-            id: 'EditListingPricingForm.priceTooLow',
-          },
-          {
-            minPrice: formatMoney(intl, minPrice),
-          }
-        ),
-        config.listingMinimumPriceSubUnits
-      );
-      const priceValidators = config.listingMinimumPriceSubUnits
-        ? validators.composeValidators(priceRequired, minPriceRequired)
-        : priceRequired;
+        const unitType = config.bookingUnitType;
+        const isNightly = unitType === LINE_ITEM_NIGHT;
+        const isDaily = unitType === LINE_ITEM_DAY;
+        // const { pricing } = props.initialValues;
 
-      const classes = classNames(css.root, className);
-      const submitReady = (updated && pristine) || ready;
-      const submitInProgress = updateInProgress;
-      const submitDisabled = invalid || disabled || submitInProgress;
-      const { updateListingError, showListingsError } = fetchErrors || {};
-      const required = validators.required('This field is required');
-      return (
-        <Form onSubmit={handleSubmit} className={classes}>
-          {updateListingError ? (
-            <p className={css.error}>
-              <FormattedMessage id="EditListingPricingForm.updateFailed" />
-            </p>
-          ) : null}
-          {showListingsError ? (
-            <p className={css.error}>
-              <FormattedMessage id="EditListingPricingForm.showListingFailed" />
-            </p>
-          ) : null}
+        const translationKey = isNightly
+          ? 'EditListingPricingForm.pricePerNight'
+          : isDaily
+          ? 'EditListingPricingForm.pricePerDay'
+          : 'EditListingPricingForm.pricePerUnit';
 
-          <FieldCurrencyInput
-            id="price"
-            name="price"
-            className={css.priceInput}
-            autoFocus
-            label={pricePerUnitMessage}
-            placeholder={pricePlaceholderMessage}
-            currencyConfig={config.currencyConfig}
-            validate={priceValidators}
-          />
+        const pricePerUnitMessage = intl.formatMessage({
+          id: translationKey,
+        });
 
-          <table>
-            <thead>
-              <tr>
-                <th>Hours</th>
-                <th>People</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricing.map((price, index) => {
-                return (
-                  <tr key={`${price.people}-${price.hours}`}>
-                    <td>
-                      <FieldTextInput
-                        type="number"
-                        name={`pricing[${index}].hours`}
-                        id="hours"
-                        label="Hours"
-                        validate={required}
-                      />
-                    </td>
-                    <td>
-                      <FieldTextInput
-                        type="number"
-                        name={`pricing[${index}].people`}
-                        id="people"
-                        label="People"
-                        validate={required}
-                      />
-                    </td>
-                    <td>
-                      <FieldCurrencyInput
-                        name={`pricing[${index}].price`}
-                        className={css.priceInput}
-                        placeholder={pricePlaceholderMessage}
-                        currencyConfig={config.currencyConfig}
-                        validate={priceValidators}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+        const pricePlaceholderMessage = intl.formatMessage({
+          id: 'EditListingPricingForm.priceInputPlaceholder',
+        });
 
-          <Button
-            className={css.submitButton}
-            type="submit"
-            inProgress={submitInProgress}
-            disabled={submitDisabled}
-            ready={submitReady}
-          >
-            {saveActionMsg}
-          </Button>
-        </Form>
-      );
-    }}
-  />
-);
+        const priceRequired = validators.required(
+          intl.formatMessage({
+            id: 'EditListingPricingForm.priceRequired',
+          })
+        );
+        const minPrice = new Money(config.listingMinimumPriceSubUnits, config.currency);
+        const minPriceRequired = validators.moneySubUnitAmountAtLeast(
+          intl.formatMessage(
+            {
+              id: 'EditListingPricingForm.priceTooLow',
+            },
+            {
+              minPrice: formatMoney(intl, minPrice),
+            }
+          ),
+          config.listingMinimumPriceSubUnits
+        );
+        const priceValidators = config.listingMinimumPriceSubUnits
+          ? validators.composeValidators(priceRequired, minPriceRequired)
+          : priceRequired;
+
+        const classes = classNames(css.root, className);
+        const submitReady = (updated && pristine) || ready;
+        const submitInProgress = updateInProgress;
+        const submitDisabled = invalid || disabled || submitInProgress;
+        const { updateListingError, showListingsError } = fetchErrors || {};
+        const required = validators.required('This field is required');
+        return (
+          <Form onSubmit={handleSubmit} className={classes}>
+            {updateListingError ? (
+              <p className={css.error}>
+                <FormattedMessage id="EditListingPricingForm.updateFailed" />
+              </p>
+            ) : null}
+            {showListingsError ? (
+              <p className={css.error}>
+                <FormattedMessage id="EditListingPricingForm.showListingFailed" />
+              </p>
+            ) : null}
+
+            <section className={css.section}>
+              <header className={css.sectionHeader}>
+                <h2 className={css.sectionTitle}>Trip rate</h2>
+              </header>
+
+              <FieldCurrencyInput
+                id="price"
+                name="price"
+                className={css.priceInput}
+                autoFocus
+                label={pricePerUnitMessage}
+                placeholder={pricePlaceholderMessage}
+                currencyConfig={config.currencyConfig}
+                validate={priceValidators}
+              />
+            </section>
+
+            <section className={css.section}>
+              <header className={css.sectionHeader}>
+                <h2 className={css.sectionTitle}>Max amount of people</h2>
+              </header>
+
+              <FieldTextInput
+                type="number"
+                name={`maxPeople`}
+                id="maxPeople"
+                label="Total amount of people per trip"
+                validate={required}
+              />
+            </section>
+
+            <section className={css.section}>
+              <header className={css.sectionHeader}>
+                <h2 className={css.sectionTitle}>Cost per person</h2>
+              </header>
+
+              <FieldCurrencyInput
+                id="pricePerAdditionalPerson"
+                name="pricePerAdditionalPerson"
+                className={css.priceInput}
+                autoFocus
+                label={'Enter the cost per person that should be added to your base rate'}
+                placeholder={pricePlaceholderMessage}
+                currencyConfig={config.currencyConfig}
+                validate={priceValidators}
+              />
+            </section>
+
+            {/* <table>
+              <thead>
+                <tr>
+                  <th>Hours</th>
+                  <th>People</th>
+                  <th>Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {pricing.map((price, index) => {
+                  return (
+                    <tr key={`${price.people}-${price.hours}`}>
+                      <td>
+                        <FieldTextInput
+                          type="number"
+                          name={`pricing[${index}].hours`}
+                          id="hours"
+                          label="Hours"
+                          validate={required}
+                        />
+                      </td>
+                      <td>
+                        <FieldTextInput
+                          type="number"
+                          name={`pricing[${index}].people`}
+                          id="people"
+                          label="People"
+                          validate={required}
+                        />
+                      </td>
+                      <td>
+                        <FieldCurrencyInput
+                          defaultValue={'2323223'}
+                          name={`pricing[${index}].price`}
+                          className={css.priceInput}
+                          placeholder={pricePlaceholderMessage}
+                          currencyConfig={config.currencyConfig}
+                          validate={priceValidators}
+                        />
+                      </td>
+                      <td>
+                        <button onClick={removePricingRow(index)}>-</button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+              <tfoot>
+                <tr colspan="4">
+                  <button onClick={addPricingRow}>+</button>
+                </tr>
+              </tfoot>
+            </table> */}
+
+            <Button
+              className={css.submitButton}
+              type="submit"
+              inProgress={submitInProgress}
+              disabled={submitDisabled}
+              ready={submitReady}
+            >
+              {saveActionMsg}
+            </Button>
+          </Form>
+        );
+      }}
+    />
+  );
+};
 
 EditListingPricingFormComponent.defaultProps = { fetchErrors: null };
 

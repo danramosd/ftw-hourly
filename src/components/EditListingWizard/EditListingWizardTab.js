@@ -147,6 +147,8 @@ const EditListingWizardTab = props => {
           // Error is logged in EditListingPage.duck file.
         });
     } else {
+      console.log('going to update this', updateValuesWithImages);
+
       return onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
     }
   };
@@ -230,6 +232,7 @@ const EditListingWizardTab = props => {
       return (
         <EditListingPricingPanel
           {...panelProps(PRICING)}
+          onAddAvailabilityException={onAddAvailabilityException}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);

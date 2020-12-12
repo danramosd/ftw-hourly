@@ -122,6 +122,8 @@ export class ListingPageComponent extends Component {
       confirmPaymentError: null,
     };
 
+    console.log('handling', initialValues);
+
     const saveToSessionStorage = !this.props.currentUser;
 
     const routes = routeConfiguration();
@@ -182,6 +184,8 @@ export class ListingPageComponent extends Component {
   }
 
   render() {
+    console.log('i was called form listing pager');
+
     const {
       unitType,
       isAuthenticated,

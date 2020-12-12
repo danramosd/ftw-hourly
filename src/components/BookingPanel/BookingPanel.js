@@ -11,6 +11,7 @@ import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
 import { BookingTimeForm } from '../../forms';
+import get from 'lodash/get';
 
 import css from './BookingPanel.module.css';
 
@@ -74,6 +75,7 @@ const BookingPanel = props => {
   } = props;
 
   const price = listing.attributes.price;
+  const { publicData } = listing.attributes;
   const timeZone =
     listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
   const hasListingState = !!listing.attributes.state;
@@ -82,6 +84,7 @@ const BookingPanel = props => {
   const showClosedListingHelpText = listing.id && isClosed;
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
+  console.log('props from booking', props);
 
   const subTitleText = !!subTitle
     ? subTitle
@@ -131,6 +134,7 @@ const BookingPanel = props => {
 
         {showBookingTimeForm ? (
           <BookingTimeForm
+            publicData={publicData}
             className={css.bookingForm}
             formId="BookingPanel"
             submitButtonWrapperClassName={css.submitButtonWrapper}

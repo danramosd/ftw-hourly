@@ -26,13 +26,21 @@ const EditListingPricingPanel = props => {
     submitButtonText,
     panelUpdated,
     updateInProgress,
+    onAddAvailabilityException,
     errors,
   } = props;
+
+  console.log('onAddAvailabilityException', onAddAvailabilityException);
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { price, publicData } = currentListing.attributes;
-  const pricing = get(publicData, 'pricing', [{ people: 1, hours: 4, price: 3000 }]);
+  const { maxPeople, pricePerAdditionalPerson } = publicData;
+  // const pricing = get(publicData, 'pricing', []);
+
+  // if (!pricing.length) {
+  //   pricing.push({ people: 1, hours: 4, price: 3000 });
+  // }
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -54,17 +62,21 @@ const EditListingPricingPanel = props => {
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
-      initialValues={{ price, pricing }}
+      initialValues={{ price, pricePerAdditionalPerson, maxPeople }}
       onSubmit={values => {
-        const { pricing, price } = values;
+        const { pricePerAdditionalPerson, maxPeople = 100, price } = values;
+        const { currency, amount } = pricePerAdditionalPerson;
+
         const updatedValues = {
           price,
           publicData: {
-            pricing: pricing.map(pr => ({
-              hours: Number(pr.hours),
-              people: Number(pr.people),
-              price: pr.price.amount,
-            })),
+            maxPeople: Number(maxPeople),
+            pricePerAdditionalPerson: { currency, amount },
+            // pricing: pricing.map(pr => ({
+            //   hours: Number(pr.hours),
+            //   people: Number(pr.people),
+            //   price: pr.price,
+            // })),
           },
         };
         onSubmit(updatedValues);
@@ -111,6 +123,7 @@ EditListingPricingPanel.propTypes = {
   onSubmit: func.isRequired,
   onChange: func.isRequired,
   submitButtonText: string.isRequired,
+  onAddAvailabilityException: func.isRequired,
   panelUpdated: bool.isRequired,
   updateInProgress: bool.isRequired,
   errors: object.isRequired,

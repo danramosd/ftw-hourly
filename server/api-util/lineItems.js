@@ -9,29 +9,17 @@ const PROVIDER_COMMISSION_PERCENTAGE = -10;
 
 const resolveCleaningFeePrice = listing => {
   const { publicData } = listing.attributes;
-  console.log('publicData', publicData);
-
   return new Money(2000, 'USD');
-  // const costPerPerson = publicData && publicData.pricing;
-  // const { amount, currency } = cleaningFee;
-
-  // if (amount && currency) {
-  //   return new Money(amount, currency);
-  // }
-
-  // return null;
 };
 
 const resolveAdditionalPeople = (listing, people) => {
   if (!people) {
     return null;
   }
-  const pricing = get(listing, 'attributes.publicData.pricing');
-  if (pricing) {
-    console.log('pricing', pricing);
+  const { pricePerAdditionalPerson } = listing.attributes.publicData;
 
-    const priceMatch = pricing.find(price => price.people === people);
-    return new Money(priceMatch.price, 'USD');
+  if (pricePerAdditionalPerson) {
+    return new Money(pricePerAdditionalPerson.amount * people, 'USD');
   }
   return null;
 };

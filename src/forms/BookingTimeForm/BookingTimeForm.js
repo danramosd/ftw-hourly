@@ -35,8 +35,6 @@ export class BookingTimeFormComponent extends Component {
     const startDate = bookingStartTime ? timestampToDate(bookingStartTime) : null;
     const endDate = bookingEndTime ? timestampToDate(bookingEndTime) : null;
 
-    console.log('formValues.values', formValues.values);
-
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
 
@@ -50,9 +48,9 @@ export class BookingTimeFormComponent extends Component {
   }
 
   render() {
-    const { rootClassName, className, price: unitPrice, ...rest } = this.props;
+    const { rootClassName, className, publicData, price: unitPrice, ...rest } = this.props;
+    const { pricePerAdditionalPerson, maxPeople } = publicData;
     const classes = classNames(rootClassName || css.root, className);
-    console.log('props', this.props);
 
     if (!unitPrice) {
       return (
@@ -165,6 +163,8 @@ export class BookingTimeFormComponent extends Component {
             endDateInputProps,
           };
 
+          const optionsKey = [...Array(maxPeople).keys()].slice(1);
+
           return (
             <Form onSubmit={handleSubmit} className={classes}>
               <FormSpy
@@ -179,7 +179,11 @@ export class BookingTimeFormComponent extends Component {
                 </option>
 
                 <option value={0}>0</option>
-                <option value={1}>1</option>
+                {optionsKey.map(key => (
+                  <option key={key} value={key}>
+                    {key}
+                  </option>
+                ))}
                 {/* {countryCodes.map(country => {
             return (
               <option key={country.code} value={country.code}>

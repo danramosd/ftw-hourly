@@ -49,6 +49,7 @@ export const BookingBreakdownComponent = props => {
   });
 
   const classes = classNames(rootClassName || css.root, className);
+  console.log('props from breakdown', props);
 
   /**
    * BookingBreakdown contains different line items:
@@ -97,10 +98,8 @@ export const BookingBreakdownComponent = props => {
         timeZone={timeZone}
       />
       <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
-
       <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
       <LineItemUnknownItemsMaybe transaction={transaction} isProvider={isProvider} intl={intl} />
-
       <LineItemSubTotalMaybe
         transaction={transaction}
         unitType={unitType}
@@ -108,7 +107,6 @@ export const BookingBreakdownComponent = props => {
         intl={intl}
       />
       <LineItemRefundMaybe transaction={transaction} intl={intl} />
-
       <LineItemCustomerCommissionMaybe
         transaction={transaction}
         isCustomer={isCustomer}
@@ -119,7 +117,6 @@ export const BookingBreakdownComponent = props => {
         isCustomer={isCustomer}
         intl={intl}
       />
-
       <LineItemProviderCommissionMaybe
         transaction={transaction}
         isProvider={isProvider}
@@ -130,9 +127,7 @@ export const BookingBreakdownComponent = props => {
         isProvider={isProvider}
         intl={intl}
       />
-
       <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
-
       {hasCommissionLineItem ? (
         <span className={css.feeInfo}>
           <FormattedMessage id="BookingBreakdown.commissionFeeNote" />
