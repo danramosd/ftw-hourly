@@ -120,24 +120,24 @@ export const filters = [
       ],
     },
   },
-  {
-    id: 'certificate',
-    label: 'Certificate',
-    type: 'SelectSingleFilter',
-    group: 'secondary',
-    queryParamNames: ['pub_certificate'],
-    config: {
-      // "key" is the option you see in Flex Console.
-      // "label" is set here for the UI only.
-      // Note: label is not added through the translation files
-      // to make filter customizations a bit easier.
-      options: [
-        { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-        { key: '200h', label: 'Registered fishing guide 200h' },
-        { key: '500h', label: 'Registered fishing guide 500h' },
-      ],
-    },
-  },
+  // {
+  //   id: 'certificate',
+  //   label: 'Certificate',
+  //   type: 'SelectSingleFilter',
+  //   group: 'secondary',
+  //   queryParamNames: ['pub_certificate'],
+  //   config: {
+  //     // "key" is the option you see in Flex Console.
+  //     // "label" is set here for the UI only.
+  //     // Note: label is not added through the translation files
+  //     // to make filter customizations a bit easier.
+  //     options: [
+  //       { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  //       { key: '200h', label: 'Registered fishing guide 200h' },
+  //       { key: '500h', label: 'Registered fishing guide 500h' },
+  //     ],
+  //   },
+  // },
 ];
 
 export const sortConfig = {
