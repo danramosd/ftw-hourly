@@ -57,6 +57,8 @@ const app = express();
 
 const errorPage = fs.readFileSync(path.join(buildPath, '500.html'), 'utf-8');
 
+app.use(require('express-naked-redirect')());
+
 // load sitemap and robots file structure
 // and write those into files
 sitemap(sitemapStructure()).toFile();
@@ -66,6 +68,7 @@ log.setup();
 // Add logger request handler. In case Sentry is set up
 // request information is added to error context when sent
 // to Sentry.
+
 app.use(log.requestHandler());
 
 // The helmet middleware sets various HTTP headers to improve security.
