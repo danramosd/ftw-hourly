@@ -117,7 +117,7 @@ const Footer = props => {
                     name="SearchPage"
                     to={{
                       search:
-                        '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556',
+                        '?address=Utah&bounds=43.14102317%2C-108.60570346%2C34.38871699%2C-114.65288897',
                     }}
                     className={css.link}
                   >
@@ -129,7 +129,7 @@ const Footer = props => {
                     name="SearchPage"
                     to={{
                       search:
-                        '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901',
+                        '?address=Colorado&bounds=43.04018248%2C-101.51224562%2C34.27468742%2C-109.8566166',
                     }}
                     className={css.link}
                   >
@@ -145,7 +145,7 @@ const Footer = props => {
                     name="SearchPage"
                     to={{
                       search:
-                        '?address=Denver%2C%20Colorado%2C%20United%20States%20of%20America&bounds=39.94623402%2C-104.600299056%2C39.62371698%2C-105.193616003506',
+                        '?address=Wyoming&bounds=46.86928099%2C-103.37482842%2C38.62725731%2C-111.71919941',
                     }}
                     className={css.link}
                   >
@@ -158,7 +158,7 @@ const Footer = props => {
                     name="SearchPage"
                     to={{
                       search:
-                        '?address=Boston%2C%20Massachusetts%2C%20United%20States%20of%20America&bounds=42.3974009328397%2C-70.9860500028801%2C42.3196059806256%2C-71.1255750165112',
+                        '?address=Montana&bounds=50.99051135%2C-107.78555015%2C43.36223452%2C-116.12992113',
                     }}
                     className={css.link}
                   >
@@ -170,7 +170,7 @@ const Footer = props => {
                     name="SearchPage"
                     to={{
                       search:
-                        '?address=Boulder%2C%20Colorado%2C%20United%20States%20of%20America&bounds=40.1593785009969%2C-105.108872052936%2C39.9139839802231%2C-105.525489934809',
+                        '?address=Idaho&bounds=49.14162741%2C-110.02064952%2C41.23173313%2C-118.3650205',
                     }}
                     className={css.link}
                   >
