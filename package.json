@@ -24,7 +24,6 @@
     "dotenv-expand": "4.2.0",
     "express": "^4.16.4",
     "express-enforces-ssl": "^1.1.0",
-    "express-naked-redirect": "^0.1.9",
     "express-sitemap": "^1.8.0",
     "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",

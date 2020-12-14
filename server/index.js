@@ -57,7 +57,12 @@ const app = express();
 
 const errorPage = fs.readFileSync(path.join(buildPath, '500.html'), 'utf-8');
 
-app.use(require('express-naked-redirect')());
+app.use(
+  require('./api-util/redirect')({
+    subDomain: 'www',
+    https: true,
+  })
+);
 
 // load sitemap and robots file structure
 // and write those into files
