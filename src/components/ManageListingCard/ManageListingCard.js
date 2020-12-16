@@ -301,9 +301,9 @@ export const ManageListingCardComponent = props => {
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}
               </div>
-              <div className={css.perUnit}>
+              {/* <div className={css.perUnit}>
                 <FormattedMessage id={unitTranslationKey} />
-              </div>
+              </div> */}
             </React.Fragment>
           ) : (
             <div className={css.noPrice}>

@@ -33,113 +33,113 @@
  *         (i.e. pub_<key> or meta_<key>).
  */
 
-export const filters = [];
-// export const filters = [
-//   {
-//     id: 'dates-length',
-//     label: 'Dates',
-//     type: 'BookingDateRangeLengthFilter',
-//     group: 'primary',
-//     // Note: BookingDateRangeFilter is fixed filter,
-//     // you can't change "queryParamNames: ['dates'],"
-//     queryParamNames: ['dates', 'minDuration'],
-//     config: {
-//       // A global time zone to use in availability searches. As listings
-//       // can be in various time zones, we must decide what time zone we
-//       // use in search when looking for available listings within a
-//       // certain time interval.
-//       //
-//       // If you have all/most listings in a certain time zone, change this
-//       // config value to that.
-//       //
-//       // See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-//       searchTimeZone: 'Etc/UTC',
+// export const filters = [];
+export const filters = [
+  // {
+  //   id: 'dates-length',
+  //   label: 'Dates',
+  //   type: 'BookingDateRangeLengthFilter',
+  //   group: 'primary',
+  //   // Note: BookingDateRangeFilter is fixed filter,
+  //   // you can't change "queryParamNames: ['dates'],"
+  //   queryParamNames: ['dates', 'minDuration'],
+  //   config: {
+  //     // A global time zone to use in availability searches. As listings
+  //     // can be in various time zones, we must decide what time zone we
+  //     // use in search when looking for available listings within a
+  //     // certain time interval.
+  //     //
+  //     // If you have all/most listings in a certain time zone, change this
+  //     // config value to that.
+  //     //
+  //     // See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  //     searchTimeZone: 'Etc/UTC',
 
-//       // Options for the minimum duration of the booking
-//       options: [
-//         { key: '0', label: 'Any length' },
-//         { key: '60', label: '1 hour', shortLabel: '1h' },
-//         { key: '120', label: '2 hours', shortLabel: '2h' },
-//       ],
-//     },
-//   },
-//   {
-//     id: 'price',
-//     label: 'Price',
-//     type: 'PriceFilter',
-//     group: 'primary',
-//     // Note: PriceFilter is fixed filter,
-//     // you can't change "queryParamNames: ['price'],"
-//     queryParamNames: ['price'],
-//     // Price filter configuration
-//     // Note: unlike most prices this is not handled in subunits
-//     config: {
-//       min: 0,
-//       max: 1000,
-//       step: 5,
-//     },
-//   },
-//   {
-//     id: 'keyword',
-//     label: 'Keyword',
-//     type: 'KeywordFilter',
-//     group: 'primary',
-//     // Note: KeywordFilter is fixed filter,
-//     // you can't change "queryParamNames: ['keywords'],"
-//     queryParamNames: ['keywords'],
-//     // NOTE: If you are ordering search results by distance
-//     // the keyword search can't be used at the same time.
-//     // You can turn on/off ordering by distance from config.js file.
-//     config: {},
-//   },
-//   {
-//     id: 'fishingStyles',
-//     label: 'Fishing styles',
-//     type: 'SelectMultipleFilter',
-//     group: 'secondary',
-//     queryParamNames: ['pub_fishingStyles'],
-//     config: {
-//       // Optional modes: 'has_all', 'has_any'
-//       // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
-//       searchMode: 'has_all',
+  //     // Options for the minimum duration of the booking
+  //     options: [
+  //       { key: '0', label: 'Any length' },
+  //       { key: '60', label: '1 hour', shortLabel: '1h' },
+  //       { key: '120', label: '2 hours', shortLabel: '2h' },
+  //     ],
+  //   },
+  // },
+  // {
+  //   id: 'price',
+  //   label: 'Price',
+  //   type: 'PriceFilter',
+  //   group: 'primary',
+  //   // Note: PriceFilter is fixed filter,
+  //   // you can't change "queryParamNames: ['price'],"
+  //   queryParamNames: ['price'],
+  //   // Price filter configuration
+  //   // Note: unlike most prices this is not handled in subunits
+  //   config: {
+  //     min: 0,
+  //     max: 1000,
+  //     step: 5,
+  //   },
+  // },
+  // {
+  //   id: 'keyword',
+  //   label: 'Keyword',
+  //   type: 'KeywordFilter',
+  //   group: 'primary',
+  //   // Note: KeywordFilter is fixed filter,
+  //   // you can't change "queryParamNames: ['keywords'],"
+  //   queryParamNames: ['keywords'],
+  //   // NOTE: If you are ordering search results by distance
+  //   // the keyword search can't be used at the same time.
+  //   // You can turn on/off ordering by distance from config.js file.
+  //   config: {},
+  // },
+  {
+    id: 'fishingStyles',
+    label: 'Fishing styles',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_fishingStyles'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
 
-//       // "key" is the option you see in Flex Console.
-//       // "label" is set here for this web app's UI only.
-//       // Note: label is not added through the translation files
-//       // to make filter customizations a bit easier.
-//       options: [
-//         { key: 'artificial', label: 'Artificial' },
-//         { key: 'float', label: 'Float' },
-//         { key: 'fly', label: 'Fly fishing' },
-//         { key: 'ice', label: 'Ice fishing' },
-//         { key: 'lake', label: 'Lake' },
-//         { key: 'bait', label: 'Live Bait' },
-//         { key: 'river', label: 'River' },
-//         { key: 'spin', label: 'Spin fishing' },
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'artificial', label: 'Artificial' },
+        { key: 'float', label: 'Float' },
+        { key: 'fly', label: 'Fly fishing' },
+        { key: 'ice', label: 'Ice fishing' },
+        { key: 'lake', label: 'Lake' },
+        { key: 'bait', label: 'Live Bait' },
+        { key: 'river', label: 'River' },
+        { key: 'spin', label: 'Spin fishing' },
 
-//         { key: 'trolling', label: 'Trolling' },
-//       ],
-//     },
-//   },
-//   {
-//     id: 'certificate',
-//     label: 'Certificate',
-//     type: 'SelectSingleFilter',
-//     group: 'secondary',
-//     queryParamNames: ['pub_certificate'],
-//     config: {
-//       // "key" is the option you see in Flex Console.
-//       // "label" is set here for the UI only.
-//       // Note: label is not added through the translation files
-//       // to make filter customizations a bit easier.
-//       options: [
-//         { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-//         { key: '200h', label: 'Registered fishing guide 200h' },
-//         { key: '500h', label: 'Registered fishing guide 500h' },
-//       ],
-//     },
-//   },
-// ];
+        { key: 'trolling', label: 'Trolling' },
+      ],
+    },
+  },
+  // {
+  //   id: 'certificate',
+  //   label: 'Certificate',
+  //   type: 'SelectSingleFilter',
+  //   group: 'secondary',
+  //   queryParamNames: ['pub_certificate'],
+  //   config: {
+  //     // "key" is the option you see in Flex Console.
+  //     // "label" is set here for the UI only.
+  //     // Note: label is not added through the translation files
+  //     // to make filter customizations a bit easier.
+  //     options: [
+  //       { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  //       { key: '200h', label: 'Registered fishing guide 200h' },
+  //       { key: '500h', label: 'Registered fishing guide 500h' },
+  //     ],
+  //   },
+  // },
+];
 
 export const sortConfig = {
   // Enable/disable the sorting control in the SearchPage
