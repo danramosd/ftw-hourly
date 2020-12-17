@@ -4,13 +4,8 @@ const { Money } = types;
 const get = require('lodash/get');
 // This bookingUnitType needs to be one of the following:
 // line-item/night, line-item/day or line-item/units
-const bookingUnitType = 'line-item/units';
+const bookingUnitType = 'line-item/trip-price';
 const PROVIDER_COMMISSION_PERCENTAGE = -10;
-
-const resolveCleaningFeePrice = listing => {
-  const { publicData } = listing.attributes;
-  return new Money(2000, 'USD');
-};
 
 const resolveAdditionalPeople = (listing, people) => {
   if (!people) {
@@ -65,23 +60,12 @@ exports.transactionLineItems = (listing, bookingData) => {
     includeFor: ['customer', 'provider'],
   };
 
-  // const cleaningFeePrice = resolveCleaningFeePrice(listing);
   const additionalPersonPrice = resolveAdditionalPeople(listing, people);
-  // const cleaningFee = cleaningFeePrice
-  //   ? [
-  //       {
-  //         code: 'line-item/cleaning-fee',
-  //         unitPrice: cleaningFeePrice,
-  //         quantity: 1,
-  //         includeFor: ['customer', 'provider'],
-  //       },
-  //     ]
-  //   : [];
 
   const additionalPersonFee = additionalPersonPrice
     ? [
         {
-          code: 'line-item/additional-person',
+          code: 'line-item/additional-people',
           unitPrice: additionalPersonPrice,
           quantity: 1,
           includeFor: ['customer', 'provider'],
@@ -92,7 +76,7 @@ exports.transactionLineItems = (listing, bookingData) => {
   const providerCommission = {
     code: 'line-item/provider-commission',
     // unitPrice: calculateTotalFromLineItems([booking]),
-    unitPrice: calculateTotalFromLineItems([booking, ...additionalPersonFee]),
+    unitPrice: calculateTotalFromLineItems([...additionalPersonFee]),
     percentage: PROVIDER_COMMISSION_PERCENTAGE,
     includeFor: ['provider'],
   };

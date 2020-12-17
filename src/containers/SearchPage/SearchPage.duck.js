@@ -146,13 +146,14 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     // Find configs for 'dates-length' filter
     // (type: BookingDateRangeLengthFilter)
     const filterConfigs = config.custom.filters;
-    if (!filterConfigs.length) {
-      return {};
-    }
+
     const idOfBookingDateRangeLengthFilter = 'dates-length';
     const dateLengthFilterConfig = filterConfigs.find(
       f => f.id === idOfBookingDateRangeLengthFilter
     );
+    if (!filterConfigs.length || !dateLengthFilterConfig) {
+      return {};
+    }
     // Extract time zone
     const timeZone = dateLengthFilterConfig.config.searchTimeZone;
 

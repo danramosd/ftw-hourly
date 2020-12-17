@@ -497,7 +497,7 @@ class FieldDateAndTimeInput extends Component {
             />
           </div>
 
-          <div className={css.field}>
+          {/* <div className={css.field}>
             <FieldSelect
               name="bookingStartTime"
               id={formId ? `${formId}.bookingStartTime` : 'bookingStartTime'}
@@ -540,7 +540,7 @@ class FieldDateAndTimeInput extends Component {
                 <option>{placeholderTime}</option>
               )}
             </FieldSelect>
-          </div>
+          </div>*/}
         </div>
       </div>
     );

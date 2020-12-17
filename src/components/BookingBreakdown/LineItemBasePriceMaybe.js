@@ -6,6 +6,8 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import css from './BookingBreakdown.module.css';
 
 const LineItemBasePriceMaybe = props => {
+  console.log('meprops', props);
+
   const { transaction, unitType, intl } = props;
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;

@@ -136,6 +136,9 @@ exports.calculateLineTotal = lineItem => {
  * @retuns {Money} total sum
  */
 exports.calculateTotalFromLineItems = lineItems => {
+  if (!lineItems.length) {
+    return new Money(0, 'USD');
+  }
   const totalPrice = lineItems.reduce((sum, lineItem) => {
     const lineTotal = this.calculateLineTotal(lineItem);
     return getAmountAsDecimalJS(lineTotal).add(sum);

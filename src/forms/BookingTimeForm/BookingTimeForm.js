@@ -11,7 +11,7 @@ import { IconSpinner, Form, PrimaryButton } from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 import FieldSelect from '../../components/FieldSelect/FieldSelect';
-
+import get from 'lodash/get';
 import css from './BookingTimeForm.module.css';
 
 export class BookingTimeFormComponent extends Component {
@@ -97,8 +97,13 @@ export class BookingTimeFormComponent extends Component {
             fetchLineItemsError,
           } = fieldRenderProps;
 
-          const startTime = values && values.bookingStartTime ? values.bookingStartTime : null;
-          const endTime = values && values.bookingEndTime ? values.bookingEndTime : null;
+          const start = new Date(get(values, 'bookingStartDate.date'));
+          start.setHours(0, 0, 0, 0);
+          const end = new Date(get(values, 'bookingEndDate.date'));
+          end.setHours(24, 0, 0, 0);
+          const startTime = start.getTime(); //values && values.bookingStartTime ? values.bookingStartTime : null;
+          const endTime = end.getTime(); //values && values.bookingEndTime ? values.bookingEndTime : null;
+          console.log('values', values, startTime, endTime);
 
           const bookingStartLabel = intl.formatMessage({
             id: 'BookingTimeForm.bookingStartTitle',

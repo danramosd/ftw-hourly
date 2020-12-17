@@ -56,10 +56,10 @@ const SearchFiltersPrimaryComponent = props => {
         {sortByComponent}
       </div>
 
-      <div className={css.filters}>
+      {/* <div className={css.filters}>
         {children}
         {toggleSecondaryFiltersOpenButton}
-      </div>
+      </div> */}
 
       {hasNoResult ? (
         <div className={css.noSearchResults}>

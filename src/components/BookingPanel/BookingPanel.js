@@ -84,7 +84,6 @@ const BookingPanel = props => {
   const showClosedListingHelpText = listing.id && isClosed;
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
-  console.log('props from booking', props);
 
   const subTitleText = !!subTitle
     ? subTitle
@@ -122,9 +121,9 @@ const BookingPanel = props => {
             <div className={css.desktopPriceValue} title={priceTitle}>
               {formattedPrice}
             </div>
-            <div className={css.desktopPerUnit}>
+            {/* <div className={css.desktopPerUnit}>
               <FormattedMessage id={unitTranslationKey} />
-            </div>
+            </div> */}
           </div>
           <div className={css.bookingHeadingContainer}>
             <h2 className={titleClasses}>{title}</h2>

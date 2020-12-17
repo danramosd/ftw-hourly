@@ -33,15 +33,15 @@ const BookingPeriod = props => {
           <div className={css.dayLabel}>
             <FormattedMessage id="BookingBreakdown.bookingStart" />
           </div>
-          <div className={css.dayInfo}>
+          {/* <div className={css.dayInfo}>
             <FormattedDate value={startDate} {...timeFormatOptions} {...timeZoneMaybe} />
-          </div>
+          </div> */}
           <div className={css.itemLabel}>
             <FormattedDate value={startDate} {...dateFormatOptions} {...timeZoneMaybe} />
           </div>
         </div>
 
-        <div className={css.bookingPeriodSectionRigth}>
+        {/* <div className={css.bookingPeriodSectionRigth}>
           <div className={css.dayLabel}>
             <FormattedMessage id="BookingBreakdown.bookingEnd" />
           </div>
@@ -51,7 +51,7 @@ const BookingPeriod = props => {
           <div className={css.itemLabel}>
             <FormattedDate value={endDate} {...dateFormatOptions} {...timeZoneMaybe} />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
