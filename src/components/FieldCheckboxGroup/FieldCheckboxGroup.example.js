@@ -8,7 +8,7 @@ import { requiredFieldArrayCheckbox } from '../../util/validators';
 const formName = 'Styleguide.FieldCheckboxGroup';
 const formNameRequired = 'Styleguide.FieldCheckboxGroupRequired';
 
-const label = <h3>Yoga styles</h3>;
+const label = <h3>Fishing styles</h3>;
 
 const commonProps = {
   label: label,
