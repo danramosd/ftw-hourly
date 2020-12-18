@@ -9,53 +9,53 @@ const { LatLng, LatLngBounds } = sdkTypes;
 // `predictionPlace` (util.types.place) properties.
 export default [
   {
-    id: 'default-new-york',
+    id: 'default-utah',
     predictionPlace: {
-      address: 'New York City, New York, USA',
+      address: 'Utah',
       bounds: new LatLngBounds(
-        new LatLng(40.917576401307, -73.7008392055224),
-        new LatLng(40.477399, -74.2590879797556)
+        new LatLng(43.14102317, -108.60570346),
+        new LatLng(34.38871699, -114.65288897)
       ),
     },
   },
   {
-    id: 'default-los-angeles',
+    id: 'default-colorado',
     predictionPlace: {
-      address: 'Los Angeles, California, USA',
+      address: 'Colorado',
       bounds: new LatLngBounds(
-        new LatLng(34.161440999758, -118.121305008073),
-        new LatLng(33.9018913203336, -118.521456965901)
+        new LatLng(43.04018248, -101.51224562),
+        new LatLng(34.27468742, -109.8566166)
       ),
     },
   },
   {
-    id: 'default-san-francisco',
+    id: 'default-wyoming',
     predictionPlace: {
-      address: 'San Francisco, California, USA',
+      address: 'Wyoming',
       bounds: new LatLngBounds(
-        new LatLng(37.8324430069081, -122.354995082683),
-        new LatLng(37.6044780500533, -122.517910874663)
+        new LatLng(46.86928099, -103.37482842),
+        new LatLng(38.62725731, -111.71919941)
       ),
     },
   },
-  {
-    id: 'default-seattle',
-    predictionPlace: {
-      address: 'Seattle, Washington, USA',
-      bounds: new LatLngBounds(
-        new LatLng(47.7779392908564, -122.216605992108),
-        new LatLng(47.3403950185547, -122.441233019046)
-      ),
-    },
-  },
-  {
-    id: 'default-portland',
-    predictionPlace: {
-      address: 'Portland, Oregon, USA',
-      bounds: new LatLngBounds(
-        new LatLng(45.858099013046, -122.441059986416),
-        new LatLng(45.3794799927623, -122.929215816001)
-      ),
-    },
-  },
+  // {
+  //   id: 'default-seattle',
+  //   predictionPlace: {
+  //     address: 'Seattle, Washington, USA',
+  //     bounds: new LatLngBounds(
+  //       new LatLng(47.7779392908564, -122.216605992108),
+  //       new LatLng(47.3403950185547, -122.441233019046)
+  //     ),
+  //   },
+  // },
+  // {
+  //   id: 'default-portland',
+  //   predictionPlace: {
+  //     address: 'Portland, Oregon, USA',
+  //     bounds: new LatLngBounds(
+  //       new LatLng(45.858099013046, -122.441059986416),
+  //       new LatLng(45.3794799927623, -122.929215816001)
+  //     ),
+  //   },
+  // },
 ];
