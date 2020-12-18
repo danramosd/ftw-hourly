@@ -167,8 +167,9 @@ export class BookingTimeFormComponent extends Component {
             startDateInputProps,
             endDateInputProps,
           };
+          console.log('max people', maxPeople);
 
-          const optionsKey = [...Array(maxPeople).keys()].slice(1);
+          const optionsKey = [...Array(maxPeople + 1).keys()].slice(1);
 
           return (
             <Form onSubmit={handleSubmit} className={classes}>

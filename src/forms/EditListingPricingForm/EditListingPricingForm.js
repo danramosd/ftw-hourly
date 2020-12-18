@@ -137,7 +137,7 @@ export const EditListingPricingFormComponent = props => {
                 type="number"
                 name={`maxPeople`}
                 id="maxPeople"
-                label="Total amount of people per trip"
+                label="Total number of people per trip"
                 validate={required}
               />
             </section>
@@ -152,7 +152,7 @@ export const EditListingPricingFormComponent = props => {
                 name="pricePerAdditionalPerson"
                 className={css.priceInput}
                 autoFocus
-                label={'Enter the cost per person that should be added to your base rate'}
+                label={'Enter the cost for each additional person'}
                 placeholder={pricePlaceholderMessage}
                 currencyConfig={config.currencyConfig}
                 validate={priceValidators}
