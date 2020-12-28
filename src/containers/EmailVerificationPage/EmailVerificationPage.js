@@ -67,6 +67,7 @@ export const EmailVerificationPageComponent = props => {
   if (user && user.attributes.emailVerified) {
     return <NamedRedirect name="LandingPage" />;
   }
+  console.log('current user', user);
 
   return (
     <Page title={title} scrollingDisabled={scrollingDisabled} referrer="origin">
