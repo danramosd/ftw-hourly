@@ -7,7 +7,9 @@ import {
   isInclusivelyBeforeDay,
   isInclusivelyAfterDay,
 } from 'react-dates';
-import { monthIdString, monthIdStringInUTC } from '../../util/dates';
+import { monthIdString, monthIdStringInUTC, stringifyDateToISO8601 } from '../../util/dates';
+import { Form as FinalForm, FormSpy } from 'react-final-form';
+import FieldSelect from '../../components/FieldSelect/FieldSelect';
 import {
   ensureBooking,
   ensureAvailabilityException,
@@ -130,12 +132,16 @@ const renderDayContents = (calendar, availabilityPlan) => date => {
   // you might want to deal with local dates using monthIdString instead of monthIdStringInUTC.
   // console.log('day content', calendar, availabilityPlan, date);
 
+  const currentMonth = monthIdStringInUTC(date);
   const { exceptions = [], bookings = [] } = calendar[monthIdStringInUTC(date)] || {};
   const { isOutsideRange } = dateModifiers(availabilityPlan, exceptions, bookings, date);
-  const [currentMonth] = Object.keys(calendar);
-  if (!currentMonth) {
+  // const [currentMonth] = Object.keys(calendar);
+  if (!calendar[currentMonth]) {
     return null;
   }
+
+  console.log('currentMonth', calendar[currentMonth], currentMonth);
+
   const timeSlots = calendar[currentMonth].timeSlots || [];
   const availableTimeSlots = timeSlots.map(timeSlot => moment(timeSlot.attributes.start).utc());
   const isAvailable = availableTimeSlots.find(slot => isSameDay(slot, date));
@@ -161,9 +167,14 @@ const BookingCalendar = props => {
     onFetchTimeSlots,
     availability,
     availabilityPlan,
+    publicData,
+    price: unitPrice,
   } = props;
 
+  const { pricePerAdditionalPerson, maxPeople } = publicData;
+  const optionsKey = [...Array(maxPeople + 1).keys()].slice(1);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [currentMonth, setCurrentMonth] = useState(moment().startOf('day'));
   const dayPickerWrapper = useRef(null);
   const dayPicker = useRef(null);
   useEffect(() => {
@@ -182,7 +193,18 @@ const BookingCalendar = props => {
   };
   const onFocusChange = () => {};
 
-  const onMonthClick = () => {};
+  const onMonthClick = monthFn => {
+    const nextMonth = monthFn(currentMonth, timeZone);
+    setCurrentMonth(nextMonth);
+
+    const start = new Date(nextMonth);
+    const end = new Date(nextMonthFn(nextMonth));
+    console.log('start', start, end);
+
+    fetchMonthlyAvailability(start, end);
+  };
+
+  const handleFormSubmit = () => {};
 
   const date = null;
   const width = get(dayPickerWrapper, 'current.clientWidth', 0);
@@ -193,35 +215,85 @@ const BookingCalendar = props => {
   const classes = classNames(css.root);
 
   return (
-    <div className={classes} ref={dayPickerWrapper}>
-      {width > 0 ? (
-        <div style={{ width: `${calendarGridWidth}px` }}>
-          <DayPickerSingleDateController
-            ref={dayPicker}
-            numberOfMonths={1}
-            navPrev={<IconArrowHead direction="left" />}
-            navNext={<IconArrowHead direction="right" />}
-            weekDayFormat="ddd"
-            daySize={daySize}
-            renderDayContents={renderDayContents(availability, availabilityPlan)}
-            focused={true}
-            date={date}
-            onDateChange={onDateChange}
-            onFocusChange={onFocusChange}
-            onPrevMonthClick={() => onMonthClick(prevMonthFn)}
-            onNextMonthClick={() => onMonthClick(nextMonthFn)}
-            hideKeyboardShortcutsPanel
-            horizontalMonthPadding={9}
-            renderMonthElement={({ month }) => (
-              <div className={css.monthElement}>
-                <span className={css.monthString}>{month.format('MMMM YYYY')}</span>
-                {/* {!isMonthDataFetched ? <IconSpinner rootClassName={css.monthInProgress} /> : null} */}
+    <FinalForm
+      // {...rest}
+      unitPrice={unitPrice}
+      onSubmit={handleFormSubmit}
+      render={fieldRenderProps => {
+        const {
+          endDatePlaceholder,
+          startDatePlaceholder,
+          formId,
+          handleSubmit,
+          intl,
+          isOwnListing,
+          submitButtonWrapperClassName,
+          unitType,
+          values,
+          timeSlots,
+          fetchTimeSlotsError,
+          lineItems,
+          fetchLineItemsInProgress,
+          fetchLineItemsError,
+        } = fieldRenderProps;
+        const { startDate, endDate } = values && values.bookingDates ? values.bookingDates : {};
+        const bookingStartDate =
+          values.bookingStartDate && values.bookingStartDate.date
+            ? values.bookingStartDate.date
+            : null;
+
+        return (
+          <div className={classes} ref={dayPickerWrapper}>
+            <FieldSelect id="people" name="people" className={css.field}>
+              <option disabled value="">
+                Additional People
+              </option>
+
+              <option value={0}>0</option>
+              {optionsKey.map(key => (
+                <option key={key} value={key}>
+                  {key}
+                </option>
+              ))}
+              {/* {countryCodes.map(country => {
+            return (
+              <option key={country.code} value={country.code}>
+                {country.name}
+              </option>
+            );
+          })} */}
+            </FieldSelect>
+            {width > 0 ? (
+              <div style={{ width: `${calendarGridWidth}px` }}>
+                <DayPickerSingleDateController
+                  ref={dayPicker}
+                  numberOfMonths={1}
+                  navPrev={<IconArrowHead direction="left" />}
+                  navNext={<IconArrowHead direction="right" />}
+                  weekDayFormat="ddd"
+                  daySize={daySize}
+                  renderDayContents={renderDayContents(availability, availabilityPlan)}
+                  focused={true}
+                  date={date}
+                  onDateChange={onDateChange}
+                  onFocusChange={onFocusChange}
+                  onPrevMonthClick={() => onMonthClick(prevMonthFn)}
+                  onNextMonthClick={() => onMonthClick(nextMonthFn)}
+                  hideKeyboardShortcutsPanel
+                  horizontalMonthPadding={9}
+                  renderMonthElement={({ month }) => (
+                    <div className={css.monthElement}>
+                      <span className={css.monthString}>{month.format('MMMM YYYY')}</span>
+                      {/* {!isMonthDataFetched ? <IconSpinner rootClassName={css.monthInProgress} /> : null} */}
+                    </div>
+                  )}
+                />
               </div>
-            )}
-          />
-        </div>
-      ) : null}
-    </div>
+            ) : null}
+          </div>
+        );
+      }}
+    />
   );
 };
 export default BookingCalendar;

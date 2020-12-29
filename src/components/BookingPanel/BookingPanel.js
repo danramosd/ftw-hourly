@@ -180,6 +180,8 @@ const BookingPanel = props => {
               onFetchTimeSlots={onFetchTimeSlots}
               timeZone={timeZone}
               availabilityPlan={availabilityPlan}
+              publicData={publicData}
+              price={price}
             />
           </div>
         ) : null}

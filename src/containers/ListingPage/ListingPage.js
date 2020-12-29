@@ -182,8 +182,6 @@ export class ListingPageComponent extends Component {
   }
 
   render() {
-    console.log('i was called form listing pager');
-
     const {
       unitType,
       isAuthenticated,

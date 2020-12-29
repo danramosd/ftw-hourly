@@ -275,9 +275,13 @@ export const fetchTimeSlots = (listingId, start, end, timeZone) => (dispatch, ge
 
   return dispatch(timeSlotsRequest({ listingId, start, end, ...extraParams }))
     .then(timeSlots => {
+      console.log('got the slots', timeSlots);
+
       dispatch(fetchTimeSlotsSuccess(monthId, timeSlots));
     })
     .catch(e => {
+      console.log('Error!');
+
       dispatch(fetchTimeSlotsError(monthId, storableError(e)));
     });
 };
