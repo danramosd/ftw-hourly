@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { IconArrowHead, IconSpinner } from '../../components';
 import {
   DayPickerSingleDateController,
@@ -16,6 +16,8 @@ import moment from 'moment';
 import memoize from 'lodash/memoize';
 import classNames from 'classnames';
 import css from '../../forms/EditListingAvailabilityForm/ManageAvailabilityCalendar.module.css';
+import { confirmCardPaymentSuccess } from '../../ducks/stripe.duck';
+import get from 'lodash/get';
 
 const HORIZONTAL_ORIENTATION = 'horizontal';
 const MAX_AVAILABILITY_EXCEPTIONS_RANGE = 365;
@@ -154,7 +156,6 @@ const renderDayContents = (calendar, availabilityPlan) => date => {
 };
 
 const BookingCalendar = props => {
-  console.log('props', props);
   const {
     listingId,
     timeZone = 'UTC/Etc',
@@ -163,47 +164,66 @@ const BookingCalendar = props => {
     availabilityPlan,
   } = props;
 
+  const [selectedDate, setSelectedDate] = useState(null);
+  const dayPickerWrapper = useRef(null);
+  const dayPicker = useRef(null);
   useEffect(() => {
     const start = new Date();
     const end = new Date();
     end.setMonth(end.getMonth() + 1);
-    onFetchTimeSlots(listingId, start, end, timeZone);
+    fetchMonthlyAvailability(start, end);
   }, []);
 
-  const onDateChange = () => {};
+  const fetchMonthlyAvailability = (start, end) => {
+    onFetchTimeSlots(listingId, start, end, timeZone);
+  };
+
+  const onDateChange = date => {
+    console.log('date(', date);
+
+    setSelectedDate(date);
+  };
   const onFocusChange = () => {};
 
   const onMonthClick = () => {};
 
   const date = null;
+  const width = get(dayPickerWrapper, 'current.clientWidth', 0);
+  const hasWindow = typeof window !== 'undefined';
+  const windowWidth = hasWindow ? window.innerWidth : 0;
+  const daySize = dayWidth(width, windowWidth);
+  const calendarGridWidth = daySize * TABLE_COLUMNS + TABLE_BORDER;
+  console.log('width', width, calendarGridWidth, dayPickerWrapper, dayPickerWrapper.current);
+  const classes = classNames(css.root);
   return (
-    <div>
-      <DayPickerSingleDateController
-        // {...rest}
-        // ref={c => {
-        //   this.dayPicker = c;
-        // }}
-        numberOfMonths={1}
-        navPrev={<IconArrowHead direction="left" />}
-        navNext={<IconArrowHead direction="right" />}
-        weekDayFormat="ddd"
-        // daySize={daySize}
-        renderDayContents={renderDayContents(availability, availabilityPlan)}
-        focused={true}
-        date={date}
-        onDateChange={onDateChange}
-        onFocusChange={onFocusChange}
-        onPrevMonthClick={() => onMonthClick(prevMonthFn)}
-        onNextMonthClick={() => onMonthClick(nextMonthFn)}
-        hideKeyboardShortcutsPanel
-        horizontalMonthPadding={9}
-        renderMonthElement={({ month }) => (
-          <div className={css.monthElement}>
-            <span className={css.monthString}>{month.format('MMMM YYYY')}</span>
-            {/* {!isMonthDataFetched ? <IconSpinner rootClassName={css.monthInProgress} /> : null} */}
-          </div>
-        )}
-      />
+    <div className={classes} ref={dayPickerWrapper}>
+      {width > 0 ? (
+        <div style={{ width: `${calendarGridWidth}px` }}>
+          <DayPickerSingleDateController
+            ref={dayPicker}
+            numberOfMonths={1}
+            navPrev={<IconArrowHead direction="left" />}
+            navNext={<IconArrowHead direction="right" />}
+            weekDayFormat="ddd"
+            daySize={daySize}
+            renderDayContents={renderDayContents(availability, availabilityPlan)}
+            focused={true}
+            date={date}
+            onDateChange={onDateChange}
+            onFocusChange={onFocusChange}
+            onPrevMonthClick={() => onMonthClick(prevMonthFn)}
+            onNextMonthClick={() => onMonthClick(nextMonthFn)}
+            hideKeyboardShortcutsPanel
+            horizontalMonthPadding={9}
+            renderMonthElement={({ month }) => (
+              <div className={css.monthElement}>
+                <span className={css.monthString}>{month.format('MMMM YYYY')}</span>
+                {/* {!isMonthDataFetched ? <IconSpinner rootClassName={css.monthInProgress} /> : null} */}
+              </div>
+            )}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };
