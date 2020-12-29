@@ -823,3 +823,25 @@ export const isDayMomentInsideRange = (dayMoment, start, end, timeZone) => {
 
   return false;
 };
+
+/**
+ * Convert local date for API.
+ * Date given by browser
+ * ("Fri Mar 30 2018 12:00:00 GMT-1100 (SST)" aka "Fri Mar 30 2018 23:00:00 GMT+0000 (UTC)")
+ * must be modified so that API will get correct moment also in UTC.
+ * We achieve this by adding timezone offset to local date / timestamp.
+ *
+ * The resulting timestamp for the API is:
+ * localTimestamp.add(timezoneoffset)
+ * In eg. Fri Mar 30 2018 23:00:00 GMT-1100 (SST) aka "Fri Mar 30 2018 12:00:00 GMT+0000 (UTC)"
+ *
+ * @param {Date} date is a local date object
+ *
+ * @returns {Date} date (given by API as UTC 00:00) converted back to local noon.
+ */
+export const dateFromLocalToAPI = date => {
+  const timezoneDiffInMinutes = moment(date).utcOffset();
+  const momentInLocalTimezone = moment(date).add(timezoneDiffInMinutes, 'minutes');
+
+  return momentInLocalTimezone.toDate();
+};

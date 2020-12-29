@@ -97,6 +97,7 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
+    availability,
     fetchExceptionsInProgress,
     availabilityExceptions,
   } = props;
@@ -247,19 +248,11 @@ const EditListingWizardTab = props => {
       return (
         <EditListingAvailabilityPanel
           {...panelProps(AVAILABILITY)}
-          fetchExceptionsInProgress={fetchExceptionsInProgress}
-          availabilityExceptions={availabilityExceptions}
+          availability={availability}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onAddAvailabilityException={onAddAvailabilityException}
-          onDeleteAvailabilityException={onDeleteAvailabilityException}
           onSubmit={values => {
-            // We want to return the Promise to the form,
-            // so that it doesn't close its modal if an error is thrown.
-            return onCompleteEditListingWizardTab(tab, values, true);
+            onCompleteEditListingWizardTab(tab, values);
           }}
-          onNextTab={() =>
-            redirectAfterDraftUpdate(listing.id.uuid, params, tab, marketplaceTabs, history)
-          }
         />
       );
     }

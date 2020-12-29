@@ -13,6 +13,7 @@ import {
   PrimaryButton,
   FieldSelect,
   FieldTimeZoneSelect,
+  FieldCheckbox,
 } from '../../components';
 
 import css from './EditListingAvailabilityPlanForm.module.css';
@@ -251,7 +252,6 @@ const EditListingAvailabilityPlanFormComponent = props => {
           formId,
           handleSubmit,
           inProgress,
-          intl,
           listingTitle,
           weekdays,
           fetchErrors,
@@ -261,15 +261,9 @@ const EditListingAvailabilityPlanFormComponent = props => {
         const classes = classNames(rootClassName || css.root, className);
         const submitInProgress = inProgress;
 
-        const concatDayEntriesReducer = (entries, day) =>
-          values[day] ? entries.concat(values[day]) : entries;
-        const hasUnfinishedEntries = !!weekdays
-          .reduce(concatDayEntriesReducer, [])
-          .find(e => !e.startTime || !e.endTime);
-
         const { updateListingError } = fetchErrors || {};
 
-        const submitDisabled = submitInProgress || hasUnfinishedEntries;
+        const submitDisabled = submitInProgress;
 
         return (
           <Form id={formId} className={classes} onSubmit={handleSubmit}>
@@ -279,18 +273,23 @@ const EditListingAvailabilityPlanFormComponent = props => {
                 values={{ listingTitle }}
               />
             </h2>
-            <h3 className={css.subheading}>
+            {/* <h3 className={css.subheading}>
               <FormattedMessage id="EditListingAvailabilityPlanForm.timezonePickerTitle" />
-            </h3>
-            <div className={css.timezonePicker}>
+            </h3> */}
+            {/* <div className={css.timezonePicker}>
               <FieldTimeZoneSelect id="timezone" name="timezone" />
-            </div>
-            <h3 className={css.subheading}>
+            </div> */}
+            {/* <h3 className={css.subheading}>
               <FormattedMessage id="EditListingAvailabilityPlanForm.hoursOfOperationTitle" />
-            </h3>
+            </h3> */}
             <div className={css.week}>
               {weekdays.map(w => {
-                return <DailyPlan dayOfWeek={w} key={w} values={values} intl={intl} />;
+                return (
+                  <label key={w}>
+                    {w}
+                    <FieldCheckbox id={`availability[${w}]`} name={`availability[${w}]`} value={true} />
+                  </label>
+                );
               })}
             </div>
 

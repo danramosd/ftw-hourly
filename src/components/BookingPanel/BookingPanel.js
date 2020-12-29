@@ -10,7 +10,9 @@ import { formatMoney } from '../../util/currency';
 import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
-import { BookingTimeForm } from '../../forms';
+import { BookingTimeForm, BookingDatesForm } from '../../forms';
+import ManageAvailabilityCalendar from '../../forms/EditListingAvailabilityForm/ManageAvailabilityCalendar';
+import BookingCalendar from '../BookingCalendar/BookingCalendar';
 import get from 'lodash/get';
 
 import css from './BookingPanel.module.css';
@@ -72,14 +74,21 @@ const BookingPanel = props => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
+    timeSlots,
+    fetchTimeSlotsError,
   } = props;
 
   const price = listing.attributes.price;
   const { publicData } = listing.attributes;
+  console.log('attributes', listing.attributes);
+
   const timeZone =
     listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
+
+  const availabilityPlan = listing.attributes.availabilityPlan;
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
+  const showBookingDatesForm = hasListingState && !isClosed;
   const showBookingTimeForm = hasListingState && !isClosed;
   const showClosedListingHelpText = listing.id && isClosed;
   const { formattedPrice, priceTitle } = priceData(price, intl);
@@ -102,6 +111,7 @@ const BookingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
+  console.log('props', props);
 
   return (
     <div className={classes}>
@@ -131,7 +141,49 @@ const BookingPanel = props => {
           </div>
         </div>
 
-        {showBookingTimeForm ? (
+        {showBookingDatesForm ? (
+          // <BookingDatesForm
+          //   className={css.bookingForm}
+          //   formId="BookingPanel"
+          //   submitButtonWrapperClassName={css.bookingDatesSubmitButtonWrapper}
+          //   unitType={unitType}
+          //   onSubmit={onSubmit}
+          //   price={price}
+          //   listingId={listing.id}
+          //   isOwnListing={isOwnListing}
+          //   timeSlots={monthlyTimeSlots}
+          //   onFetchTimeSlots={onFetchTimeSlots}
+          //   fetchTimeSlotsError={fetchTimeSlotsError}
+          //   onFetchTransactionLineItems={onFetchTransactionLineItems}
+          //   lineItems={lineItems}
+          //   fetchLineItemsInProgress={fetchLineItemsInProgress}
+          //   fetchLineItemsError={fetchLineItemsError}
+          //   publicData={publicData}
+          //   timeZone={timeZone}
+          // />
+          <div>
+            {/* <ManageAvailabilityCalendar
+          availability={{
+            calendar: page.availabilityCalendar,
+            onFetchAvailabilityExceptions,
+            onCreateAvailabilityException,
+            onDeleteAvailabilityException,
+            onFetchBookings,
+          }}
+          availabilityPlan={availabilityPlan}
+          listingId={listingId}
+        /> */}
+
+            <BookingCalendar
+              listingId={listing.id.uuid}
+              availability={monthlyTimeSlots}
+              onFetchTimeSlots={onFetchTimeSlots}
+              timeZone={timeZone}
+              availabilityPlan={availabilityPlan}
+            />
+          </div>
+        ) : null}
+        {/* {showBookingTimeForm ? (
           <BookingTimeForm
             publicData={publicData}
             className={css.bookingForm}
@@ -152,7 +204,7 @@ const BookingPanel = props => {
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
           />
-        ) : null}
+        ) : null} */}
       </ModalInMobile>
       <div className={css.openBookingForm}>
         <div className={css.priceContainer}>
@@ -191,6 +243,7 @@ BookingPanel.defaultProps = {
   monthlyTimeSlots: null,
   lineItems: null,
   fetchLineItemsError: null,
+  fetchTimeSlotsError: null,
 };
 
 BookingPanel.propTypes = {
@@ -211,6 +264,7 @@ BookingPanel.propTypes = {
   lineItems: array,
   fetchLineItemsInProgress: bool.isRequired,
   fetchLineItemsError: propTypes.error,
+  fetchTimeSlotsError: propTypes.error,
 
   // from withRouter
   history: shape({

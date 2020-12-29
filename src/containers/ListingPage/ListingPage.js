@@ -122,8 +122,6 @@ export class ListingPageComponent extends Component {
       confirmPaymentError: null,
     };
 
-    console.log('handling', initialValues);
-
     const saveToSessionStorage = !this.props.currentUser;
 
     const routes = routeConfiguration();
@@ -390,6 +388,8 @@ export class ListingPageComponent extends Component {
 
     const fishingStylesOptions = findOptionsForSelectFilter('fishingStyles', filterConfig);
     // const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
+
+    console.log('monthlyTimeSlots', monthlyTimeSlots);
 
     return (
       <Page

@@ -36,6 +36,9 @@ import {
   loadData,
   clearUpdatedTab,
   savePayoutDetails,
+  requestFetchAvailabilityExceptions,
+  requestFetchBookings,
+  requestCreateAvailabilityException,
 } from './EditListingPage.duck';
 
 import css from './EditListingPage.module.css';
@@ -63,7 +66,7 @@ export const EditListingPageComponent = props => {
     getAccountLinkInProgress,
     history,
     intl,
-    onAddAvailabilityException,
+    // onAddAvailabilityException,
     onDeleteAvailabilityException,
     onCreateListingDraft,
     onPublishListingDraft,
@@ -83,7 +86,12 @@ export const EditListingPageComponent = props => {
     stripeAccountFetched,
     stripeAccount,
     updateStripeAccountError,
+    onFetchAvailabilityExceptions,
+    onCreateAvailabilityException,
+    onFetchBookings,
   } = props;
+
+  console.log('page!,', page);
 
   const { id, type, returnURLType } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
@@ -210,7 +218,14 @@ export const EditListingPageComponent = props => {
           history={history}
           images={images}
           listing={currentListing}
-          onAddAvailabilityException={onAddAvailabilityException}
+          availability={{
+            calendar: page.availabilityCalendar,
+            onFetchAvailabilityExceptions,
+            onCreateAvailabilityException,
+            onDeleteAvailabilityException,
+            onFetchBookings,
+          }}
+          // onAddAvailabilityException={onAddAvailabilityException}
           onDeleteAvailabilityException={onDeleteAvailabilityException}
           onUpdateListing={onUpdateListing}
           onCreateListingDraft={onCreateListingDraft}
@@ -370,8 +385,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onAddAvailabilityException: params => dispatch(requestAddAvailabilityException(params)),
-  onDeleteAvailabilityException: params => dispatch(requestDeleteAvailabilityException(params)),
+  // onAddAvailabilityException: params => dispatch(requestAddAvailabilityException(params)),
+  // onDeleteAvailabilityException: params => dispatch(requestDeleteAvailabilityException(params)),
   onUpdateListing: (tab, values) => dispatch(requestUpdateListing(tab, values)),
   onCreateListingDraft: values => dispatch(requestCreateListingDraft(values)),
   onPublishListingDraft: listingId => dispatch(requestPublishListingDraft(listingId)),
@@ -385,6 +400,10 @@ const mapDispatchToProps = dispatch => ({
   onUpdateImageOrder: imageOrder => dispatch(updateImageOrder(imageOrder)),
   onRemoveListingImage: imageId => dispatch(removeListingImage(imageId)),
   onChange: () => dispatch(clearUpdatedTab()),
+  onFetchAvailabilityExceptions: params => dispatch(requestFetchAvailabilityExceptions(params)),
+  onCreateAvailabilityException: params => dispatch(requestCreateAvailabilityException(params)),
+  onDeleteAvailabilityException: params => dispatch(requestDeleteAvailabilityException(params)),
+  onFetchBookings: params => dispatch(requestFetchBookings(params)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

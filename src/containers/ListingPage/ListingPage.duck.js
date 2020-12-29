@@ -80,6 +80,8 @@ const listingPageReducer = (state = initialState, action = {}) => {
       return { ...state, fetchReviewsError: payload };
 
     case FETCH_TIME_SLOTS_REQUEST: {
+      console.log('fetching them!', payload, state.monthlyTimeSlots);
+
       const monthlyTimeSlots = {
         ...state.monthlyTimeSlots,
         [payload]: {
@@ -259,6 +261,8 @@ const timeSlotsRequest = params => (dispatch, getState, sdk) => {
 };
 
 export const fetchTimeSlots = (listingId, start, end, timeZone) => (dispatch, getState, sdk) => {
+  console.log('fetching this finally!', listingId, start, end, timeZone);
+
   const monthId = monthIdStringInTimeZone(start, timeZone);
 
   dispatch(fetchTimeSlotsRequest(monthId));

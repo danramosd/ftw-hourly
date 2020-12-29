@@ -195,6 +195,8 @@ export class TransactionPanelComponent extends Component {
       lineItems,
       fetchLineItemsInProgress,
       fetchLineItemsError,
+      timeSlots,
+      fetchTimeSlotsError,
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -451,6 +453,8 @@ export class TransactionPanelComponent extends Component {
                   authorDisplayName={authorDisplayName}
                   onSubmit={onSubmitBookingRequest}
                   onManageDisableScrolling={onManageDisableScrolling}
+                  timeSlots={timeSlots}
+                  fetchTimeSlotsError={fetchTimeSlotsError}
                   monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
                   onFetchTransactionLineItems={onFetchTransactionLineItems}

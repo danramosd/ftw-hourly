@@ -380,6 +380,8 @@ const mapStateToProps = state => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
+    timeSlots,
+    fetchTimeSlotsError,
   } = state.TransactionPage;
   const { currentUser } = state.user;
 
@@ -411,6 +413,8 @@ const mapStateToProps = state => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
+    timeSlots,
+    fetchTimeSlotsError,
   };
 };
 

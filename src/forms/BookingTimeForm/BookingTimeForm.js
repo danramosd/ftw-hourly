@@ -167,7 +167,7 @@ export class BookingTimeFormComponent extends Component {
             startDateInputProps,
             endDateInputProps,
           };
-          console.log('max people', maxPeople);
+          console.log('max people', monthlyTimeSlots);
 
           const optionsKey = [...Array(maxPeople + 1).keys()].slice(1);
 
