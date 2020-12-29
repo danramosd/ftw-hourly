@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { IconArrowHead, IconSpinner } from '../../components';
+import useWindowSize from '../../hooks/useWindowSize';
 import {
   DayPickerSingleDateController,
   isSameDay,
@@ -18,6 +19,7 @@ import classNames from 'classnames';
 import css from '../../forms/EditListingAvailabilityForm/ManageAvailabilityCalendar.module.css';
 import { confirmCardPaymentSuccess } from '../../ducks/stripe.duck';
 import get from 'lodash/get';
+import chalk from 'chalk';
 
 const HORIZONTAL_ORIENTATION = 'horizontal';
 const MAX_AVAILABILITY_EXCEPTIONS_RANGE = 365;
@@ -26,16 +28,13 @@ const TODAY_MOMENT = moment().startOf('day');
 const END_OF_RANGE_MOMENT = TODAY_MOMENT.clone()
   .add(MAX_AVAILABILITY_EXCEPTIONS_RANGE - 1, 'days')
   .startOf('day');
-const END_OF_BOOKING_RANGE_MOMENT = TODAY_MOMENT.clone()
-  .add(MAX_BOOKINGS_RANGE - 1, 'days')
-  .startOf('day');
 
 // Constants for calculating day width (aka table cell dimensions)
 const TABLE_BORDER = 2;
 const TABLE_COLUMNS = 7;
 const MIN_CONTENT_WIDTH = 272;
 const MIN_CELL_WIDTH = Math.floor(MIN_CONTENT_WIDTH / TABLE_COLUMNS); // 38
-const MAX_CONTENT_WIDTH_DESKTOP = 756;
+const MAX_CONTENT_WIDTH_DESKTOP = 350;
 const MAX_CELL_WIDTH_DESKTOP = Math.floor(MAX_CONTENT_WIDTH_DESKTOP / TABLE_COLUMNS); // 108
 const VIEWPORT_LARGE = 1024;
 
@@ -46,7 +45,7 @@ const dayWidth = (wrapperWidth, windowWith) => {
   if (windowWith >= VIEWPORT_LARGE) {
     // NOTE: viewportLarge has a layout with sidebar.
     // In that layout 30% is reserved for paddings and 282 px goes to sidebar and gutter.
-    const width = windowWith * 0.7 - 282;
+    const width = windowWith * 0.6 - 282;
     return width > MAX_CONTENT_WIDTH_DESKTOP
       ? MAX_CELL_WIDTH_DESKTOP
       : Math.floor((width - TABLE_BORDER) / TABLE_COLUMNS);
@@ -179,8 +178,6 @@ const BookingCalendar = props => {
   };
 
   const onDateChange = date => {
-    console.log('date(', date);
-
     setSelectedDate(date);
   };
   const onFocusChange = () => {};
@@ -190,11 +187,11 @@ const BookingCalendar = props => {
   const date = null;
   const width = get(dayPickerWrapper, 'current.clientWidth', 0);
   const hasWindow = typeof window !== 'undefined';
-  const windowWidth = hasWindow ? window.innerWidth : 0;
+  const windowWidth = hasWindow ? useWindowSize().width : 0;
   const daySize = dayWidth(width, windowWidth);
   const calendarGridWidth = daySize * TABLE_COLUMNS + TABLE_BORDER;
-  console.log('width', width, calendarGridWidth, dayPickerWrapper, dayPickerWrapper.current);
   const classes = classNames(css.root);
+
   return (
     <div className={classes} ref={dayPickerWrapper}>
       {width > 0 ? (
