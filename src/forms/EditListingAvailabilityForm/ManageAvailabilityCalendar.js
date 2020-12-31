@@ -346,6 +346,8 @@ class ManageAvailabilityCalendar extends Component {
         // Callback function after month has been updated.
         // react-dates component has next and previous months ready (but inivisible).
         // we try to populate those invisible months before user advances there.
+        console.log('current', this.state.currentMonth);
+
         this.fetchMonthData(monthFn(this.state.currentMonth));
 
         // If previous fetch for month data failed, try again.

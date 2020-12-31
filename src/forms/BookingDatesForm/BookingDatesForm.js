@@ -46,8 +46,6 @@ export class BookingDatesFormComponent extends Component {
 
   componentDidMount() {
     const { listingId, timeZone } = this.props;
-    console.log('zone!', timeZone);
-
     const start = new Date();
     const end = new Date();
     end.setMonth(end.getMonth() + 1);

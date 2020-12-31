@@ -573,7 +573,6 @@ export const requestFetchAvailabilityExceptions = fetchParams => (dispatch, getS
   const monthId = monthIdStringInUTC(start);
 
   dispatch(fetchAvailabilityExceptionsRequest({ ...fetchParams, monthId }));
-
   return sdk.availabilityExceptions
     .query({ listingId, start, end }, { expand: true })
     .then(response => {

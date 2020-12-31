@@ -140,11 +140,10 @@ const renderDayContents = (calendar, availabilityPlan) => date => {
     return null;
   }
 
-  console.log('currentMonth', calendar[currentMonth], currentMonth);
-
   const timeSlots = calendar[currentMonth].timeSlots || [];
-  const availableTimeSlots = timeSlots.map(timeSlot => moment(timeSlot.attributes.start).utc());
+  const availableTimeSlots = timeSlots.map(timeSlot => moment(timeSlot.attributes.start));
   const isAvailable = availableTimeSlots.find(slot => isSameDay(slot, date));
+
   const dayClasses = classNames(css.default, {
     [css.outsideRange]: isOutsideRange,
     [css.today]: isSameDay(date, TODAY_MOMENT),
@@ -178,14 +177,12 @@ const BookingCalendar = props => {
   const dayPickerWrapper = useRef(null);
   const dayPicker = useRef(null);
   useEffect(() => {
-    const start = new Date();
-    const end = new Date();
-    end.setMonth(end.getMonth() + 1);
-    fetchMonthlyAvailability(start, end);
+    const end = currentMonth.clone().add(1, 'month');
+    fetchMonthlyAvailability(currentMonth, end);
   }, []);
 
   const fetchMonthlyAvailability = (start, end) => {
-    onFetchTimeSlots(listingId, start, end, timeZone);
+    onFetchTimeSlots(listingId, start.toDate(), end.toDate(), timeZone);
   };
 
   const onDateChange = date => {
@@ -194,14 +191,25 @@ const BookingCalendar = props => {
   const onFocusChange = () => {};
 
   const onMonthClick = monthFn => {
-    const nextMonth = monthFn(currentMonth, timeZone);
+    const nextMonth = moment(monthFn(currentMonth));
+
     setCurrentMonth(nextMonth);
 
-    const start = new Date(nextMonth);
-    const end = new Date(nextMonthFn(nextMonth));
-    console.log('start', start, end);
+    const end = nextMonthFn(nextMonth);
+    // console.log('nextMonth', nextMonth, end);
 
-    fetchMonthlyAvailability(start, end);
+    // const startDate = nextMonth.toDate();
+    // const tzOffset = startDate.getTimezoneOffset();
+    // const queryStart = new Date(startDate);
+    // queryStart.setMinutes(queryStart.getMinutes() - tzOffset);
+
+    // const queryStart = moment(start).subtract(1, 'days');
+    // console.log('requ', start, end, queryStart);
+    // const queryStart = new Date(start.toDate())
+    // queryStart.setDate(queryStart.getDate() - 1);
+    // console.log('start', start,queryStart);
+
+    fetchMonthlyAvailability(nextMonth, end.add(1, 'days'));
   };
 
   const handleFormSubmit = () => {};
