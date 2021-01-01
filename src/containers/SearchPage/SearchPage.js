@@ -215,7 +215,7 @@ export class SearchPageComponent extends Component {
               <NamedLink name="AboutPage">click here</NamedLink>.
             </p> */}
             <p>
-              <h2>Get $25 off your first trip</h2>
+              <h2>Looking to book a fishing trip?</h2>
               <NamedLink name="SignupPage">Sign up</NamedLink> now and receive 25$ off your first
               trip.
             </p>
