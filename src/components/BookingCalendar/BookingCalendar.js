@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { IconArrowHead, IconSpinner } from '../../components';
+import { IconArrowHead, IconSpinner, Form, FieldDateInputComponent } from '../../components';
 import useWindowSize from '../../hooks/useWindowSize';
 import {
   DayPickerSingleDateController,
@@ -127,7 +127,7 @@ const dateModifiers = (availabilityPlan, exceptions, bookings, date) => {
   };
 };
 
-const renderDayContents = (calendar, availabilityPlan) => date => {
+const renderDayContents = (calendar, availabilityPlan, onDaySelected) => date => {
   // This component is for day/night based processes. If time-based process is used,
   // you might want to deal with local dates using monthIdString instead of monthIdStringInUTC.
   // console.log('day content', calendar, availabilityPlan, date);
@@ -151,7 +151,12 @@ const renderDayContents = (calendar, availabilityPlan) => date => {
   });
 
   return (
-    <div className={css.dayWrapper}>
+    <div
+      className={css.dayWrapper}
+      onClick={() => {
+        onDaySelected(date);
+      }}
+    >
       <span className={dayClasses}>
         <span className={css.dayNumber}>{date.format('D')}</span>
       </span>
@@ -185,34 +190,55 @@ const BookingCalendar = props => {
     onFetchTimeSlots(listingId, start.toDate(), end.toDate(), timeZone);
   };
 
-  const onDateChange = date => {
-    setSelectedDate(date);
-  };
   const onFocusChange = () => {};
 
   const onMonthClick = monthFn => {
     const nextMonth = moment(monthFn(currentMonth));
-
     setCurrentMonth(nextMonth);
-
     const end = nextMonthFn(nextMonth);
-    // console.log('nextMonth', nextMonth, end);
-
-    // const startDate = nextMonth.toDate();
-    // const tzOffset = startDate.getTimezoneOffset();
-    // const queryStart = new Date(startDate);
-    // queryStart.setMinutes(queryStart.getMinutes() - tzOffset);
-
-    // const queryStart = moment(start).subtract(1, 'days');
-    // console.log('requ', start, end, queryStart);
-    // const queryStart = new Date(start.toDate())
-    // queryStart.setDate(queryStart.getDate() - 1);
-    // console.log('start', start,queryStart);
-
     fetchMonthlyAvailability(nextMonth, end.add(1, 'days'));
   };
 
-  const handleFormSubmit = () => {};
+  // When the values of the form are updated we need to fetch
+  // lineItems from FTW backend for the EstimatedTransactionMaybe
+  // In case you add more fields to the form, make sure you add
+  // the values here to the bookingData object.
+  const handleOnChange = formValues => {
+    console.log('form values', formValues);
+
+    const { startDate, endDate } =
+      formValues.values && formValues.values.bookingDates ? formValues.values.bookingDates : {};
+    const listingId = props.listingId;
+    const isOwnListing = props.isOwnListing;
+
+    if (startDate && endDate && !props.fetchLineItemsInProgress) {
+      props.onFetchTransactionLineItems({
+        bookingData: { startDate, endDate },
+        listingId,
+        isOwnListing,
+      });
+    }
+  };
+
+  // In case start or end date for the booking is missing
+  // focus on that input, otherwise continue with the
+  // default handleSubmit function.
+  const handleFormSubmit = e => {
+    const { startDate, endDate } = e.bookingDates || {};
+    if (!startDate) {
+      e.preventDefault();
+      this.setState({ focusedInput: START_DATE });
+    } else if (!endDate) {
+      e.preventDefault();
+      this.setState({ focusedInput: END_DATE });
+    } else {
+      props.onSubmit(e);
+    }
+  };
+
+  const onDaySelected = date => {
+    setSelectedDate(date);
+  };
 
   const date = null;
   const width = get(dayPickerWrapper, 'current.clientWidth', 0);
@@ -224,7 +250,6 @@ const BookingCalendar = props => {
 
   return (
     <FinalForm
-      // {...rest}
       unitPrice={unitPrice}
       onSubmit={handleFormSubmit}
       render={fieldRenderProps => {
@@ -245,60 +270,96 @@ const BookingCalendar = props => {
           fetchLineItemsError,
         } = fieldRenderProps;
         const { startDate, endDate } = values && values.bookingDates ? values.bookingDates : {};
-        const bookingStartDate =
-          values.bookingStartDate && values.bookingStartDate.date
-            ? values.bookingStartDate.date
+        // const bookingStartDate =
+        //   values.bookingStartDate && values.bookingStartDate.date
+        //     ? values.bookingStartDate.date
+        //     : null;
+
+        // This is the place to collect breakdown estimation data.
+        // Note: lineItems are calculated and fetched from FTW backend
+        // so we need to pass only booking data that is needed otherwise
+        // If you have added new fields to the form that will affect to pricing,
+        // you need to add the values to handleOnChange function
+        const timeSlotsError = fetchTimeSlotsError ? (
+          <p className={css.sideBarError}>
+            <FormattedMessage id="BookingDatesForm.timeSlotsError" />
+          </p>
+        ) : null;
+        const bookingData =
+          startDate && endDate
+            ? {
+                unitType,
+                startDate,
+                endDate,
+              }
             : null;
 
-        return (
-          <div className={classes} ref={dayPickerWrapper}>
-            <FieldSelect id="people" name="people" className={css.field}>
-              <option disabled value="">
-                Additional People
-              </option>
-
-              <option value={0}>0</option>
-              {optionsKey.map(key => (
-                <option key={key} value={key}>
-                  {key}
-                </option>
-              ))}
-              {/* {countryCodes.map(country => {
-            return (
-              <option key={country.code} value={country.code}>
-                {country.name}
-              </option>
-            );
-          })} */}
-            </FieldSelect>
-            {width > 0 ? (
-              <div style={{ width: `${calendarGridWidth}px` }}>
-                <DayPickerSingleDateController
-                  ref={dayPicker}
-                  numberOfMonths={1}
-                  navPrev={<IconArrowHead direction="left" />}
-                  navNext={<IconArrowHead direction="right" />}
-                  weekDayFormat="ddd"
-                  daySize={daySize}
-                  renderDayContents={renderDayContents(availability, availabilityPlan)}
-                  focused={true}
-                  date={date}
-                  onDateChange={onDateChange}
-                  onFocusChange={onFocusChange}
-                  onPrevMonthClick={() => onMonthClick(prevMonthFn)}
-                  onNextMonthClick={() => onMonthClick(nextMonthFn)}
-                  hideKeyboardShortcutsPanel
-                  horizontalMonthPadding={9}
-                  renderMonthElement={({ month }) => (
-                    <div className={css.monthElement}>
-                      <span className={css.monthString}>{month.format('MMMM YYYY')}</span>
-                      {/* {!isMonthDataFetched ? <IconSpinner rootClassName={css.monthInProgress} /> : null} */}
-                    </div>
-                  )}
-                />
-              </div>
-            ) : null}
+        const showEstimatedBreakdown =
+          bookingData && lineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
+        const bookingInfoMaybe = showEstimatedBreakdown ? (
+          <div className={css.priceBreakdownContainer}>
+            <h3 className={css.priceBreakdownTitle}>
+              <FormattedMessage id="BookingDatesForm.priceBreakdownTitle" />
+            </h3>
+            <EstimatedBreakdownMaybe bookingData={bookingData} lineItems={lineItems} />
           </div>
+        ) : null;
+
+        return (
+          <Form onSubmit={handleSubmit} className={classes}>
+            {/* {timeSlotsError} */}
+            <FormSpy subscription={{ values: true }} onChange={handleOnChange} />
+            <div className={classes} ref={dayPickerWrapper}>
+              <FieldSelect id="people" name="people" className={css.field}>
+                <option disabled value="">
+                  Additional People
+                </option>
+
+                <option value={0}>0</option>
+                {optionsKey.map(key => (
+                  <option key={key} value={key}>
+                    {key}
+                  </option>
+                ))}
+              </FieldSelect>
+
+              {width > 0 ? (
+                <div style={{ width: `${calendarGridWidth}px` }}>
+                  <DayPickerSingleDateController
+                    ref={dayPicker}
+                    onDayClick={date => {
+                      console.log('date changed', date);
+                    }}
+                    numberOfMonths={1}
+                    navPrev={<IconArrowHead direction="left" />}
+                    navNext={<IconArrowHead direction="right" />}
+                    weekDayFormat="ddd"
+                    daySize={daySize}
+                    renderDayContents={renderDayContents(
+                      availability,
+                      availabilityPlan,
+                      onDaySelected
+                    )}
+                    focused={true}
+                    date={date}
+                    onFocusChange={onFocusChange}
+                    onPrevMonthClick={() => onMonthClick(prevMonthFn)}
+                    onNextMonthClick={() => onMonthClick(nextMonthFn)}
+                    hideKeyboardShortcutsPanel
+                    horizontalMonthPadding={9}
+                    name="bookingDates"
+                    renderMonthElement={({ month }) => (
+                      <div className={css.monthElement}>
+                        <span className={css.monthString}>{month.format('MMMM YYYY')}</span>
+                        {/* {!isMonthDataFetched ? <IconSpinner rootClassName={css.monthInProgress} /> : null} */}
+                      </div>
+                    )}
+                  />
+                </div>
+              ) : null}
+              {bookingInfoMaybe}
+            </div>
+          </Form>
         );
       }}
     />

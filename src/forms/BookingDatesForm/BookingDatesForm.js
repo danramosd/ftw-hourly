@@ -276,20 +276,8 @@ export class BookingDatesFormComponent extends Component {
             );
           })} */}
               </FieldSelect>
-              <SingleDatePicker
-                date={this.state.date}
-                onDateChange={this.handleDateChange}
-                onFocusChange={({ focused }) => this.setState({ dateFocused: focused })}
-                focused={this.state.dateFocused}
-                id="requested_booking_date"
-                disabled={fetchLineItemsInProgress}
-                className={css.bookingDates}
-                name="bookingDates"
-                isOutsideRange={day =>
-                  this.isOutsideRange(day, bookingStartDate, selectedTimeSlot(timeSlots), timezone)
-                }
-              />
-              {/* <FieldDateRangeInput
+
+              <FieldDateRangeInput
                 className={css.bookingDates}
                 name="bookingDates"
                 unitType={unitType}
@@ -309,7 +297,7 @@ export class BookingDatesFormComponent extends Component {
                   bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
                 )}
                 disabled={fetchLineItemsInProgress}
-              /> */}
+              />
               {bookingInfoMaybe}
               {loadingSpinnerMaybe}
               {bookingInfoErrorMaybe}

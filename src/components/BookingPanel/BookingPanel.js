@@ -161,29 +161,20 @@ const BookingPanel = props => {
           //   publicData={publicData}
           //   timeZone={timeZone}
           // />
-          <div>
-            {/* <ManageAvailabilityCalendar
-          availability={{
-            calendar: page.availabilityCalendar,
-            onFetchAvailabilityExceptions,
-            onCreateAvailabilityException,
-            onDeleteAvailabilityException,
-            onFetchBookings,
-          }}
-          availabilityPlan={availabilityPlan}
-          listingId={listingId}
-        /> */}
 
-            <BookingCalendar
-              listingId={listing.id.uuid}
-              availability={monthlyTimeSlots}
-              onFetchTimeSlots={onFetchTimeSlots}
-              timeZone={timeZone}
-              availabilityPlan={availabilityPlan}
-              publicData={publicData}
-              price={price}
-            />
-          </div>
+          <BookingCalendar
+            listingId={listing.id.uuid}
+            availability={monthlyTimeSlots}
+            onFetchTimeSlots={onFetchTimeSlots}
+            timeZone={timeZone}
+            availabilityPlan={availabilityPlan}
+            publicData={publicData}
+            price={price}
+            onSubmit={onSubmit}
+            fetchLineItemsInProgress={fetchLineItemsInProgress}
+            fetchLineItemsError={fetchLineItemsError}
+            onFetchTransactionLineItems={onFetchTransactionLineItems}
+          />
         ) : null}
         {/* {showBookingTimeForm ? (
           <BookingTimeForm
