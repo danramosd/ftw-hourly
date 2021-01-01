@@ -16,7 +16,7 @@ import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { SearchMap, ModalInMobile, Page } from '../../components';
 import { TopbarContainer } from '../../containers';
-
+import { NamedLink } from '../../components';
 import { searchListings, searchMapListings, setActiveListing } from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
@@ -174,7 +174,7 @@ export class SearchPageComponent extends Component {
           currentSearchParams={urlQueryParams}
         />
         <div className={css.container}>
-          <MainPanel
+          {/* <MainPanel
             urlQueryParams={validQueryParams}
             listings={listings}
             searchInProgress={searchInProgress}
@@ -189,7 +189,41 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
-          />
+          /> */}
+          <div className={css.notReadyYet}>
+            <p>
+              <h2>Our comminity first.</h2>
+              LocalFishingGuide's top priority is to offer a high quality user experience for our
+              guides and customers interested in booking fishing trips. In order to provide such an
+              experience, it’s crucial we have a healthy level of supply and demand. To achieve
+              this, we need a specific number of guides to join our platform before we can open
+              online booking to the public.
+            </p>
+            <p>
+              Help us get started by listing your guiding business 100% FREE of charge.
+              <br />
+              <NamedLink name="SignupPage">
+                <button className={css.button}>Sign Up</button>
+              </NamedLink>
+              <br />
+              <em className={css.small}>
+                We’ll notify you when online booking becomes available in your region.
+              </em>
+            </p>
+            {/* <p>
+              For more info about LocalFishingGuide{' '}
+              <NamedLink name="AboutPage">click here</NamedLink>.
+            </p> */}
+            <p>
+              <h2>Get $25 off your first trip</h2>
+              <NamedLink name="SignupPage">Sign up</NamedLink> now and receive 25$ off your first
+              trip.
+            </p>
+            {/* <p>
+              Looking for more exposure while making money? We’re hiring for local fishing reports -
+              Click here
+            </p> */}
+          </div>
           <ModalInMobile
             className={css.mapPanel}
             id="SearchPage.map"
@@ -207,7 +241,8 @@ export class SearchPageComponent extends Component {
                   center={origin}
                   isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
                   location={location}
-                  listings={mapListings || []}
+                  // listings={mapListings || []}
+                  listings={[]}
                   onMapMoveEnd={this.onMapMoveEnd}
                   onCloseAsModal={() => {
                     onManageDisableScrolling('SearchPage.map', false);
