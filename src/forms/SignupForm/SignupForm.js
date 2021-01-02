@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldCheckbox } from '../../components';
 
 import css from './SignupForm.module.css';
 
@@ -172,6 +172,14 @@ const SignupFormComponent = props => (
               label={passwordLabel}
               placeholder={passwordPlaceholder}
               validate={passwordValidators}
+            />
+
+            <br />
+            <FieldCheckbox
+              name="isGuide"
+              value="true"
+              id="privateDate.isGuide"
+              label="I'm a fishing guide"
             />
           </div>
 

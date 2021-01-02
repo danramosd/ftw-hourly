@@ -171,8 +171,16 @@ export class AuthenticationPageComponent extends Component {
     ];
 
     const handleSubmitSignup = values => {
-      const { fname, lname, ...rest } = values;
-      const params = { firstName: fname.trim(), lastName: lname.trim(), ...rest };
+      const { fname, lname, isGuide, ...rest } = values;
+      const guide = isGuide instanceof Array && isGuide[0] === 'true' ? true : false;
+      const params = {
+        firstName: fname.trim(),
+        lastName: lname.trim(),
+        ...rest,
+        privateData: {
+          isGuide: guide,
+        },
+      };
       submitSignup(params);
     };
 

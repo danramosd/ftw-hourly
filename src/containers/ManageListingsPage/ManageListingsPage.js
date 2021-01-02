@@ -78,9 +78,9 @@ export class ManageListingsPageComponent extends Component {
 
     const noResults =
       listingsAreLoaded && pagination.totalItems === 0 ? (
-        <h1 className={css.title}>
+        <h2 className={css.title}>
           <FormattedMessage id="ManageListingsPage.noResults" />
-        </h1>
+        </h2>
       ) : null;
 
     const heading =

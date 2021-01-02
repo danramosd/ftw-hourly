@@ -38,6 +38,8 @@ const TopbarDesktop = props => {
   } = props;
   const [mounted, setMounted] = useState(false);
 
+  console.log('currentUserListing', props);
+
   useEffect(() => {
     setMounted(true);
   }, []);

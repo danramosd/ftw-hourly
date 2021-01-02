@@ -468,7 +468,7 @@
   "ManageListingCard.viewListing": "View guide profile",
   "ManageListingsPage.accountSettings": "Account settings",
   "ManageListingsPage.loadingOwnListings": "Loading guide profiles",
-  "ManageListingsPage.noResults": "You don't have a guide profile.",
+  "ManageListingsPage.noResults": "You haven't created any trips yet.  To create a trip, click the 'Create Trip' link above.",
   "ManageListingsPage.profileSettings": "Company profile",
   "ManageListingsPage.queryError": "Query failed. Please try again.",
   "ManageListingsPage.title": "Manage your guide profile",

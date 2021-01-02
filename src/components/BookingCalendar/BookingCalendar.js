@@ -8,6 +8,7 @@ import {
   isInclusivelyAfterDay,
 } from 'react-dates';
 import { monthIdString, monthIdStringInUTC, stringifyDateToISO8601 } from '../../util/dates';
+import { DAYS_OF_WEEK } from '../../util/types';
 import { Form as FinalForm, FormSpy } from 'react-final-form';
 import FieldSelect from '../../components/FieldSelect/FieldSelect';
 import {
