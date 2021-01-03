@@ -354,6 +354,7 @@ export const fetchCurrentUser = (params = null) => (dispatch, getState, sdk) => 
         throw new Error('Expected a resource in the sdk.currentUser.show response');
       }
       const currentUser = entities[0];
+      console.log('current user', currentUser);
 
       // Save stripeAccount to store.stripe.stripeAccount if it exists
       if (currentUser.stripeAccount) {
