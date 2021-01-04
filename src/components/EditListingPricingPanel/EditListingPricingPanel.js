@@ -57,10 +57,12 @@ const EditListingPricingPanel = props => {
       className={css.form}
       initialValues={{
         price,
-        pricePerAdditionalPerson: new Money(
-          pricePerAdditionalPerson.amount,
+        pricePerAdditionalPerson:
+          pricePerAdditionalPerson &&
+          pricePerAdditionalPerson.amount &&
           pricePerAdditionalPerson.currency
-        ),
+            ? new Money(pricePerAdditionalPerson.amount, pricePerAdditionalPerson.currency)
+            : null,
         maxPeople,
       }}
       onSubmit={values => {

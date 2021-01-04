@@ -133,7 +133,7 @@ export const EditListingPricingFormComponent = props => {
                 id="pricePerAdditionalPerson"
                 name="pricePerAdditionalPerson"
                 className={css.priceInput}
-                label={'Enter the cost for each additional person'}
+                label={'Cost for each additional person'}
                 placeholder={pricePlaceholderMessage}
                 currencyConfig={config.currencyConfig}
                 validate={priceValidators}

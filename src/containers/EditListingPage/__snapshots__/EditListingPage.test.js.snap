@@ -18,6 +18,15 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
     selectedPageName="NewListingPage"
   />
   <withViewport(injectIntl(EditListingWizard))
+    availability={
+      Object {
+        "calendar": undefined,
+        "onCreateAvailabilityException": undefined,
+        "onDeleteAvailabilityException": [Function],
+        "onFetchAvailabilityExceptions": undefined,
+        "onFetchBookings": undefined,
+      }
+    }
     className="wizard"
     currentUser={null}
     errors={
@@ -53,7 +62,6 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
       }
     }
     newListingPublished={false}
-    onAddAvailabilityException={[Function]}
     onChange={[Function]}
     onCreateListingDraft={[Function]}
     onDeleteAvailabilityException={[Function]}

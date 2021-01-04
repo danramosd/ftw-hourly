@@ -22,42 +22,10 @@ exports[`BookingBreakdown customer transaction data matches snapshot 1`] = `
             </span>
           </div>
           <div
-            className="dayInfo"
-          >
-            <span>
-              Fri 12:00 PM
-            </span>
-          </div>
-          <div
             className="itemLabel"
           >
             <span>
               Apr 14
-            </span>
-          </div>
-        </div>
-        <div
-          className="bookingPeriodSectionRigth"
-        >
-          <div
-            className="dayLabel"
-          >
-            <span>
-              BookingBreakdown.bookingEnd
-            </span>
-          </div>
-          <div
-            className="dayInfo"
-          >
-            <span>
-              Sun 12:00 PM
-            </span>
-          </div>
-          <div
-            className="itemLabel"
-          >
-            <span>
-              Apr 16
             </span>
           </div>
         </div>
@@ -145,42 +113,10 @@ exports[`BookingBreakdown pretransaction data matches snapshot 1`] = `
             </span>
           </div>
           <div
-            className="dayInfo"
-          >
-            <span>
-              Fri 12:00 PM
-            </span>
-          </div>
-          <div
             className="itemLabel"
           >
             <span>
               Apr 14
-            </span>
-          </div>
-        </div>
-        <div
-          className="bookingPeriodSectionRigth"
-        >
-          <div
-            className="dayLabel"
-          >
-            <span>
-              BookingBreakdown.bookingEnd
-            </span>
-          </div>
-          <div
-            className="dayInfo"
-          >
-            <span>
-              Sun 12:00 PM
-            </span>
-          </div>
-          <div
-            className="itemLabel"
-          >
-            <span>
-              Apr 16
             </span>
           </div>
         </div>
@@ -268,42 +204,10 @@ exports[`BookingBreakdown provider canceled transaction data matches snapshot 1`
             </span>
           </div>
           <div
-            className="dayInfo"
-          >
-            <span>
-              Fri 12:00 PM
-            </span>
-          </div>
-          <div
             className="itemLabel"
           >
             <span>
               Apr 14
-            </span>
-          </div>
-        </div>
-        <div
-          className="bookingPeriodSectionRigth"
-        >
-          <div
-            className="dayLabel"
-          >
-            <span>
-              BookingBreakdown.bookingEnd
-            </span>
-          </div>
-          <div
-            className="dayInfo"
-          >
-            <span>
-              Sun 12:00 PM
-            </span>
-          </div>
-          <div
-            className="itemLabel"
-          >
-            <span>
-              Apr 16
             </span>
           </div>
         </div>
@@ -467,42 +371,10 @@ exports[`BookingBreakdown provider transaction data matches snapshot 1`] = `
             </span>
           </div>
           <div
-            className="dayInfo"
-          >
-            <span>
-              Fri 12:00 PM
-            </span>
-          </div>
-          <div
             className="itemLabel"
           >
             <span>
               Apr 14
-            </span>
-          </div>
-        </div>
-        <div
-          className="bookingPeriodSectionRigth"
-        >
-          <div
-            className="dayLabel"
-          >
-            <span>
-              BookingBreakdown.bookingEnd
-            </span>
-          </div>
-          <div
-            className="dayInfo"
-          >
-            <span>
-              Sun 12:00 PM
-            </span>
-          </div>
-          <div
-            className="itemLabel"
-          >
-            <span>
-              Apr 16
             </span>
           </div>
         </div>

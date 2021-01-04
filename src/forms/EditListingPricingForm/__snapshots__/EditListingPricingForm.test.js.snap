@@ -7,26 +7,104 @@ exports[`EditListingPricingForm matches snapshot 1`] = `
   method="post"
   onSubmit={[Function]}
 >
-  <div
-    className="priceInput"
+  <section
+    className="section"
   >
-    <label
-      htmlFor="price"
+    <header
+      className="sectionHeader"
     >
-      EditListingPricingForm.pricePerUnit
-    </label>
-    <input
-      autoFocus={true}
-      className="input"
-      id="price"
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      placeholder="EditListingPricingForm.priceInputPlaceholder"
-      type="text"
-      value=""
-    />
-  </div>
+      <h2
+        className="sectionTitle"
+      >
+        Trip rate
+      </h2>
+    </header>
+    <div
+      className="priceInput"
+    >
+      <label
+        htmlFor="price"
+      >
+        EditListingPricingForm.pricePerUnit
+      </label>
+      <input
+        autoFocus={true}
+        className="input"
+        id="price"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        placeholder="EditListingPricingForm.priceInputPlaceholder"
+        type="text"
+        value=""
+      />
+    </div>
+  </section>
+  <section
+    className="section"
+  >
+    <header
+      className="sectionHeader"
+    >
+      <h2
+        className="sectionTitle"
+      >
+        Max amount of people
+      </h2>
+    </header>
+    <div
+      className="root"
+    >
+      <label
+        htmlFor="maxPeople"
+      >
+        Total number of people allowed per trip
+      </label>
+      <input
+        className="input"
+        id="maxPeople"
+        name="maxPeople"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        type="number"
+        value=""
+      />
+    </div>
+  </section>
+  <section
+    className="section"
+  >
+    <header
+      className="sectionHeader"
+    >
+      <h2
+        className="sectionTitle"
+      >
+        Cost per person
+      </h2>
+    </header>
+    <div
+      className="priceInput"
+    >
+      <label
+        htmlFor="pricePerAdditionalPerson"
+      >
+        Enter the cost for each additional person
+      </label>
+      <input
+        className="input"
+        id="pricePerAdditionalPerson"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        placeholder="EditListingPricingForm.priceInputPlaceholder"
+        type="text"
+        value=""
+      />
+    </div>
+  </section>
+  <br />
   <button
     className="root submitButton"
     disabled={true}

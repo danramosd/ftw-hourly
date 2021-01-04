@@ -99,9 +99,9 @@ export class ProfileSettingsPageComponent extends Component {
           <LayoutWrapperMain>
             <div className={css.content}>
               <div className={css.headingContainer}>
-                <h1 className={css.heading}>
+                <h2 className={css.heading}>
                   <FormattedMessage id="ProfileSettingsPage.heading" />
-                </h1>
+                </h2>
                 {user.id ? (
                   <NamedLink
                     className={css.profileLink}

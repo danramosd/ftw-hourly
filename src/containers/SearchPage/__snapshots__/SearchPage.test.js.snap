@@ -25,191 +25,46 @@ exports[`SearchPageComponent matches snapshot 1`] = `
   <div
     className="container"
   >
-    <MainPanel
-      className={null}
-      filterConfig={
-        Array [
-          Object {
-            "config": Object {
-              "options": Array [
-                Object {
-                  "key": "0",
-                  "label": "Any length",
-                },
-                Object {
-                  "key": "60",
-                  "label": "1 hour",
-                  "shortLabel": "1h",
-                },
-                Object {
-                  "key": "120",
-                  "label": "2 hours",
-                  "shortLabel": "2h",
-                },
-              ],
-              "searchTimeZone": "Etc/UTC",
-            },
-            "group": "primary",
-            "id": "dates-length",
-            "label": "Dates",
-            "queryParamNames": Array [
-              "dates",
-              "minDuration",
-            ],
-            "type": "BookingDateRangeLengthFilter",
-          },
-          Object {
-            "config": Object {
-              "max": 1000,
-              "min": 0,
-              "step": 5,
-            },
-            "group": "primary",
-            "id": "price",
-            "label": "Price",
-            "queryParamNames": Array [
-              "price",
-            ],
-            "type": "PriceFilter",
-          },
-          Object {
-            "config": Object {},
-            "group": "primary",
-            "id": "keyword",
-            "label": "Keyword",
-            "queryParamNames": Array [
-              "keywords",
-            ],
-            "type": "KeywordFilter",
-          },
-          Object {
-            "config": Object {
-              "options": Array [
-                Object {
-                  "key": "ashtanga",
-                  "label": "Ashtanga",
-                },
-                Object {
-                  "key": "hatha",
-                  "label": "Hatha",
-                },
-                Object {
-                  "key": "kundalini",
-                  "label": "Kundalini",
-                },
-                Object {
-                  "key": "restorative",
-                  "label": "Restorative",
-                },
-                Object {
-                  "key": "vinyasa",
-                  "label": "Vinyasa",
-                },
-                Object {
-                  "key": "yin",
-                  "label": "Yin",
-                },
-              ],
-              "searchMode": "has_all",
-            },
-            "group": "secondary",
-            "id": "fishingStyles",
-            "label": "Yoga styles",
-            "queryParamNames": Array [
-              "pub_fishingStyles",
-            ],
-            "type": "SelectMultipleFilter",
-          },
-          Object {
-            "config": Object {
-              "options": Array [
-                Object {
-                  "hideFromFilters": true,
-                  "hideFromListingInfo": true,
-                  "key": "none",
-                  "label": "None",
-                },
-                Object {
-                  "key": "200h",
-                  "label": "Registered fishing guide 200h",
-                },
-                Object {
-                  "key": "500h",
-                  "label": "Registered fishing guide 500h",
-                },
-              ],
-            },
-            "group": "secondary",
-            "id": "certificate",
-            "label": "Certificate",
-            "queryParamNames": Array [
-              "pub_certificate",
-            ],
-            "type": "SelectSingleFilter",
-          },
-        ]
-      }
-      history={
-        Object {
-          "push": [Function],
-        }
-      }
-      listings={Array []}
-      onActivateListing={[Function]}
-      onCloseModal={[Function]}
-      onManageDisableScrolling={[Function]}
-      onMapIconClick={[Function]}
-      onOpenModal={[Function]}
-      pagination={
-        Object {
-          "page": 1,
-          "perPage": 12,
-          "totalItems": 22,
-          "totalPages": 2,
-        }
-      }
-      resultsCount={0}
-      rootClassName={null}
-      searchInProgress={false}
-      searchListingsError={null}
-      searchParamsAreInSync={true}
-      searchParamsForPagination={Object {}}
-      showAsModalMaxWidth={768}
-      sortConfig={
-        Object {
-          "active": true,
-          "conflictingFilters": Array [
-            "keyword",
-          ],
-          "options": Array [
-            Object {
-              "key": "createdAt",
-              "label": "Newest",
-            },
-            Object {
-              "key": "-createdAt",
-              "label": "Oldest",
-            },
-            Object {
-              "key": "-price",
-              "label": "Lowest price",
-            },
-            Object {
-              "key": "price",
-              "label": "Highest price",
-            },
-            Object {
-              "key": "relevance",
-              "label": "Relevance",
-              "longLabel": "Relevance (Keyword search)",
-            },
-          ],
-          "queryParamName": "sort",
-          "relevanceKey": "relevance",
-        }
-      }
-      urlQueryParams={Object {}}
-    />
+    <div
+      className="notReadyYet"
+    >
+      <p>
+        <h2>
+          Our comminity first.
+        </h2>
+        LocalFishingGuide's top priority is to offer a high quality user experience for our guides and customers interested in booking fishing trips. In order to provide such an experience, it’s crucial we have a healthy level of supply and demand. To achieve this, we need a specific number of guides to join our platform before we can open online booking to the public.
+      </p>
+      <p>
+        Help us get started by listing your guiding business 100% FREE of charge.
+        <br />
+        <NamedLink
+          name="SignupPage"
+        >
+          <button
+            className="button"
+          >
+            Sign Up
+          </button>
+        </NamedLink>
+        <br />
+        <em
+          className="small"
+        >
+          We’ll notify you when online booking becomes available in your region.
+        </em>
+      </p>
+      <p>
+        <h2>
+          Looking to book a fishing trip?
+        </h2>
+        <NamedLink
+          name="SignupPage"
+        >
+          Sign up
+        </NamedLink>
+         now and receive 25$ off your first trip.
+      </p>
+    </div>
     <withViewport(ModalInMobileComponent)
       className="mapPanel"
       id="SearchPage.map"

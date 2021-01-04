@@ -194,13 +194,14 @@ export class SearchPageComponent extends Component {
             <p>
               <h2>Our comminity first.</h2>
               LocalFishingGuide's top priority is to offer a high quality user experience for our
-              guides and customers interested in booking fishing trips. In order to provide such an
-              experience, it’s crucial we have a healthy level of supply and demand. To achieve
-              this, we need a specific number of guides to join our platform before we can open
-              online booking to the public.
+              guides and customers interested in booking fishing trips. In order to provide this
+              kind of an experience, it’s crucial we have a healthy level of supply and demand. To
+              achieve this, we're focusing on growing our partnerships with local guides before we
+              open online booking to the public. With your help we can launch online bookings no
+              later than February 1, 2021.
             </p>
             <p>
-              Help us get started by listing your guiding business 100% FREE of charge.
+              Grow your business today by creating your company profile 100% FREE of charge.
               <br />
               <NamedLink name="SignupPage">
                 <button className={css.button}>Sign Up</button>

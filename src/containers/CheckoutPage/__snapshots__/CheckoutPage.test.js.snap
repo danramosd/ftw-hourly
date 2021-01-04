@@ -17,11 +17,6 @@ exports[`CheckoutPage matches snapshot 1`] = `
         format="mobile"
         title="CheckoutPage.goToLandingPage"
       />
-      <Logo
-        alt="CheckoutPage.goToLandingPage"
-        className="logoDesktop"
-        format="desktop"
-      />
     </NamedLink>
   </div>
   <div

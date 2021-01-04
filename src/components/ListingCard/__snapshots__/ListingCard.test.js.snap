@@ -45,14 +45,6 @@ exports[`ListingCard matches snapshot 1`] = `
       >
         55
       </div>
-      <div
-        className="perUnit"
-      >
-        <FormattedMessage
-          id="ListingCard.perUnit"
-          values={Object {}}
-        />
-      </div>
     </div>
     <div
       className="mainInfo"
@@ -64,9 +56,6 @@ exports[`ListingCard matches snapshot 1`] = `
          
         title
       </div>
-      <div
-        className="certificateInfo"
-      />
     </div>
   </div>
 </NamedLink>
