@@ -256,7 +256,7 @@
   "EditListingPage.loadingListingData": "Loading listing data…",
   "EditListingPage.titleCreateListing": "Create a listing",
   "EditListingPage.titleEditListing": "Edit listing",
-  "EditListingPhotosForm.addImagesTip": "Tip: Choose the top 1-3 photos that show the customer what they can expect.",
+  "EditListingPhotosForm.addImagesTip": "Tip: Choose the top 1-3 photos that show the customer what they can expect from this trip.",
   "EditListingPhotosForm.bankAccountNumberRequired": "You need to add a bank account number.",
   "EditListingPhotosForm.chooseImage": "+ Choose an image…",
   "EditListingPhotosForm.imageRequired": "You need to add at least one image.",

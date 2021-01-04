@@ -140,61 +140,7 @@ export const EditListingPricingFormComponent = props => {
               />
             </section>
 
-            {/* <table>
-              <thead>
-                <tr>
-                  <th>Hours</th>
-                  <th>People</th>
-                  <th>Price</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {pricing.map((price, index) => {
-                  return (
-                    <tr key={`${price.people}-${price.hours}`}>
-                      <td>
-                        <FieldTextInput
-                          type="number"
-                          name={`pricing[${index}].hours`}
-                          id="hours"
-                          label="Hours"
-                          validate={required}
-                        />
-                      </td>
-                      <td>
-                        <FieldTextInput
-                          type="number"
-                          name={`pricing[${index}].people`}
-                          id="people"
-                          label="People"
-                          validate={required}
-                        />
-                      </td>
-                      <td>
-                        <FieldCurrencyInput
-                          defaultValue={'2323223'}
-                          name={`pricing[${index}].price`}
-                          className={css.priceInput}
-                          placeholder={pricePlaceholderMessage}
-                          currencyConfig={config.currencyConfig}
-                          validate={priceValidators}
-                        />
-                      </td>
-                      <td>
-                        <button onClick={removePricingRow(index)}>-</button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-              <tfoot>
-                <tr colspan="4">
-                  <button onClick={addPricingRow}>+</button>
-                </tr>
-              </tfoot>
-            </table> */}
-
+            <br />
             <Button
               className={css.submitButton}
               type="submit"

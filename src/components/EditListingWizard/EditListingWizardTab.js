@@ -130,7 +130,8 @@ const EditListingWizardTab = props => {
 
       return onUpsertListingDraft(tab, upsertValues)
         .then(r => {
-          if (tab !== AVAILABILITY && tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
+          // if (tab !== AVAILABILITY && tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
+          if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
             // Create listing flow: smooth scrolling polyfill to scroll to correct tab
             handleCreateFlowTabScrolling(false);
 
@@ -148,8 +149,6 @@ const EditListingWizardTab = props => {
           // Error is logged in EditListingPage.duck file.
         });
     } else {
-      console.log('going to update this', updateValuesWithImages);
-
       return onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
     }
   };
