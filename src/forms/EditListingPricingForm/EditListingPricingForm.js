@@ -16,24 +16,6 @@ import css from './EditListingPricingForm.module.css';
 const { Money } = sdkTypes;
 
 export const EditListingPricingFormComponent = props => {
-  const [pricing, setPricingRow] = useState([]);
-  // console.log('pricing props', props.initialValues.pricing, pricing);
-
-  useEffect(() => {
-    const inheritedPricing = props.initialValues.pricing;
-    setPricingRow(inheritedPricing);
-  }, []);
-
-  const addPricingRow = () => {
-    const row = { people: 1, hours: 1, price: 100 };
-    setPricingRow([...pricing, row]);
-  };
-
-  const removePricingRow = index => () => {
-    const newPricing = pricing.filter((_, counter) => index !== counter);
-    setPricingRow(newPricing);
-  };
-
   return (
     <FinalForm
       {...props}
@@ -137,7 +119,7 @@ export const EditListingPricingFormComponent = props => {
                 type="number"
                 name={`maxPeople`}
                 id="maxPeople"
-                label="Total number of people per trip"
+                label="Total number of people allowed per trip"
                 validate={required}
               />
             </section>
@@ -151,7 +133,6 @@ export const EditListingPricingFormComponent = props => {
                 id="pricePerAdditionalPerson"
                 name="pricePerAdditionalPerson"
                 className={css.priceInput}
-                autoFocus
                 label={'Enter the cost for each additional person'}
                 placeholder={pricePlaceholderMessage}
                 currencyConfig={config.currencyConfig}

@@ -30,17 +30,10 @@ const EditListingPricingPanel = props => {
     errors,
   } = props;
 
-  console.log('onAddAvailabilityException', onAddAvailabilityException);
-
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { price, publicData } = currentListing.attributes;
   const { maxPeople, pricePerAdditionalPerson } = publicData;
-  // const pricing = get(publicData, 'pricing', []);
-
-  // if (!pricing.length) {
-  //   pricing.push({ people: 1, hours: 4, price: 3000 });
-  // }
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -62,7 +55,14 @@ const EditListingPricingPanel = props => {
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
-      initialValues={{ price, pricePerAdditionalPerson, maxPeople }}
+      initialValues={{
+        price,
+        pricePerAdditionalPerson: new Money(
+          pricePerAdditionalPerson.amount,
+          pricePerAdditionalPerson.currency
+        ),
+        maxPeople,
+      }}
       onSubmit={values => {
         const { pricePerAdditionalPerson, maxPeople = 100, price } = values;
         const { currency, amount } = pricePerAdditionalPerson;

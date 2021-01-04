@@ -116,7 +116,6 @@ export const filters = [
         { key: 'bait', label: 'Live Bait' },
         { key: 'river', label: 'River' },
         { key: 'spin', label: 'Spin fishing' },
-
         { key: 'trolling', label: 'Trolling' },
       ],
     },
