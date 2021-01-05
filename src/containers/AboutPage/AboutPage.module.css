@@ -108,8 +108,12 @@
   margin:0 auto;
 }
 
+.howItWorks .flex img{
+  width: 350px;
+}
 
 
+.howItWorks,
 .button a {
   color:unset;
   text-decoration: none;

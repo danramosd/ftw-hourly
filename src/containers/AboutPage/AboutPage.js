@@ -158,7 +158,7 @@ const AboutPage = () => {
                 </div>
               </section>
 
-              <section id="howItWorks">
+              <section className={css.howItWorks}>
                 <div className={css.sectionTitle}>
                   <img src="static/images/treble-hook.png" alt="Trebel Hook Icon" />
                   <h2>How it Works</h2>
@@ -187,10 +187,11 @@ const AboutPage = () => {
                   three-step process:
                 </p>
 
-                <div class="flex space-between mt-16">
+                <div className={css.flex}>
                   <img
                     class="howItWorks mr-4"
-                    src="static/images/treble-hook.pngd alt='Trebel Hook Icon'e-how-it-works-1.png"
+                    src="static/images/local-fishing-guide-how-it-works.png"
+                    alt="Local fishing guides near me - screenshot1"
                   />
                   <p>
                     Provide as much detail in your LocalFishingGuide listing as possible. The more
