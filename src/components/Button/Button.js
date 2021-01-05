@@ -95,6 +95,12 @@ export const SecondaryButton = props => {
 };
 SecondaryButton.displayName = 'SecondaryButton';
 
+export const OrangeButton = props => {
+  const classes = classNames(props.rootClassName || css.orangeButtonRoot, css.orangeButtonRoot);
+  return <Button {...props} rootClassName={classes} />;
+};
+OrangeButton.displayName = 'OrangeButton';
+
 export const InlineTextButton = props => {
   const classes = classNames(props.rootClassName || css.inlineTextButtonRoot, css.inlineTextButton);
   return <Button {...props} rootClassName={classes} />;

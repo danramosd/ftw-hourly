@@ -488,6 +488,32 @@
     }
   }
 
+  --marketplaceButtonStylesOrange {
+    @apply --marketplaceButtonStyles;
+
+    background-color: #fe8b1a;
+    color: #fff;
+
+    /* Padding is only for <a> elements where button styles are applied,
+   buttons elements should have zero padding */
+    padding: 18px 0 0 0;
+
+    border-width: 1px;
+    border-style: solid;
+    /* border-color: var(--matterColorNegative); */
+
+    &:hover,
+    &:focus {
+      background-color: #fe8b1a;
+      filter: brightness(90%);
+    }
+    /* &:disabled {
+      background-color: var(--matterColorNegative);
+      color: var(--matterColorLight);
+      border-color: var(--matterColorNegative);
+    } */
+  }
+
   /* ================ Inputs ================ */
 
   --marketplaceInputStyles: {

@@ -9,6 +9,9 @@ import {
   LayoutWrapperFooter,
   Footer,
   ExternalLink,
+  LayoutWrapperMainFullWidth,
+  OrangeButton,
+  NamedLink,
 } from '../../components';
 
 import css from './AboutPage.module.css';
@@ -32,32 +35,81 @@ const AboutPage = () => {
         <LayoutWrapperTopbar>
           <TopbarContainer />
         </LayoutWrapperTopbar>
+        <LayoutWrapperMainFullWidth>
+          <div className={css.heroWrapper}>
+            <p>
+              <h1 className={css.pageTitle}>Let's Go Fishing</h1>
+              <h2>
+                You may be a fish whisperer, but hooking customers requires a much more subtle
+                approach
+              </h2>
+              <OrangeButton className={css.button}>
+                <a href="#learnMore">Learn More</a>
+              </OrangeButton>
+            </p>
+            <img className={css.coverImage} src="static/images/find-a-local-fishing-guide.jpg" />
+          </div>
+        </LayoutWrapperMainFullWidth>
 
         <LayoutWrapperMain className={css.staticPageWrapper}>
-          <h1 className={css.pageTitle}>The FIRST Marketplace for Freshwater Fishing Guides</h1>
-          <img className={css.coverImage} src="static/images/find-a-local-fishing-guide.jpg" />
-
-          <div className={css.contentWrapper}>
+          <div className={css.contentWrapper} id="learnMore">
             <div className={css.contentMain}>
               <section>
-                <div id="learnMore" className="title">
+                <div className={css.sectionTitle}>
                   <img src="static/images/treble-hook.png" alt="Trebel Hook Icon" />
                   <h2>
-                    The <span className="underline italic">First</span> Marketplace for Freshwater
-                    Fishing Guides
+                    The <span className={css.emph}>First</span> Marketplace for Freshwater Fishing
+                    Guides
                   </h2>
+                </div>
+                <div className={css.flex}>
+                  <div>
+                    <p>
+                      No matter how extensive your expertise at tracking trout, pinpointing perch,
+                      and stalking stripers, catching the attention of anglers requires an entirely
+                      different skillset.
+                    </p>
+                    <p>
+                      As a savvy small-business owner, you know you have to chum the water with
+                      marketing dollars to attract the right type of client for your fishing guide
+                      service. But keeping your website current, posting to Facebook, tweeting
+                      special offers, and adding photos to Instagram cost real money and requires
+                      time better spent on the water.
+                    </p>
+                    <p>
+                      Website marketing and social media are important, but for your guide service
+                      to really succeed, you need a platform that shines a wider, brighter spotlight
+                      on your offerings.
+                    </p>
+                    <p>
+                      That’s where we come in. Consider LocalFishingGuide your tacklebox, full of
+                      strategies for luring customers and booking more trips. We’re an innovative
+                      referral website that matches avid fishers to guides whose knowledge of local
+                      waterways can put them on the lunkers of their dreams. We’re a low-cost,
+                      all-inclusive solution to your marketing needs. LocalFishingGuide focuses
+                      exclusively on fishing guides and outfitters serving the Rocky Mountain,
+                      Desert Southwest, and Great Lakes regions. We tailor our guide listing and
+                      referral service to match your ideal customer persona and your marketing
+                      budget. As avid outdoorspeople, we understand what customers want from the
+                      fishing trips we book. Your listing on LocalFishingGuide showcases your
+                      service and your dedication to delivering productive fishing trips.
+                    </p>
+                  </div>
+                  <img
+                    width="350"
+                    src="/static/images/fly-fishing-utah.jpg"
+                    alt="Fly Fishing Guides Utah"
+                  />
                 </div>
               </section>
 
               <section>
-                <div class="title">
+                <div className={css.sectionTitle}>
                   <img src="static/images/treble-hook.png" alt="Trebel Hook Icon" />
                   <h2>Trusted and Comprehensive</h2>
-                  <nuxt-link to="/user/sign_up">
-                    <button size="large" color="orange">
-                      Sign up now
-                    </button>
-                  </nuxt-link>
+                  <NamedLink name="SignupPage">
+                    <OrangeButton className={css.button}>Sign up now</OrangeButton>
+                  </NamedLink>
                 </div>
 
                 <p>
@@ -72,8 +124,8 @@ const AboutPage = () => {
                 </p>
               </section>
 
-              <section id="simpleAndAffordable">
-                <div class="title">
+              <section className={css.simpleAndAffordable}>
+                <div className={css.sectionTitle}>
                   <img src="static/images/treble-hook.png" alt="Trebel Hook Icon" />
                   <h2>Simple and Affordable</h2>
                 </div>
@@ -83,38 +135,36 @@ const AboutPage = () => {
                   adhere to the strictest ethics and safety protocols and provides an implicit
                   endorsement of your services. Here are the reasons to sign up today:
                 </p>
-                <div class="flex space-between">
-                  <div class="cardList">
-                    <img src="static/images/treble-hook.pnge alt='Trebel Hook Icon'.svg" />
+                <div className={css.cardListWrapper}>
+                  <div className={css.cardList}>
+                    <img src="static/icons/checkmark-outline.svg" />
                     <p>Easy to set up and update, giving you more time on the water</p>
                   </div>
-                  <div class="cardList">
-                    <img src="static/images/treble-hook.pngg alt='Trebel Hook Icon'" />
+                  <div className={css.cardList}>
+                    <img src="static/icons/brightness-up.svg" />
                     <p>
                       Wide exposure to potential customers who increasing go online to research
                       fishing trips
                     </p>
                   </div>
-                  <div class="cardList">
-                    <img src="static/images/treble-hook.png. alt='Trebel Hook Icon'svg" />
+                  <div className={css.cardList}>
+                    <img src="static/icons/location-current.svg" />
                     <p>Highly targeted, low-cost referral prospects</p>
                   </div>
-                  <div class="cardList">
-                    <img src="static/images/treble-hook.png" alt="Trebel Hook Icon" />
+                  <div className={css.cardList}>
+                    <img src="static/icons/view-show.svg" />
                     <p>Professional appearance and attentive administration</p>
                   </div>
                 </div>
               </section>
 
               <section id="howItWorks">
-                <div class="title">
+                <div className={css.sectionTitle}>
                   <img src="static/images/treble-hook.png" alt="Trebel Hook Icon" />
                   <h2>How it Works</h2>
-                  <nuxt-link to="/user/sign_up">
-                    <button size="large" color="orange">
-                      Sign up now
-                    </button>
-                  </nuxt-link>
+                  <NamedLink name="SignupPage">
+                    <OrangeButton className={css.button}>Sign up now</OrangeButton>
+                  </NamedLink>
                 </div>
                 <p>
                   Currently in beta with a launch date of December 2020, LocalFishingGuide will
@@ -173,7 +223,7 @@ const AboutPage = () => {
                   </p>
                 </div>
                 <div class="flex space-between">
-                  <div class="cardList">
+                  <div className={css.cardList}>
                     <img src="static/images/treble-hook.pngd alt='Trebel Hook Icon'e-how-it-works-1.png" />
                     <p>
                       Provide as much detail in your LocalFishingGuide listing as possible. The more
@@ -182,7 +232,7 @@ const AboutPage = () => {
                       likely to convert to buyers.
                     </p>
                   </div>
-                  <div class="cardList">
+                  <div className={css.cardList}>
                     <img src="static/images/treble-hook.pngd alt='Trebel Hook Icon'e-how-it-works-2.png" />
                     <p>
                       LocalFishingGuide spreads the word. Our site is search-engine optimized to
@@ -191,7 +241,7 @@ const AboutPage = () => {
                       marketing program. You provide the service, we provide the customers.
                     </p>
                   </div>
-                  <div class="cardList">
+                  <div className={css.cardList}>
                     <img src="static/images/treble-hook.pngd alt='Trebel Hook Icon'e-how-it-works-2.png" />
                     <p>
                       The requests roll in. We start sending you referrals from anglers interested
@@ -203,7 +253,7 @@ const AboutPage = () => {
               </section>
 
               <section id="firstThingsFirst">
-                <div class="title">
+                <div className={css.sectionTitle}>
                   <img src="static/images/treble-hook.png" alt="Trebel Hook Icon" />
                   <h2>First Things First</h2>
                 </div>
@@ -225,11 +275,9 @@ const AboutPage = () => {
                   To get all this and secure your place as a LocalFishingGuide charter member,
                   simply click the "Sign up now" button below.
                 </p>
-                <nuxt-link to="/user/sign_up">
-                  <button size="large" color="orange" class="mx-auto mt-8">
-                    Sign up now
-                  </button>
-                </nuxt-link>
+                <NamedLink name="SignupPage">
+                  <OrangeButton className={css.button}>Sign up now</OrangeButton>
+                </NamedLink>
               </section>
             </div>
           </div>

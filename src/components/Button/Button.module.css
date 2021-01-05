@@ -22,6 +22,14 @@
    elements looking like buttons */
   padding: 0 0 2px 0;
 }
+.orangeButtonRoot {
+
+  @apply --marketplaceButtonStylesOrange;
+  /* We must lift up the text from the center since it looks better with
+   the button border. Also clears the top padding set for link
+   elements looking like buttons */
+  padding: 0 0 2px 0;
+}
 
 .inlineTextButtonRoot {
   @apply --marketplaceLinkStyles;
@@ -33,6 +41,7 @@
 .secondaryButton {
   /* Class handle for secondary button state styles */
 }
+.orangeButton{}
 
 .inProgress {
   padding: 0;

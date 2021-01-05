@@ -5,7 +5,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { LayoutWrapperTopbar, LayoutWrapperMain, LayoutWrapperFooter } from '../../components';
+import {
+  LayoutWrapperTopbar,
+  LayoutWrapperMain,
+  LayoutWrapperFooter,
+  LayoutWrapperMainFullWidth,
+} from '../../components';
 
 import css from './LayoutSingleColumn.module.css';
 
@@ -14,7 +19,7 @@ const prepareChildren = children => {
   if (!(childrenCount === 3 || childrenCount === 4)) {
     throw new Error(
       `Menu needs to have 2 - 3 children:
-      LayoutWrapperTopbar, and LayoutWrapperMain,
+      LayoutWrapperTopbar, and LayoutWrapperMain,LayoutWrapperMainFullWidth
       and optionally LayoutWrapperFooter.`
     );
   }
@@ -30,12 +35,18 @@ const prepareChildren = children => {
         rootClassName: css.layoutWrapperMain,
       });
       childrenMap.layoutWrapperMain = childWithAddedCSS;
+    } else if (child.type === LayoutWrapperMainFullWidth) {
+      // LayoutWrapperMain needs different rootClassName
+      const childWithAddedCSS = React.cloneElement(child, {
+        rootClassName: css.layoutWrapperMain,
+      });
+      childrenMap.LayoutWrapperMainFullWidth = childWithAddedCSS;
     } else if (child.type === LayoutWrapperFooter) {
       childrenMap.layoutWrapperFooter = child;
     } else {
       throw new Error(
         `LayoutSingleColumn has an unknown child.
-      Only LayoutWrapperTopbar, LayoutWrapperMain, LayoutWrapperFooter are allowed.`
+      Only LayoutWrapperTopbar, LayoutWrapperMain, LayoutWrapperFooter, LayoutWrapperMainFullWidth are allowed.`
       );
     }
   });
@@ -51,6 +62,7 @@ const LayoutSingleColumn = props => {
   return (
     <div className={classes}>
       {preparedChildren.layoutWrapperTopbar}
+      {preparedChildren.LayoutWrapperMainFullWidth}
       {preparedChildren.layoutWrapperMain}
       {maybeFooter}
     </div>

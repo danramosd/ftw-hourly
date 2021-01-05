@@ -60,7 +60,7 @@ export { default as ValidationError } from './ValidationError/ValidationError';
 // First components that include only atomic components //
 //////////////////////////////////////////////////////////
 
-export { default as Button, PrimaryButton, SecondaryButton, InlineTextButton, SocialLoginButton } from './Button/Button';
+export { default as Button, PrimaryButton, SecondaryButton, InlineTextButton,OrangeButton, SocialLoginButton } from './Button/Button';
 export { default as CookieConsent } from './CookieConsent/CookieConsent';
 export { default as ImageCarousel } from './ImageCarousel/ImageCarousel';
 export { default as ImageFromFile } from './ImageFromFile/ImageFromFile';
@@ -71,6 +71,7 @@ export { default as ReviewRating } from './ReviewRating/ReviewRating';
 // Layout helpers
 export { default as LayoutWrapperFooter } from './LayoutWrapperFooter/LayoutWrapperFooter';
 export { default as LayoutWrapperMain } from './LayoutWrapperMain/LayoutWrapperMain';
+export { default as LayoutWrapperMainFullWidth } from './LayoutWrapperMainFullWidth/LayoutWrapperMainFullWidth';
 export { default as LayoutWrapperSideNav } from './LayoutWrapperSideNav/LayoutWrapperSideNav';
 export { default as LayoutWrapperTopbar } from './LayoutWrapperTopbar/LayoutWrapperTopbar';
 export { default as LayoutSideNavigation } from './LayoutSideNavigation/LayoutSideNavigation';
