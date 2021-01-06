@@ -24,15 +24,22 @@
 .heroWrapper{
   display:flex;
   position: relative;
-
+  background-image: url(./find-a-local-fishing-guide.jpg);
+  height: 400px;
+  background-size: cover;
+  background-position: center;
 }
 
 .heroWrapper h2{
-  font-size: 38px;
+
+  font-size: 24px;
     font-family: Montserrat;
     line-height: 1.2;
-  width: 500px;
+  max-width: 500px;
   font-weight: 100;
+  @media screen(--viewportMedium) {
+    font-size: 38px;
+  }
 }
 
 .sectionTitle img{
@@ -43,6 +50,10 @@
 .flex{
   display:flex;
   align-items: flex-start;
+  flex-direction: column;
+  @media (--viewportMedium) {
+    flex-direction:row;
+  }
 }
 .heroWrapper p{
   position:absolute;
@@ -53,13 +64,23 @@
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 1056px;
+  z-index: 20;
 }
 .coverImage {
-  width: 100%;
-  height: 528px;
-  border-radius: 4px;
-  object-fit: cover;
-  margin: 32px 0 40px;
+
+    /* border-radius: 4px;
+    position: relative;
+    z-index: 0;
+    right: 87vw; */
+
+
+  @media (--viewportMedium) {
+    width: 100%;
+    height: 528px;
+    margin: 32px 0 40px;
+
+  }
+
 }
 
 .contentWrapper {
@@ -82,15 +103,20 @@
 }
 
 .contentMain {
-  /* width: 90%; */
+  width: 100%;
 
-  /* @media (--viewportMedium) {
-    max-width: 650px;
-  } */
+  @media (--viewportLarge) {
+    max-width: 100%;
+  }
 }
 
+
+
 .contentMain section:first-child .flex img{
-  margin-left: 2rem;
+  max-width: 100%;
+  @media screen(--viewportMedium) {
+    margin-left: 2rem;
+  }
 }
 
 .subtitle {
@@ -109,13 +135,29 @@
 }
 
 .howItWorks .flex img{
-  width: 350px;
+  width: 250px;
+  margin: .5rem 1.5rem;
 }
 
+.howItWorks .flex{
+  margin-top: 1.5rem;
+}
+
+.howItWorks .flex + .flex{
+  flex-direction: column-reverse;
+  @media (--viewportMedium){
+    flex-direction: row;
+  }
+
+}
 
 .howItWorks,
 .button a {
   color:unset;
+  text-decoration: none;
+}
+
+.button a:hover{
   text-decoration: none;
 }
 
@@ -127,19 +169,27 @@
 .cardList{
   border: 1px solid #ddd;
   padding: 4px;
-  margin: 16px 4px;
+
   width: 250px;
   text-align: center;
   position: relative;
+  width: 100%;
+  margin-top: 4rem;
+
+  @media (--viewportMedium){
+    margin: 16px 4px;
+  }
+
 }
 
 .cardList img{
-  width: 30%;
+
   margin: 0 auto;
   position: absolute;
-  top: -37px;
-  left: calc(15% + 50px);
+  top: -25px;
   background-color: #fff;
+  width: 46px;
+  left: calc(50% - 23px);
 }
 
 .cardList p{
@@ -151,4 +201,16 @@
   display:flex;
   justify-content: space-between;
   margin-top: 4rem;
+  flex-direction:column;
+
+  @media (--viewportMedium) {
+    flex-direction:row;
+  }
+
+}
+.strike{
+  text-decoration:line-through;
+}
+.staticPageWrapper h3{
+  text-align: center;
 }

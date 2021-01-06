@@ -192,7 +192,7 @@ export class SearchPageComponent extends Component {
           /> */}
           <div className={css.notReadyYet}>
             <p>
-              <h2>Our comminity first.</h2>
+              <h2>Community first</h2>
               LocalFishingGuide's top priority is to offer a high quality user experience for our
               guides and customers interested in booking fishing trips. In order to provide this
               kind of an experience, it’s crucial we have a healthy level of supply and demand. To
