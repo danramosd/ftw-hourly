@@ -207,11 +207,11 @@ const AboutPage = () => {
                     our listings on other relevant websites and through an aggressive marketing
                     program. You provide the service, we provide the customers.
                   </p>
-                  <img
+                  {/* <img
                     class="howItWorks mr-4"
                     src="static/images/local-fishing-guide-how-it-works.png"
                     alt="Local fishing guides near me - screenshot1"
-                  />
+                  /> */}
                 </div>
                 <div className={css.flex}>
                   <img
