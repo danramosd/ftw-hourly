@@ -36,7 +36,7 @@
   font-family: 'Montserrat', sans-serif;
     line-height: 1.2;
   max-width: 500px;
-  font-weight: 100;
+  font-weight: 700;
   @media screen(--viewportMedium) {
     font-size: 38px;
   }
