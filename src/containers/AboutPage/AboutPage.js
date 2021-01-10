@@ -243,12 +243,11 @@ const AboutPage = () => {
                   In order to offer anglers our valuable service from the get-go, we need to launch
                   with several listings in each region from top-notch fishing guides like you. To
                   sweeten the deal, LocalFishingGuide is offering guide members a pricing discount.
-                  For a limited time, you can lock in our lowest pricing ever at{' '}
+                  Listing your business is 100% free with no monthly or hidden fees. By signing up
+                  today you can lock in our lowest ever pricing at{' '}
                   <span className={css.strike}>15%</span>
                   {` `}
-                  <strong>7%</strong> for all transactions INCLUDING credit card processing fees. No
-                  monthly or hidden fees, and absolutely ZERO cost to you until you land your first
-                  client.
+                  <strong>7%</strong> for all transactions INCLUDING credit card processing fees.
                 </p>
                 <h3>List your business today!</h3>
                 <OrangeButton className={css.button}>
