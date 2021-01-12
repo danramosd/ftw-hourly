@@ -44,7 +44,7 @@ const AboutPage = () => {
                 approach
               </h2>
               <OrangeButton className={css.button}>
-                <a href="#learnMore">Learn More</a>
+                <NamedLink name="SignupPage">Sign up now</NamedLink>
               </OrangeButton>
             </p>
             {/* <img className={css.coverImage} src="static/images/find-a-local-fishing-guide.jpg" /> */}

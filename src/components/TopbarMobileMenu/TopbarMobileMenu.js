@@ -62,8 +62,8 @@ const TopbarMobileMenu = props => {
           </div>
         </div>
         <div className={css.footer}>
-          <NamedLink className={css.createNewListingLink} name="NewListingPage">
-            <FormattedMessage id="TopbarMobileMenu.newListingLink" />
+          <NamedLink className={css.createNewListingLink} name="AboutPage">
+            Become a guide
           </NamedLink>
         </div>
       </div>

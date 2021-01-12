@@ -157,10 +157,8 @@ const TopbarDesktop = props => {
     ) : null;
 
   const createListingLink = isAuthenticatedOrJustHydrated ? null : (
-    <NamedLink className={css.createListingLink} name="NewListingPage">
-      <span className={css.createListing}>
-        <FormattedMessage id="TopbarDesktop.createListing" />
-      </span>
+    <NamedLink className={css.createListingLink} name="AboutPage">
+      <span className={css.createListing}>Become a guide</span>
     </NamedLink>
   );
 
