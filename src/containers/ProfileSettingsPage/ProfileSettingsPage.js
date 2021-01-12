@@ -44,6 +44,7 @@ export class ProfileSettingsPageComponent extends Component {
       uploadInProgress,
       intl,
     } = this.props;
+    console.log('props', this.props);
 
     const handleSubmit = values => {
       const { firstName, lastName, bio: rawBio } = values;

@@ -177,7 +177,7 @@ export class AuthenticationPageComponent extends Component {
         firstName: fname.trim(),
         lastName: lname.trim(),
         ...rest,
-        privateData: {
+        publicData: {
           isGuide: guide,
         },
       };
