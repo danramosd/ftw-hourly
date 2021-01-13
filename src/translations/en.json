@@ -225,7 +225,7 @@
   "EditListingDescriptionForm.certificateLabel": "Teaching certificate",
   "EditListingDescriptionForm.createListingDraftError": "Failed to create a draft. Please try again.",
   "EditListingDescriptionForm.description": "Trip description",
-  "EditListingDescriptionForm.descriptionPlaceholder": "What can the client expect, what should they bring, what is and isn't included...",
+  "EditListingDescriptionForm.descriptionPlaceholder": "What can the client expect, what they should bring, what is and isn't included...",
   "EditListingDescriptionForm.descriptionRequired": "A description is required.",
   "EditListingDescriptionForm.maxLength": "Must be {maxLength} characters or less",
   "EditListingDescriptionForm.showListingFailed": "Fetching guide profile data failed",
