@@ -106,7 +106,7 @@ export class AuthenticationPageComponent extends Component {
     if (isAuthenticated && from) {
       return <Redirect to={from} />;
     } else if (isAuthenticated && currentUserLoaded && !showEmailVerification) {
-      return <NamedRedirect name="LandingPage" />;
+      return <NamedRedirect name="ProfileSettingsPage" />;
     }
 
     const loginErrorMessage = (

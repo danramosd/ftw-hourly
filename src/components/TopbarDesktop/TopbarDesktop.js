@@ -172,7 +172,7 @@ const TopbarDesktop = props => {
         />
       </NamedLink>
       {search}
-      {listingLink}
+      {/* {listingLink} */}
       {createListingLink}
       {inboxLink}
       {profileMenu}
