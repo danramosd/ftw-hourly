@@ -21,6 +21,7 @@ import { TopbarContainer } from '../../containers';
 
 import { updateProfile, uploadImage } from './ProfileSettingsPage.duck';
 import css from './ProfileSettingsPage.module.css';
+import get from 'lodash/get';
 
 const onImageUploadHandler = (values, fn) => {
   const { id, imageId, file } = values;
@@ -44,10 +45,9 @@ export class ProfileSettingsPageComponent extends Component {
       uploadInProgress,
       intl,
     } = this.props;
-    console.log('props', this.props);
 
     const handleSubmit = values => {
-      const { firstName, lastName, bio: rawBio } = values;
+      const { firstName, lastName, bio: rawBio, publicData } = values;
 
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
@@ -57,6 +57,9 @@ export class ProfileSettingsPageComponent extends Component {
         lastName: lastName.trim(),
         bio,
       };
+      if (publicData) {
+        profile.publicData = publicData;
+      }
       const uploadedImage = this.props.image;
 
       // Update profileImage only if file system has been accessed
@@ -69,15 +72,16 @@ export class ProfileSettingsPageComponent extends Component {
     };
 
     const user = ensureCurrentUser(currentUser);
-    const { firstName, lastName, bio } = user.attributes.profile;
+    const { firstName, lastName, bio, publicData } = user.attributes.profile;
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
+    const isGuide = get(publicData, 'isGuide', false);
 
     const profileSettingsForm = user.id ? (
       <ProfileSettingsForm
         className={css.form}
         currentUser={currentUser}
-        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage }}
+        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, publicData }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
         uploadInProgress={uploadInProgress}
@@ -85,10 +89,11 @@ export class ProfileSettingsPageComponent extends Component {
         uploadImageError={uploadImageError}
         updateProfileError={updateProfileError}
         onSubmit={handleSubmit}
+        isGuide={isGuide}
       />
     ) : null;
 
-    const title = intl.formatMessage({ id: 'ProfileSettingsPage.title' });
+    const title = isGuide ? 'Company Profile' : 'User Profile';
 
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
@@ -100,16 +105,14 @@ export class ProfileSettingsPageComponent extends Component {
           <LayoutWrapperMain>
             <div className={css.content}>
               <div className={css.headingContainer}>
-                <h2 className={css.heading}>
-                  <FormattedMessage id="ProfileSettingsPage.heading" />
-                </h2>
+                <h2 className={css.heading}>{title}</h2>
                 {user.id ? (
                   <NamedLink
                     className={css.profileLink}
                     name="ProfilePage"
                     params={{ id: user.id.uuid }}
                   >
-                    <FormattedMessage id="ProfileSettingsPage.viewProfileLink" />
+                    View your {title.toLowerCase()}
                   </NamedLink>
                 ) : null}
               </div>

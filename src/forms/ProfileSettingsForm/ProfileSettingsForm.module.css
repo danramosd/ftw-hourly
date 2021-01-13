@@ -2,15 +2,21 @@
 
 .root {
   margin-top: 24px;
-
+  display:flex;
+  flex-direction: column-reverse;
+  flex-wrap: wrap;
+  justify-content: space-between;
   @media (--viewportMedium) {
     margin-top: 32px;
+    flex-direction: row;
   }
 }
+
 
 .sectionContainer {
   padding: 0;
   margin-bottom: 36px;
+  flex-basis: 48%;
 
   @media (--viewportMedium) {
     padding: 0;
@@ -56,13 +62,13 @@
   margin-bottom: 18px;
 
   @media (--viewportMedium) {
-    margin-top: 44px;
     margin-bottom: 20px;
   }
 }
 
 .label {
   width: var(--ProfileSettingsForm_avatarSize);
+  margin: 0 auto;
   @media (--viewportMedium) {
     width: var(--ProfileSettingsForm_avatarSizeDesktop);
   }
@@ -262,6 +268,7 @@
   margin-bottom: 0;
   padding-top: 5px;
   padding-bottom: 1px;
+  text-align: center;
 
   @media (--viewportMedium) {
     margin-top: 0;
@@ -288,7 +295,9 @@
 .lastName {
   width: calc(66% - 9px);
 }
-
+.companyName{
+  width: 100%;
+}
 .bioInfo {
   color: var(--matterColorAnti);
   margin-top: 11px;

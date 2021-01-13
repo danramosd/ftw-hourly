@@ -61,14 +61,12 @@ class ProfileSettingsFormComponent extends Component {
             uploadInProgress,
             form,
             values,
+            isGuide,
           } = fieldRenderProps;
+          console.log('is guide', isGuide);
 
           const user = ensureCurrentUser(currentUser);
 
-          // First name
-          const firstNameLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.firstNameLabel',
-          });
           const firstNamePlaceholder = intl.formatMessage({
             id: 'ProfileSettingsForm.firstNamePlaceholder',
           });
@@ -77,10 +75,6 @@ class ProfileSettingsFormComponent extends Component {
           });
           const firstNameRequired = validators.required(firstNameRequiredMessage);
 
-          // Last name
-          const lastNameLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.lastNameLabel',
-          });
           const lastNamePlaceholder = intl.formatMessage({
             id: 'ProfileSettingsForm.lastNamePlaceholder',
           });
@@ -88,6 +82,7 @@ class ProfileSettingsFormComponent extends Component {
             id: 'ProfileSettingsForm.lastNameRequired',
           });
           const lastNameRequired = validators.required(lastNameRequiredMessage);
+          const companyNameRequired = validators.required('Company name is required.');
 
           // Bio
           const bioLabel = intl.formatMessage({
@@ -184,9 +179,54 @@ class ProfileSettingsFormComponent extends Component {
               }}
             >
               <div className={css.sectionContainer}>
-                <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="ProfileSettingsForm.yourProfilePicture" />
-                </h3>
+                <div className={css.nameContainer}>
+                  <FieldTextInput
+                    className={css.firstName}
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    label="First name"
+                    placeholder={firstNamePlaceholder}
+                    validate={firstNameRequired}
+                  />
+                  <FieldTextInput
+                    className={css.lastName}
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    label="Last name"
+                    placeholder={lastNamePlaceholder}
+                    validate={lastNameRequired}
+                  />
+                </div>
+                <br />
+                {isGuide && (
+                  <FieldTextInput
+                    className={css.companyName}
+                    type="text"
+                    id="publicData.companyName"
+                    name="publicData.companyName"
+                    label="Company name"
+                    placeholder="Company name"
+                    validate={companyNameRequired}
+                  />
+                )}
+                <br />
+                <div className={classNames(css.sectionContainer, css.lastSection)}>
+                  <FieldTextInput
+                    type="textarea"
+                    id="bio"
+                    name="bio"
+                    label={bioLabel}
+                    placeholder={bioPlaceholder}
+                  />
+                  <p className={css.bioInfo}>
+                    <FormattedMessage id="ProfileSettingsForm.bioInfo" />
+                  </p>
+                </div>
+              </div>
+
+              <div className={css.sectionContainer}>
                 <Field
                   accept={ACCEPT_IMAGES}
                   id="profileImage"
@@ -245,53 +285,9 @@ class ProfileSettingsFormComponent extends Component {
                     );
                   }}
                 </Field>
-                <div className={css.tip}>
-                  <FormattedMessage id="ProfileSettingsForm.tip" />
-                </div>
-                <div className={css.fileInfo}>
-                  <FormattedMessage id="ProfileSettingsForm.fileInfo" />
-                </div>
+                <div className={css.fileInfo}>(.JPG, .GIF or .PNG. Max. 20 MB)</div>
               </div>
-              <div className={css.sectionContainer}>
-                <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="ProfileSettingsForm.yourName" />
-                </h3>
-                <div className={css.nameContainer}>
-                  <FieldTextInput
-                    className={css.firstName}
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    label={firstNameLabel}
-                    placeholder={firstNamePlaceholder}
-                    validate={firstNameRequired}
-                  />
-                  <FieldTextInput
-                    className={css.lastName}
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    label={lastNameLabel}
-                    placeholder={lastNamePlaceholder}
-                    validate={lastNameRequired}
-                  />
-                </div>
-              </div>
-              <div className={classNames(css.sectionContainer, css.lastSection)}>
-                <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="ProfileSettingsForm.bioHeading" />
-                </h3>
-                <FieldTextInput
-                  type="textarea"
-                  id="bio"
-                  name="bio"
-                  label={bioLabel}
-                  placeholder={bioPlaceholder}
-                />
-                <p className={css.bioInfo}>
-                  <FormattedMessage id="ProfileSettingsForm.bioInfo" />
-                </p>
-              </div>
+
               {submitError}
               <Button
                 className={css.submitButton}
@@ -316,6 +312,7 @@ ProfileSettingsFormComponent.defaultProps = {
   uploadImageError: null,
   updateProfileError: null,
   updateProfileReady: false,
+  isGuide: false,
 };
 
 ProfileSettingsFormComponent.propTypes = {
@@ -327,7 +324,7 @@ ProfileSettingsFormComponent.propTypes = {
   updateInProgress: bool.isRequired,
   updateProfileError: propTypes.error,
   updateProfileReady: bool,
-
+  isGuide: bool,
   // from injectIntl
   intl: intlShape.isRequired,
 };
