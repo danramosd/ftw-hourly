@@ -76,44 +76,47 @@ const EditListingAvailabilityPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
-  const [valuesFromLastSubmit, setValuesFromLastSubmit] = useState(null);
-  const defaultAvailabilityPlan = {
-    type: 'availability-plan/day',
-    entries: [
-      { dayOfWeek: 'mon', seats: 1 },
-      { dayOfWeek: 'tue', seats: 1 },
-      { dayOfWeek: 'wed', seats: 1 },
-      { dayOfWeek: 'thu', seats: 1 },
-      { dayOfWeek: 'fri', seats: 1 },
-      { dayOfWeek: 'sat', seats: 1 },
-      { dayOfWeek: 'sun', seats: 1 },
-    ],
-  };
-  const createInitialValues = availabilityPlan => {
-    const { timezone, entries } = availabilityPlan || {};
-    const tz = timezone || defaultTimeZone();
-    return {
-      timezone: tz,
-      ...createEntryDayGroups(entries),
-    };
-  };
-  const availabilityPlan = currentListing.attributes.availabilityPlan || defaultAvailabilityPlan;
-  const initialValues = valuesFromLastSubmit
-    ? valuesFromLastSubmit
-    : createInitialValues(availabilityPlan);
+  // const [valuesFromLastSubmit, setValuesFromLastSubmit] = useState(null);
+  // const defaultAvailabilityPlan = {
+  //   type: 'availability-plan/day',
+  //   entries: [
+  //     { dayOfWeek: 'mon', seats: 1 },
+  //     { dayOfWeek: 'tue', seats: 1 },
+  //     { dayOfWeek: 'wed', seats: 1 },
+  //     { dayOfWeek: 'thu', seats: 1 },
+  //     { dayOfWeek: 'fri', seats: 1 },
+  //     { dayOfWeek: 'sat', seats: 1 },
+  //     { dayOfWeek: 'sun', seats: 1 },
+  //   ],
+  // };
+  // const createInitialValues = availabilityPlan => {
+  //   const { timezone, entries } = availabilityPlan || {};
+  //   const tz = timezone || defaultTimeZone();
+  //   return {
+  //     timezone: tz,
+  //     ...createEntryDayGroups(entries),
+  //   };
+  // };
+  // const availabilityPlan = currentListing.attributes.availabilityPlan || defaultAvailabilityPlan;
+  // const initialValues = valuesFromLastSubmit
+  //   ? valuesFromLastSubmit
+  //   : createInitialValues(availabilityPlan);
 
-  const handleSubmit = values => {
-    setValuesFromLastSubmit(values);
+  // const handleSubmit = values => {
+  //   setValuesFromLastSubmit(values);
 
-    // Final Form can wait for Promises to return.
-    return onSubmit(values)
-      .then(() => {
-        setIsEditPlanModalOpen(false);
-      })
-      .catch(e => {
-        // Don't close modal if there was an error
-      });
-  };
+  //   // Final Form can wait for Promises to return.
+  //   return onSubmit(values)
+  //     .then(() => {
+  //       setIsEditPlanModalOpen(false);
+  //     })
+  //     .catch(e => {
+  //       // Don't close modal if there was an error
+  //     });
+  // };
+
+  console.log('dan!', props);
+
   return (
     <div className={classes}>
       <h1 className={css.title}>
@@ -129,15 +132,24 @@ const EditListingAvailabilityPanel = props => {
       <EditListingAvailabilityForm
         className={css.form}
         listingId={currentListing.id}
-        initialValues={initialValues}
-        availability={availability}
-        availabilityPlan={availabilityPlan}
-        onSubmit={() => {
+        initialValues={{}}
+        // availability={availability}
+        // availabilityPlan={availabilityPlan}
+        onSubmit={data => {
+          const { availability } = data;
           // We save the default availability plan
           // I.e. this listing is available every night.
           // Exceptions are handled with live edit through a calendar,
           // which is visible on this panel.
-          onSubmit({ availabilityPlan });
+          const entries = Object.values(availability).map(dayOfWeek => ({
+            dayOfWeek,
+            seats: 1,
+          }));
+          const formattedPlan = {
+            type: 'availability-plan/day',
+            entries,
+          };
+          onSubmit({ availabilityPlan: formattedPlan });
           // handleSubmit({ availabilityPlan });
         }}
         onChange={onChange}

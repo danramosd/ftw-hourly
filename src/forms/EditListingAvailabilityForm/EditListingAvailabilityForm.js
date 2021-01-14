@@ -6,15 +6,20 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { Form, Button } from '../../components';
-
+import { FieldCheckbox, FieldCheckboxGroup } from '../../components';
 import ManageAvailabilityCalendar from './ManageAvailabilityCalendar';
+import arrayMutators from 'final-form-arrays';
 import css from './EditListingAvailabilityForm.module.css';
 
+const WEEKDAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 export class EditListingAvailabilityFormComponent extends Component {
   render() {
+    console.log('initialValues', this.initialValues);
+
     return (
       <FinalForm
         {...this.props}
+        mutators={{ ...arrayMutators }}
         render={formRenderProps => {
           const {
             className,
@@ -44,16 +49,23 @@ export class EditListingAvailabilityFormComponent extends Component {
           const submitReady = (updated && pristine) || ready;
           const submitInProgress = updateInProgress;
           const submitDisabled = invalid || disabled || submitInProgress;
-
+          const options = WEEKDAYS.map(day => ({ key: day, label: day }));
           return (
             <Form className={classes} onSubmit={handleSubmit}>
               {errorMessage}
               <div className={css.calendarWrapper}>
-                <ManageAvailabilityCalendar
+                <FieldCheckboxGroup
+                  className={css.features}
+                  id="availability"
+                  name="availability"
+                  options={options}
+                />
+
+                {/* <ManageAvailabilityCalendar
                   availability={availability}
                   availabilityPlan={availabilityPlan}
                   listingId={listingId}
-                />
+                /> */}
               </div>
 
               <Button
