@@ -447,7 +447,7 @@ export class ListingPageComponent extends Component {
                   />
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                 </div>
-                <BookingPanel
+                {/* <BookingPanel
                   className={css.bookingPanel}
                   listing={currentListing}
                   isOwnListing={isOwnListing}
@@ -462,7 +462,7 @@ export class ListingPageComponent extends Component {
                   lineItems={lineItems}
                   fetchLineItemsInProgress={fetchLineItemsInProgress}
                   fetchLineItemsError={fetchLineItemsError}
-                />
+                /> */}
               </div>
             </div>
             <Modal
