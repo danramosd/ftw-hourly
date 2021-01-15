@@ -195,6 +195,7 @@ export const EditListingPageComponent = props => {
       ? intl.formatMessage({ id: 'EditListingPage.titleCreateListing' })
       : intl.formatMessage({ id: 'EditListingPage.titleEditListing' });
 
+    const calendar = currentUserListing ? currentUserListing : {};
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
         <TopbarContainer
@@ -219,7 +220,9 @@ export const EditListingPageComponent = props => {
           images={images}
           listing={currentListing}
           availability={{
-            calendar: page.availabilityCalendar,
+            // might actually need it to be page.availabilityCalendar
+            calendar,
+            // calendar: currentUserListing.attributes.availabilityPlan,
             onFetchAvailabilityExceptions,
             onCreateAvailabilityException,
             onDeleteAvailabilityException,
