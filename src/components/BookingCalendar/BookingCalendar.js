@@ -188,7 +188,7 @@ const BookingCalendar = props => {
   }, []);
 
   const fetchMonthlyAvailability = (start, end) => {
-    onFetchTimeSlots(listingId, start.toDate(), end.toDate(), timeZone);
+    onFetchTimeSlots(listingId, start.toDate(), end.toDate());
   };
 
   const onFocusChange = () => {};

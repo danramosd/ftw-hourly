@@ -3,6 +3,8 @@ const { getSdk, handleError, serialize } = require('../api-util/sdk');
 const { constructValidLineItems } = require('../api-util/lineItemHelpers');
 
 module.exports = (req, res) => {
+  console.log('got data', req.body);
+
   const { isOwnListing, listingId, bookingData } = req.body;
 
   const sdk = getSdk(req, res);
@@ -13,6 +15,8 @@ module.exports = (req, res) => {
 
   listingPromise
     .then(apiResponse => {
+      console.log('api response', apiResponse);
+
       const listing = apiResponse.data.data;
       const lineItems = transactionLineItems(listing, bookingData);
 

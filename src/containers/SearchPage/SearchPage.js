@@ -174,7 +174,7 @@ export class SearchPageComponent extends Component {
           currentSearchParams={urlQueryParams}
         />
         <div className={css.container}>
-          {/* <MainPanel
+          <MainPanel
             urlQueryParams={validQueryParams}
             listings={listings}
             searchInProgress={searchInProgress}
@@ -189,8 +189,8 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
-          /> */}
-          <div className={css.notReadyYet}>
+          />
+          {/* <div className={css.notReadyYet}>
             <p>
               <h2>Community first</h2>
               LocalFishingGuide's top priority is to offer a high quality user experience for our
@@ -211,20 +211,20 @@ export class SearchPageComponent extends Component {
                 We’ll notify you when online booking becomes available in your region.
               </em>
             </p>
-            {/* <p>
+            <p>
               For more info about LocalFishingGuide{' '}
               <NamedLink name="AboutPage">click here</NamedLink>.
-            </p> */}
+            </p>
             <p>
               <h2>Looking to book a fishing trip?</h2>
               <NamedLink name="SignupPage">Sign up</NamedLink> now and receive 25$ off your first
               trip.
             </p>
-            {/* <p>
+            <p>
               Looking for more exposure while making money? We’re hiring for local fishing reports -
               Click here
-            </p> */}
-          </div>
+            </p>
+          </div> */}
           <ModalInMobile
             className={css.mapPanel}
             id="SearchPage.map"

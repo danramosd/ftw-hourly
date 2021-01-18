@@ -142,40 +142,39 @@ const BookingPanel = props => {
         </div>
 
         {showBookingDatesForm ? (
-          // <BookingDatesForm
-          //   className={css.bookingForm}
-          //   formId="BookingPanel"
-          //   submitButtonWrapperClassName={css.bookingDatesSubmitButtonWrapper}
-          //   unitType={unitType}
-          //   onSubmit={onSubmit}
-          //   price={price}
-          //   listingId={listing.id}
-          //   isOwnListing={isOwnListing}
-          //   timeSlots={monthlyTimeSlots}
-          //   onFetchTimeSlots={onFetchTimeSlots}
-          //   fetchTimeSlotsError={fetchTimeSlotsError}
-          //   onFetchTransactionLineItems={onFetchTransactionLineItems}
-          //   lineItems={lineItems}
-          //   fetchLineItemsInProgress={fetchLineItemsInProgress}
-          //   fetchLineItemsError={fetchLineItemsError}
-          //   publicData={publicData}
-          //   timeZone={timeZone}
-          // />
-
-          <BookingCalendar
-            listingId={listing.id.uuid}
-            availability={monthlyTimeSlots}
-            onFetchTimeSlots={onFetchTimeSlots}
-            timeZone={timeZone}
-            availabilityPlan={availabilityPlan}
-            publicData={publicData}
-            price={price}
+          <BookingDatesForm
+            className={css.bookingForm}
+            formId="BookingPanel"
+            submitButtonWrapperClassName={css.bookingDatesSubmitButtonWrapper}
+            unitType={unitType}
             onSubmit={onSubmit}
+            price={price}
+            listingId={listing.id}
+            isOwnListing={isOwnListing}
+            timeSlots={monthlyTimeSlots}
+            onFetchTimeSlots={onFetchTimeSlots}
+            fetchTimeSlotsError={fetchTimeSlotsError}
+            onFetchTransactionLineItems={onFetchTransactionLineItems}
+            lineItems={lineItems}
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
-            onFetchTransactionLineItems={onFetchTransactionLineItems}
+            publicData={publicData}
+            timeZone={timeZone}
           />
-        ) : null}
+        ) : // <BookingCalendar
+        //   listingId={listing.id.uuid}
+        //   availability={monthlyTimeSlots}
+        //   onFetchTimeSlots={onFetchTimeSlots}
+        //   timeZone={timeZone}
+        //   availabilityPlan={availabilityPlan}
+        //   publicData={publicData}
+        //   price={price}
+        //   onSubmit={onSubmit}
+        //   fetchLineItemsInProgress={fetchLineItemsInProgress}
+        //   fetchLineItemsError={fetchLineItemsError}
+        //   onFetchTransactionLineItems={onFetchTransactionLineItems}
+        // />
+        null}
         {/* {showBookingTimeForm ? (
           <BookingTimeForm
             publicData={publicData}

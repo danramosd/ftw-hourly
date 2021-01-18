@@ -120,14 +120,7 @@ const EditListingAvailabilityPanel = props => {
   return (
     <div className={classes}>
       <h1 className={css.title}>
-        {isPublished ? (
-          <FormattedMessage
-            id="EditListingAvailabilityPanel.title"
-            values={{ listingTitle: <ListingLink listing={listing} /> }}
-          />
-        ) : (
-          <FormattedMessage id="EditListingAvailabilityPanel.createListingTitle" />
-        )}
+        {isPublished ? 'Edit trip availability' : 'Set your availability'}
       </h1>
       <EditListingAvailabilityForm
         className={css.form}

@@ -5,16 +5,16 @@ const get = require('lodash/get');
 // This bookingUnitType needs to be one of the following:
 // line-item/night, line-item/day or line-item/units
 const bookingUnitType = 'line-item/trip-price';
-const PROVIDER_COMMISSION_PERCENTAGE = -10;
+const PROVIDER_COMMISSION_PERCENTAGE = -7;
 
-const resolveAdditionalPeople = (listing, people) => {
+const resolvePersonCost = (listing, people) => {
   if (!people) {
     return null;
   }
-  const { pricePerAdditionalPerson } = listing.attributes.publicData;
 
+  const { pricePerAdditionalPerson } = listing.attributes.publicData;
   if (pricePerAdditionalPerson) {
-    return new Money(pricePerAdditionalPerson.amount * people, 'USD');
+    return new Money(pricePerAdditionalPerson.amount, 'USD');
   }
   return null;
 };
@@ -42,7 +42,7 @@ const resolveAdditionalPeople = (listing, people) => {
 
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
-  const { startDate, endDate, people } = bookingData;
+  const { people } = bookingData;
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
@@ -56,33 +56,33 @@ exports.transactionLineItems = (listing, bookingData) => {
   const booking = {
     code: bookingUnitType,
     unitPrice,
-    quantity: calculateQuantityFromHours(startDate, endDate),
+    quantity: 1,
     includeFor: ['customer', 'provider'],
   };
 
-  const additionalPersonPrice = resolveAdditionalPeople(listing, people);
+  const additionalPersonPrice = resolvePersonCost(listing, people);
 
   const additionalPersonFee = additionalPersonPrice
     ? [
         {
           code: 'line-item/additional-people',
           unitPrice: additionalPersonPrice,
-          quantity: 1,
+          quantity: people,
           includeFor: ['customer', 'provider'],
         },
       ]
     : [];
 
-  const providerCommission = {
-    code: 'line-item/provider-commission',
-    // unitPrice: calculateTotalFromLineItems([booking]),
-    unitPrice: calculateTotalFromLineItems([...additionalPersonFee]),
-    percentage: PROVIDER_COMMISSION_PERCENTAGE,
-    includeFor: ['provider'],
-  };
+  // const providerCommission = {
+  //   code: 'line-item/provider-commission',
+  //   // unitPrice: calculateTotalFromLineItems([booking]),
+  //   unitPrice: calculateTotalFromLineItems([...additionalPersonFee]),
+  //   percentage: PROVIDER_COMMISSION_PERCENTAGE,
+  //   includeFor: ['provider'],
+  // };
 
-  // const lineItems = [booking, providerCommission];
-  const lineItems = [booking, ...additionalPersonFee, providerCommission];
+  const lineItems = [booking, ...additionalPersonFee];
+  // const lineItems = [booking, ...additionalPersonFee, providerCommission];
 
   return lineItems;
 };

@@ -5,6 +5,9 @@ const { Money } = types;
 
 const { getAmountAsDecimalJS, convertDecimalJSToNumber } = require('./currency');
 
+const LINE_ITEM_NIGHT = 'line-item/night';
+const LINE_ITEM_DAY = 'line-item/day';
+
 /** Helper functions for constructing line items*/
 
 /**
@@ -102,6 +105,10 @@ exports.calculateQuantityFromHours = (startDate, endDate) => {
   return moment(endDate).diff(moment(startDate), 'hours', true);
 };
 
+// exports.calculateQuantityNumberOfPeople = (listing, people) => {
+//   return people ? people *
+// };
+
 /**
  *
  *  `lineTotal` is calculated by the following rules:
@@ -127,6 +134,24 @@ exports.calculateLineTotal = lineItem => {
       `Can't calculate the lineTotal of lineItem: ${code}. Make sure the lineItem has quantity, percentage or both seats and units`
     );
   }
+};
+
+/**
+ * Calculates the quantity based on the booking start and end dates depending on booking type.
+ *
+ * @param {Date} startDate
+ * @param {Date} endDate
+ * @param {string} type
+ *
+ * @returns {number} quantity
+ */
+exports.calculateQuantityFromDates = (startDate, endDate, type) => {
+  if (type === LINE_ITEM_NIGHT) {
+    return nightsBetween(startDate, endDate);
+  } else if (type === LINE_ITEM_DAY) {
+    return daysBetween(startDate, endDate);
+  }
+  throw new Error(`Can't calculate quantity from dates to unit type: ${type}`);
 };
 
 /**
