@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array, arrayOf, bool, func, object, shape, string, oneOf } from 'prop-types';
+import { array, arrayOf, bool, func, shape, string, oneOf } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -24,14 +24,12 @@ import {
   ensureUser,
   userDisplayNameAsString,
 } from '../../util/data';
-import { timestampToDate, calculateQuantityFromHours } from '../../util/dates';
 import { richText } from '../../util/richText';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { initializeCardPaymentData } from '../../ducks/stripe.duck.js';
 import {
   Page,
-  Modal,
   NamedLink,
   NamedRedirect,
   LayoutSingleColumn,
@@ -41,14 +39,12 @@ import {
   Footer,
   BookingPanel,
 } from '../../components';
-import { EnquiryForm } from '../../forms';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 
 import {
   sendEnquiry,
   loadData,
   setInitialValues,
-  fetchTimeSlots,
   fetchTransactionLineItems,
 } from './ListingPage.duck';
 import SectionImages from './SectionImages';
@@ -57,6 +53,8 @@ import SectionHeading from './SectionHeading';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
+import SectionHostMaybe from './SectionHostMaybe';
+import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.module.css';
 
@@ -75,6 +73,11 @@ const priceData = (price, intl) => {
     };
   }
   return {};
+};
+
+const categoryLabel = (categories, key) => {
+  const cat = categories.find(c => c.key === key);
+  return cat ? cat.label : key;
 };
 
 export class ListingPageComponent extends Component {
@@ -103,21 +106,14 @@ export class ListingPageComponent extends Component {
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
 
-    const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
-    const bookingStart = timestampToDate(bookingStartTime);
-    const bookingEnd = timestampToDate(bookingEndTime);
-
-    const bookingData = {
-      quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
-      ...restOfValues,
-    };
+    const { bookingDates, ...bookingData } = values;
 
     const initialValues = {
       listing,
       bookingData,
       bookingDates: {
-        bookingStart,
-        bookingEnd,
+        bookingStart: bookingDates.startDate,
+        bookingEnd: bookingDates.endDate,
       },
       confirmPaymentError: null,
     };
@@ -190,7 +186,6 @@ export class ListingPageComponent extends Component {
       getOwnListing,
       intl,
       onManageDisableScrolling,
-      onFetchTimeSlots,
       params: rawParams,
       location,
       scrollingDisabled,
@@ -199,7 +194,8 @@ export class ListingPageComponent extends Component {
       fetchReviewsError,
       sendEnquiryInProgress,
       sendEnquiryError,
-      monthlyTimeSlots,
+      timeSlots,
+      fetchTimeSlotsError,
       filterConfig,
       onFetchTransactionLineItems,
       lineItems,
@@ -263,6 +259,7 @@ export class ListingPageComponent extends Component {
     const bookingTitle = (
       <FormattedMessage id="ListingPage.bookingTitle" values={{ title: richTitle }} />
     );
+    const bookingSubTitle = null; //intl.formatMessage({ id: 'ListingPage.bookingSubTitle' });
 
     const topbar = <TopbarContainer />;
 
@@ -384,10 +381,15 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const fishingStylesOptions = findOptionsForSelectFilter('fishingStyles', filterConfig);
-    // const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
-
-    console.log('monthlyTimeSlots', monthlyTimeSlots);
+    const amenityOptions = findOptionsForSelectFilter('amenities', filterConfig);
+    const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
+    const category =
+      publicData && publicData.category ? (
+        <span>
+          {categoryLabel(categoryOptions, publicData.category)}
+          <span className={css.separator}>•</span>
+        </span>
+      ) : null;
 
     return (
       <Page
@@ -432,20 +434,33 @@ export class ListingPageComponent extends Component {
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
-                    // listingCertificate={publicData ? publicData.certificate : null}
-                    // certificateOptions={certificateOptions}
+                    category={category}
                     hostLink={hostLink}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={fishingStylesOptions} publicData={publicData} />
+                  <SectionFeaturesMaybe options={amenityOptions} publicData={publicData} />
+                  <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
                     listingId={currentListing.id}
                   />
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                  <SectionHostMaybe
+                    title={title}
+                    listing={currentListing}
+                    authorDisplayName={authorDisplayName}
+                    onContactUser={this.onContactUser}
+                    isEnquiryModalOpen={isAuthenticated && this.state.enquiryModalOpen}
+                    onCloseEnquiryModal={() => this.setState({ enquiryModalOpen: false })}
+                    sendEnquiryError={sendEnquiryError}
+                    sendEnquiryInProgress={sendEnquiryInProgress}
+                    onSubmitEnquiry={this.onSubmitEnquiry}
+                    currentUser={currentUser}
+                    onManageDisableScrolling={onManageDisableScrolling}
+                  />
                 </div>
                 <BookingPanel
                   className={css.bookingPanel}
@@ -454,10 +469,11 @@ export class ListingPageComponent extends Component {
                   unitType={unitType}
                   onSubmit={handleBookingSubmit}
                   title={bookingTitle}
+                  subTitle={bookingSubTitle}
                   authorDisplayName={authorDisplayName}
                   onManageDisableScrolling={onManageDisableScrolling}
-                  monthlyTimeSlots={monthlyTimeSlots}
-                  onFetchTimeSlots={onFetchTimeSlots}
+                  timeSlots={timeSlots}
+                  fetchTimeSlotsError={fetchTimeSlotsError}
                   onFetchTransactionLineItems={onFetchTransactionLineItems}
                   lineItems={lineItems}
                   fetchLineItemsInProgress={fetchLineItemsInProgress}
@@ -465,23 +481,6 @@ export class ListingPageComponent extends Component {
                 />
               </div>
             </div>
-            <Modal
-              id="ListingPage.enquiry"
-              contentClassName={css.enquiryModalContent}
-              isOpen={isAuthenticated && this.state.enquiryModalOpen}
-              onClose={() => this.setState({ enquiryModalOpen: false })}
-              onManageDisableScrolling={onManageDisableScrolling}
-            >
-              <EnquiryForm
-                className={css.enquiryForm}
-                submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}
-                listingTitle={title}
-                authorDisplayName={authorDisplayName}
-                sendEnquiryError={sendEnquiryError}
-                onSubmit={this.onSubmitEnquiry}
-                inProgress={sendEnquiryInProgress}
-              />
-            </Modal>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
@@ -499,7 +498,8 @@ ListingPageComponent.defaultProps = {
   showListingError: null,
   reviews: [],
   fetchReviewsError: null,
-  monthlyTimeSlots: null,
+  timeSlots: null,
+  fetchTimeSlotsError: null,
   sendEnquiryError: null,
   filterConfig: config.custom.filters,
   lineItems: null,
@@ -536,15 +536,8 @@ ListingPageComponent.propTypes = {
   callSetInitialValues: func.isRequired,
   reviews: arrayOf(propTypes.review),
   fetchReviewsError: propTypes.error,
-  monthlyTimeSlots: object,
-  // monthlyTimeSlots could be something like:
-  // monthlyTimeSlots: {
-  //   '2019-11': {
-  //     timeSlots: [],
-  //     fetchTimeSlotsInProgress: false,
-  //     fetchTimeSlotsError: null,
-  //   }
-  // }
+  timeSlots: arrayOf(propTypes.timeSlot),
+  fetchTimeSlotsError: propTypes.error,
   sendEnquiryInProgress: bool.isRequired,
   sendEnquiryError: propTypes.error,
   onSendEnquiry: func.isRequired,
@@ -562,7 +555,8 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    monthlyTimeSlots,
+    timeSlots,
+    fetchTimeSlotsError,
     sendEnquiryInProgress,
     sendEnquiryError,
     lineItems,
@@ -594,7 +588,8 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    monthlyTimeSlots,
+    timeSlots,
+    fetchTimeSlotsError,
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
@@ -612,8 +607,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchTransactionLineItems(bookingData, listingId, isOwnListing)),
   onSendEnquiry: (listingId, message) => dispatch(sendEnquiry(listingId, message)),
   onInitializeCardPaymentData: () => dispatch(initializeCardPaymentData()),
-  onFetchTimeSlots: (listingId, start, end, timeZone) =>
-    dispatch(fetchTimeSlots(listingId, start, end, timeZone)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
