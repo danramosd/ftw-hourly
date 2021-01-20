@@ -8,7 +8,7 @@ const bookingUnitType = 'line-item/trip-price';
 const PROVIDER_COMMISSION_PERCENTAGE = -7;
 
 const resolvePersonCost = (listing, people) => {
-  if (!people) {
+  if (!people || people <= 1) {
     return null;
   }
 
@@ -61,6 +61,8 @@ exports.transactionLineItems = (listing, bookingData) => {
   };
 
   const additionalPersonPrice = resolvePersonCost(listing, people);
+
+  console.log('additionalPersonPrice', additionalPersonPrice);
 
   const additionalPersonFee = additionalPersonPrice
     ? [

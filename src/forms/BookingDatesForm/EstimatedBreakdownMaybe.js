@@ -81,12 +81,12 @@ const estimatedTransaction = (bookingStart, bookingEnd, lineItems, userRole) => 
   // local noon -> startOf('day') => 00:00 local => remove timezoneoffset => 00:00 API (UTC)
   const serverDayStart = dateFromLocalToAPI(
     moment(bookingStart)
-      .startOf('day')
+      // .startOf('day')
       .toDate()
   );
   const serverDayEnd = dateFromLocalToAPI(
     moment(bookingEnd)
-      .startOf('day')
+      // .startOf('day')
       .toDate()
   );
 

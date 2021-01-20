@@ -92,16 +92,13 @@ export class BookingDatesFormComponent extends Component {
   // focus on that input, otherwise continue with the
   // default handleSubmit function.
   handleFormSubmit(e) {
-    const { startDate, endDate } = e.bookingDates || {};
-    if (!startDate) {
-      e.preventDefault();
-      this.setState({ focusedInput: START_DATE });
-    } else if (!endDate) {
-      e.preventDefault();
-      this.setState({ focusedInput: END_DATE });
-    } else {
-      this.props.onSubmit(e);
-    }
+    console.log('e', e, e.bookingDate.date);
+
+    this.props.onSubmit({
+      quantity: 1,
+      bookingDate: e.bookingDate.value,
+      people: e.people,
+    });
   }
 
   // When the values of the form are updated we need to fetch
@@ -166,10 +163,6 @@ export class BookingDatesFormComponent extends Component {
             fetchLineItemsInProgress,
             fetchLineItemsError,
           } = fieldRenderProps;
-          // const bookingStartDate =
-          //   values.bookingStartDate && values.bookingStartDate.date
-          //     ? values.bookingStartDate.date
-          //     : null;
 
           const timeSlotsError = fetchTimeSlotsError ? (
             <p className={css.sideBarError}>
@@ -213,12 +206,6 @@ export class BookingDatesFormComponent extends Component {
             </span>
           ) : null;
 
-          const dateFormatOptions = {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric',
-          };
-
           // const now = moment();
           // const today = now.startOf('day').toDate();
           // const tomorrow = now
@@ -248,36 +235,8 @@ export class BookingDatesFormComponent extends Component {
                     {key}
                   </option>
                 ))}
-                {/* {countryCodes.map(country => {
-            return (
-              <option key={country.code} value={country.code}>
-                {country.name}
-              </option>
-            );
-          })} */}
               </FieldSelect>
 
-              {/* <FieldDateRangeInput
-                className={css.bookingDates}
-                name="bookingDates"
-                unitType={unitType}
-                startDateId={`${formId}.bookingStartDate`}
-                startDateLabel={bookingStartLabel}
-                startDatePlaceholderText={startDatePlaceholderText}
-                endDateId={`${formId}.bookingEndDate`}
-                endDateLabel={bookingEndLabel}
-                endDatePlaceholderText={endDatePlaceholderText}
-                focusedInput={this.state.focusedInput}
-                onFocusedInputChange={this.onFocusedInputChange}
-                format={identity}
-                timeSlots={timeSlots}
-                useMobileMargins
-                validate={composeValidators(
-                  required(requiredMessage),
-                  bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
-                )}
-                disabled={fetchLineItemsInProgress}
-              /> */}
               <br />
               <FieldDateInput
                 id={formId ? `${formId}.bookingDate` : 'bookingDate'}

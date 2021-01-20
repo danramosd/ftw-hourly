@@ -80,7 +80,6 @@ const BookingPanel = props => {
 
   const price = listing.attributes.price;
   const { publicData } = listing.attributes;
-  console.log('attributes', listing.attributes);
 
   const timeZone =
     listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
@@ -111,7 +110,6 @@ const BookingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
-  console.log('props', props);
 
   return (
     <div className={classes}>
@@ -161,51 +159,13 @@ const BookingPanel = props => {
             publicData={publicData}
             timeZone={timeZone}
           />
-        ) : // <BookingCalendar
-        //   listingId={listing.id.uuid}
-        //   availability={monthlyTimeSlots}
-        //   onFetchTimeSlots={onFetchTimeSlots}
-        //   timeZone={timeZone}
-        //   availabilityPlan={availabilityPlan}
-        //   publicData={publicData}
-        //   price={price}
-        //   onSubmit={onSubmit}
-        //   fetchLineItemsInProgress={fetchLineItemsInProgress}
-        //   fetchLineItemsError={fetchLineItemsError}
-        //   onFetchTransactionLineItems={onFetchTransactionLineItems}
-        // />
-        null}
-        {/* {showBookingTimeForm ? (
-          <BookingTimeForm
-            publicData={publicData}
-            className={css.bookingForm}
-            formId="BookingPanel"
-            submitButtonWrapperClassName={css.submitButtonWrapper}
-            unitType={unitType}
-            onSubmit={onSubmit}
-            price={price}
-            listingId={listing.id}
-            isOwnListing={isOwnListing}
-            monthlyTimeSlots={monthlyTimeSlots}
-            onFetchTimeSlots={onFetchTimeSlots}
-            startDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
-            endDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
-            timeZone={timeZone}
-            onFetchTransactionLineItems={onFetchTransactionLineItems}
-            lineItems={lineItems}
-            fetchLineItemsInProgress={fetchLineItemsInProgress}
-            fetchLineItemsError={fetchLineItemsError}
-          />
-        ) : null} */}
+        ) : null}
       </ModalInMobile>
       <div className={css.openBookingForm}>
         <div className={css.priceContainer}>
           <div className={css.priceValue} title={priceTitle}>
             {formattedPrice}
           </div>
-          {/* <div className={css.perUnit}>
-            <FormattedMessage id={unitTranslationKey} />
-          </div> */}
         </div>
 
         {showBookingTimeForm ? (
