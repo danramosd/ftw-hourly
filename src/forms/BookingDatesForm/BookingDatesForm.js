@@ -6,7 +6,6 @@ import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import moment from 'moment';
 import { required, bookingDatesRequired, composeValidators } from '../../util/validators';
-import { START_DATE, END_DATE } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import {
@@ -50,7 +49,9 @@ export class BookingDatesFormComponent extends Component {
       quantity: 1,
       bookingDates: {
         startDate,
-        endDate,
+        endDate: moment(endDate)
+          .add(1, 'days')
+          .toDate(),
       },
       people: e.people,
     });
@@ -77,20 +78,6 @@ export class BookingDatesFormComponent extends Component {
       });
     }
   }
-
-  // handleOnChange(formValues) {
-  //   const bookingDate = get(formValues, 'values.bookingDate.date', null);
-  //   const people = get(formValues, 'values.people', null);
-  //   const { listingId, isOwnListing } = this.props;
-
-  //   if (bookingDate && people && !this.props.fetchLineItemsInProgress) {
-  //     this.props.onFetchTransactionLineItems({
-  //       bookingData: { bookingDate, people },
-  //       listingId,
-  //       isOwnListing,
-  //     });
-  //   }
-  // }
 
   render() {
     const { rootClassName, className, publicData, price: unitPrice, ...rest } = this.props;
