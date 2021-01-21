@@ -63,7 +63,6 @@ class ProfileSettingsFormComponent extends Component {
             values,
             isGuide,
           } = fieldRenderProps;
-          console.log('is guide', isGuide);
 
           const user = ensureCurrentUser(currentUser);
 
@@ -179,7 +178,7 @@ class ProfileSettingsFormComponent extends Component {
               }}
             >
               <div className={css.sectionContainer}>
-                <div className={css.nameContainer}>
+                {/* <div className={css.nameContainer}>
                   <FieldTextInput
                     className={css.firstName}
                     type="text"
@@ -199,7 +198,7 @@ class ProfileSettingsFormComponent extends Component {
                     validate={lastNameRequired}
                   />
                 </div>
-                <br />
+                <br /> */}
                 {isGuide && (
                   <FieldTextInput
                     className={css.companyName}

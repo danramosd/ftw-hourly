@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
+import { updateProfile } from '../../containers/ProfileSettingsPage/ProfileSettingsPage.duck';
 
 // ================ Action types ================ //
 
@@ -227,17 +228,33 @@ const saveEmailAndPhoneNumber = params => (dispatch, getState, sdk) => {
  * Update contact details, actions depend on which data has changed
  */
 export const saveContactDetails = params => (dispatch, getState, sdk) => {
-  dispatch(saveContactDetailsRequest());
-
-  const { email, currentEmail, phoneNumber, currentPhoneNumber, currentPassword } = params;
+  const {
+    email,
+    currentEmail,
+    phoneNumber,
+    currentPhoneNumber,
+    currentPassword,
+    currentFirstName,
+    currentLastName,
+    firstName,
+    lastName,
+  } = params;
   const emailChanged = email !== currentEmail;
   const phoneNumberChanged = phoneNumber !== currentPhoneNumber;
 
+  const nameChanged = firstName !== currentFirstName || lastName !== currentLastName;
+
+  if (nameChanged) {
+    dispatch(updateProfile({ firstName, lastName }));
+  }
   if (emailChanged && phoneNumberChanged) {
+    dispatch(saveContactDetailsRequest());
     return dispatch(saveEmailAndPhoneNumber({ email, currentPassword, phoneNumber }));
   } else if (emailChanged) {
+    dispatch(saveContactDetailsRequest());
     return dispatch(saveEmail({ email, currentPassword }));
   } else if (phoneNumberChanged) {
+    dispatch(saveContactDetailsRequest());
     return dispatch(savePhoneNumber({ phoneNumber }));
   }
 };

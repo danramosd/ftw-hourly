@@ -278,23 +278,6 @@
   }
 }
 
-.nameContainer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-
-  @media (--viewportMedium) {
-    margin-top: 24px;
-  }
-}
-
-.firstName {
-  width: calc(34% - 9px);
-}
-
-.lastName {
-  width: calc(66% - 9px);
-}
 .companyName{
   width: 100%;
 }

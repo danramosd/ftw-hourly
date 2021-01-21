@@ -71,7 +71,7 @@ class ContactDetailsFormComponent extends Component {
             resetPasswordInProgress,
             values,
           } = fieldRenderProps;
-          const { email, phoneNumber } = values;
+          const { email, phoneNumber, firstName, lastName } = values;
 
           const user = ensureCurrentUser(currentUser);
 
@@ -80,6 +80,7 @@ class ContactDetailsFormComponent extends Component {
           }
 
           const { email: currentEmail, emailVerified, pendingEmail, profile } = user.attributes;
+          const { firstName: currentFirstName, lastName: currentLastName } = profile;
 
           // email
 
@@ -188,6 +189,24 @@ class ContactDetailsFormComponent extends Component {
 
           // has the phone number changed
           const phoneNumberChanged = currentPhoneNumber !== phoneNumber;
+          const firstNameChanged = currentFirstName !== firstName;
+          const lastNameChanged = currentLastName !== lastName;
+
+          const firstNamePlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.firstNamePlaceholder',
+          });
+          const firstNameRequiredMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.firstNameRequired',
+          });
+          const firstNameRequired = validators.required(firstNameRequiredMessage);
+
+          const lastNamePlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.lastNamePlaceholder',
+          });
+          const lastNameRequiredMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.lastNameRequired',
+          });
+          const lastNameRequired = validators.required(lastNameRequiredMessage);
 
           const phonePlaceholder = intl.formatMessage({
             id: 'ContactDetailsForm.phonePlaceholder',
@@ -296,7 +315,7 @@ class ContactDetailsFormComponent extends Component {
             invalid ||
             pristineSinceLastSubmit ||
             inProgress ||
-            !(emailChanged || phoneNumberChanged);
+            !(emailChanged || phoneNumberChanged || firstNameChanged || lastNameChanged);
 
           return (
             <Form
@@ -307,6 +326,28 @@ class ContactDetailsFormComponent extends Component {
               }}
             >
               <div className={css.contactDetailsSection}>
+                <div className={css.nameContainer}>
+                  <FieldTextInput
+                    className={css.firstName}
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    label="First name"
+                    placeholder={firstNamePlaceholder}
+                    validate={firstNameRequired}
+                  />
+                  <FieldTextInput
+                    className={css.lastName}
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    label="Last name"
+                    placeholder={lastNamePlaceholder}
+                    validate={lastNameRequired}
+                  />
+                </div>
+                <br />
+
                 <FieldTextInput
                   type="email"
                   name="email"

@@ -51,16 +51,31 @@ export const ContactDetailsPageComponent = props => {
   const currentEmail = user.attributes.email || '';
   const protectedData = user.attributes.profile.protectedData || {};
   const currentPhoneNumber = protectedData.phoneNumber || '';
+  const currentFirstName = user.attributes.profile.firstName || '';
+  const currentLastName = user.attributes.profile.lastName || '';
   const contactInfoForm = user.id ? (
     <ContactDetailsForm
       className={css.form}
-      initialValues={{ email: currentEmail, phoneNumber: currentPhoneNumber }}
+      initialValues={{
+        email: currentEmail,
+        phoneNumber: currentPhoneNumber,
+        firstName: currentFirstName,
+        lastName: currentLastName,
+      }}
       saveEmailError={saveEmailError}
       savePhoneNumberError={savePhoneNumberError}
       currentUser={currentUser}
       onResendVerificationEmail={onResendVerificationEmail}
       onResetPassword={onResetPassword}
-      onSubmit={values => onSubmitContactDetails({ ...values, currentEmail, currentPhoneNumber })}
+      onSubmit={values =>
+        onSubmitContactDetails({
+          ...values,
+          currentEmail,
+          currentPhoneNumber,
+          currentFirstName,
+          currentLastName,
+        })
+      }
       onChange={onChange}
       inProgress={saveContactDetailsInProgress}
       ready={contactDetailsChanged}
@@ -87,9 +102,7 @@ export const ContactDetailsPageComponent = props => {
         <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" />
         <LayoutWrapperMain>
           <div className={css.content}>
-            <h1 className={css.title}>
-              <FormattedMessage id="ContactDetailsPage.heading" />
-            </h1>
+            <h1 className={css.title}>Contact details</h1>
             {contactInfoForm}
           </div>
         </LayoutWrapperMain>
@@ -138,6 +151,7 @@ const mapStateToProps = state => {
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
   } = state.user;
+
   const {
     saveEmailError,
     savePhoneNumberError,
@@ -146,10 +160,13 @@ const mapStateToProps = state => {
     resetPasswordInProgress,
     resetPasswordError,
   } = state.ContactDetailsPage;
+
+  const { updateInProgress } = state.ProfileSettingsPage;
+
   return {
     saveEmailError,
     savePhoneNumberError,
-    saveContactDetailsInProgress,
+    saveContactDetailsInProgress: updateInProgress || saveContactDetailsInProgress,
     currentUser,
     currentUserListing,
     contactDetailsChanged,
