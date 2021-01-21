@@ -184,6 +184,7 @@ export class CheckoutPageComponent extends Component {
       const listingId = pageData.listing.id;
       const transactionId = tx ? tx.id : null;
       const { bookingStart, bookingEnd } = pageData.bookingDates;
+      const { people } = pageData.bookingData;
 
       // Fetch speculated transaction for showing price in booking breakdown
       // NOTE: if unit type is line-item/units, quantity needs to be added.
@@ -193,6 +194,7 @@ export class CheckoutPageComponent extends Component {
           listingId,
           bookingStart,
           bookingEnd,
+          people,
         },
         transactionId
       );
@@ -529,11 +531,11 @@ export class CheckoutPageComponent extends Component {
     const topbar = (
       <div className={css.topbar}>
         <NamedLink className={css.home} name="LandingPage">
-          <Logo
+          {/* <Logo
             className={css.logoMobile}
             title={intl.formatMessage({ id: 'CheckoutPage.goToLandingPage' })}
             format="mobile"
-          />
+          /> */}
           <Logo
             className={css.logoDesktop}
             alt={intl.formatMessage({ id: 'CheckoutPage.goToLandingPage' })}
