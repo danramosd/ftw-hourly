@@ -36,12 +36,10 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // Note 1: You need to change save button translations for new listing flow
 // Note 2: Ensure that draft listing is created after the first panel
 // and listing publishing happens after last panel.
-// Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
-// If you want to add a free text field to your listings you can enable the POLICY tab
 export const TABS = [
   DESCRIPTION,
   FEATURES,
-  //POLICY,
+  POLICY,
   LOCATION,
   PRICING,
   ...availabilityMaybe,
@@ -98,7 +96,7 @@ const tabCompleted = (tab, listing) => {
     case DESCRIPTION:
       return !!(description && title);
     case FEATURES:
-      return !!(publicData && publicData.fishingStyles);
+      return !!(publicData && publicData.amenities);
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:
@@ -195,7 +193,6 @@ class EditListingWizard extends Component {
     this.state = {
       draftId: null,
       showPayoutDetails: false,
-      portalRoot: null,
     };
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
@@ -280,7 +277,6 @@ class EditListingWizard extends Component {
       currentUser,
       ...rest
     } = this.props;
-    console.log('rest', rest);
 
     const selectedTab = params.tab;
     const isNewListingFlow = [LISTING_PAGE_PARAM_TYPE_NEW, LISTING_PAGE_PARAM_TYPE_DRAFT].includes(
@@ -321,11 +317,6 @@ class EditListingWizard extends Component {
       return { name: 'EditListingPage', params: { ...params, tab } };
     };
 
-    const setPortalRootAfterInitialRender = () => {
-      if (!this.state.portalRoot) {
-        this.setState({ portalRoot: document.getElementById('portal-root') });
-      }
-    };
     const formDisabled = getAccountLinkInProgress;
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!ensuredCurrentUser.id;
@@ -376,7 +367,7 @@ class EditListingWizard extends Component {
     }
 
     return (
-      <div className={classes} ref={setPortalRootAfterInitialRender}>
+      <div className={classes}>
         <Tabs
           rootClassName={css.tabsContainer}
           navRootClassName={css.nav}
@@ -401,7 +392,6 @@ class EditListingWizard extends Component {
                 handleCreateFlowTabScrolling={this.handleCreateFlowTabScrolling}
                 handlePublishListing={this.handlePublishListing}
                 fetchInProgress={fetchInProgress}
-                onManageDisableScrolling={onManageDisableScrolling}
               />
             );
           })}

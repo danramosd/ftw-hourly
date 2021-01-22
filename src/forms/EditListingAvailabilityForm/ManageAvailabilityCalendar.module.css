@@ -315,7 +315,7 @@
 @media (--viewportSmall) {
   /* day aka table cell content should have bigger paddings when there's more space */
   .day {
-    padding: 10px;
+    padding: 16px;
   }
   .dayNumber {
     font-size: 16px;
