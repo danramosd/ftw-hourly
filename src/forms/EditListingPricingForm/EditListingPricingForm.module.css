@@ -31,3 +31,7 @@
     margin-top: 100px;
   }
 }
+
+.pricePerPerson {
+  display: flex;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
@@ -14,6 +14,7 @@ import css from './EditListingPricingPanel.module.css';
 
 const { Money } = sdkTypes;
 
+let pricingOverwritten = false;
 const EditListingPricingPanel = props => {
   const {
     className,
@@ -33,7 +34,18 @@ const EditListingPricingPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { price, publicData } = currentListing.attributes;
-  const { maxPeople, pricePerAdditionalPerson } = publicData;
+  const { maxPeople = 2 } = publicData;
+  const [localMaxPeople, setMaxPeople] = useState(maxPeople);
+  let { pricing = [] } = publicData;
+  pricing = pricing.map(({ price }) => {
+    return new Money(price.amount, price.currency);
+  });
+
+  useEffect(() => {
+    return () => {
+      pricingOverwritten = false;
+    };
+  }, []);
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -51,39 +63,43 @@ const EditListingPricingPanel = props => {
     <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
   );
 
+  const handleOnChange = event => {
+    setMaxPeople(Number(event.target.value));
+    pricingOverwritten = true;
+    onChange(event);
+  };
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
       initialValues={{
-        price,
-        pricePerAdditionalPerson:
-          pricePerAdditionalPerson &&
-          pricePerAdditionalPerson.amount &&
-          pricePerAdditionalPerson.currency
-            ? new Money(pricePerAdditionalPerson.amount, pricePerAdditionalPerson.currency)
-            : null,
-        maxPeople,
+        maxPeople: localMaxPeople,
+        pricing:
+          pricing.length && !pricingOverwritten
+            ? pricing
+            : Array(localMaxPeople).fill(new Money(10000, 'USD')),
       }}
       onSubmit={values => {
-        const { pricePerAdditionalPerson, maxPeople = 100, price } = values;
-        const { currency, amount } = pricePerAdditionalPerson;
-
+        const { maxPeople, pricing } = values;
         const updatedValues = {
-          price,
+          price: {
+            currency: pricing[0].currency,
+            amount: pricing[0].amount,
+          },
           publicData: {
             maxPeople: Number(maxPeople),
-            pricePerAdditionalPerson: { currency, amount },
-            // pricing: pricing.map(pr => ({
-            //   hours: Number(pr.hours),
-            //   people: Number(pr.people),
-            //   price: pr.price,
-            // })),
+            pricing: pricing.map((price, people) => {
+              const { currency, amount } = price;
+              return {
+                price: { currency, amount },
+                people: people + 1,
+              };
+            }),
           },
         };
         onSubmit(updatedValues);
       }}
-      onChange={onChange}
+      onChange={handleOnChange}
       saveActionMsg={submitButtonText}
       disabled={disabled}
       ready={ready}

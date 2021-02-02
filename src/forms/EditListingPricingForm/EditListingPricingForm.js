@@ -10,15 +10,32 @@ import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { Button, Form, FieldCurrencyInput, FieldTextInput } from '../../components';
+import arrayMutators from 'final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
 
 import css from './EditListingPricingForm.module.css';
 
 const { Money } = sdkTypes;
+function ordinal_suffix_of(i) {
+  var j = i % 10,
+    k = i % 100;
+  if (j == 1 && k != 11) {
+    return i + 'st';
+  }
+  if (j == 2 && k != 12) {
+    return i + 'nd';
+  }
+  if (j == 3 && k != 13) {
+    return i + 'rd';
+  }
+  return i + 'th';
+}
 
 export const EditListingPricingFormComponent = props => {
   return (
     <FinalForm
       {...props}
+      mutators={{ ...arrayMutators }}
       render={formRenderProps => {
         const {
           className,
@@ -32,6 +49,8 @@ export const EditListingPricingFormComponent = props => {
           updated,
           updateInProgress,
           fetchErrors,
+          values,
+          onChange,
         } = formRenderProps;
 
         const unitType = config.bookingUnitType;
@@ -80,6 +99,8 @@ export const EditListingPricingFormComponent = props => {
         const submitDisabled = invalid || disabled || submitInProgress;
         const { updateListingError, showListingsError } = fetchErrors || {};
         const required = validators.required('This field is required');
+        console.log('these props', props);
+
         return (
           <Form onSubmit={handleSubmit} className={classes}>
             {updateListingError ? (
@@ -95,23 +116,6 @@ export const EditListingPricingFormComponent = props => {
 
             <section className={css.section}>
               <header className={css.sectionHeader}>
-                <h2 className={css.sectionTitle}>Trip rate</h2>
-              </header>
-
-              <FieldCurrencyInput
-                id="price"
-                name="price"
-                className={css.priceInput}
-                autoFocus
-                label={pricePerUnitMessage}
-                placeholder={pricePlaceholderMessage}
-                currencyConfig={config.currencyConfig}
-                validate={priceValidators}
-              />
-            </section>
-
-            <section className={css.section}>
-              <header className={css.sectionHeader}>
                 <h2 className={css.sectionTitle}>Max amount of people</h2>
               </header>
 
@@ -121,6 +125,7 @@ export const EditListingPricingFormComponent = props => {
                 id="maxPeople"
                 label="Total number of people allowed per trip"
                 validate={required}
+                onChange={onChange}
               />
             </section>
 
@@ -129,23 +134,36 @@ export const EditListingPricingFormComponent = props => {
                 <h2 className={css.sectionTitle}>Cost per person</h2>
               </header>
 
-              <FieldCurrencyInput
-                id="pricePerAdditionalPerson"
-                name="pricePerAdditionalPerson"
-                className={css.priceInput}
-                label={'Cost for each additional person'}
-                placeholder={pricePlaceholderMessage}
-                currencyConfig={config.currencyConfig}
-                validate={priceValidators}
-              />
-            </section>
+              <FieldArray id={`pricing`} name={`pricing`}>
+                {({ fields }) => {
+                  return fields.map((field, index) => {
+                    const label = `${ordinal_suffix_of(index + 1)} person`;
 
+                    return (
+                      <>
+                        <FieldCurrencyInput
+                          id={`${field}`}
+                          name={`${field}`}
+                          className={css.priceInput}
+                          label={label}
+                          placeholder={pricePlaceholderMessage}
+                          currencyConfig={config.currencyConfig}
+                          validate={priceValidators}
+                          key={index}
+                        />
+                        <br />
+                      </>
+                    );
+                  });
+                }}
+              </FieldArray>
+            </section>
             <br />
             <Button
               className={css.submitButton}
               type="submit"
               inProgress={submitInProgress}
-              disabled={submitDisabled}
+              // disabled={submitDisabled}
               ready={submitReady}
             >
               {saveActionMsg}

@@ -174,9 +174,6 @@ export class ProfilePageComponent extends Component {
 
     const mainContent = (
       <div>
-        <h1 className={css.desktopHeading}>
-          <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
-        </h1>
         {hasBio ? <p className={css.bio}>{bio}</p> : null}
         {isMobileLayout ? mobileReviews : desktopReviews}
       </div>
