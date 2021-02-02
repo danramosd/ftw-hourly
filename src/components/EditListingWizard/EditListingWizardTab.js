@@ -215,9 +215,7 @@ const EditListingWizardTab = props => {
       );
     }
     case PRICING: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPricing'
-        : 'EditListingWizard.saveEditPricing';
+      const submitButtonTranslationKey = isNewListingFlow ? 'Next: Photos' : 'Save pricing';
       return (
         <EditListingPricingPanel
           {...panelProps(PRICING)}
@@ -228,21 +226,21 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case AVAILABILITY: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewAvailability'
-        : 'EditListingWizard.saveEditAvailability';
-      return (
-        <EditListingAvailabilityPanel
-          {...panelProps(AVAILABILITY)}
-          availability={availability}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
+    // case AVAILABILITY: {
+    //   const submitButtonTranslationKey = isNewListingFlow
+    //     ? 'EditListingWizard.saveNewAvailability'
+    //     : 'EditListingWizard.saveEditAvailability';
+    //   return (
+    //     <EditListingAvailabilityPanel
+    //       {...panelProps(AVAILABILITY)}
+    //       availability={availability}
+    //       submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+    //       onSubmit={values => {
+    //         onCompleteEditListingWizardTab(tab, values);
+    //       }}
+    //     />
+    //   );
+    // }
     case PHOTOS: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewPhotos'

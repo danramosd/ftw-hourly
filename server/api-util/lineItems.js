@@ -7,15 +7,16 @@ const get = require('lodash/get');
 const bookingUnitType = 'line-item/trip-price';
 const PROVIDER_COMMISSION_PERCENTAGE = -7;
 
-const resolvePersonCost = (listing, people) => {
-  if (!people || people <= 1) {
+const resolvePersonCost = (pricing, people) => {
+  if (!people) {
     return null;
   }
 
-  const { pricePerAdditionalPerson } = listing.attributes.publicData;
-  if (pricePerAdditionalPerson) {
-    return new Money(pricePerAdditionalPerson.amount, 'USD');
-  }
+  const pricingRecords = pricing.filter(price => price.people <= people);
+  const totalCost = pricingRecords.reduce((accum, currentValue) => {
+    return currentValue.price.amount + accum.price.amount;
+  });
+  return new Money(totalCost, 'USD');
   return null;
 };
 
@@ -42,8 +43,8 @@ const resolvePersonCost = (listing, people) => {
 
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
+  const { pricing } = listing.attributes.publicData;
   const { people } = bookingData;
-
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
    * you should use code line-item/units
@@ -53,37 +54,47 @@ exports.transactionLineItems = (listing, bookingData) => {
    *
    * By default BookingBreakdown prints line items inside LineItemUnknownItemsMaybe if the lineItem code is not recognized. */
 
-  const booking = {
-    code: bookingUnitType,
-    unitPrice,
-    quantity: 1,
-    includeFor: ['customer', 'provider'],
-  };
-
-  const additionalPersonPrice = resolvePersonCost(listing, people);
-
-  console.log('additionalPersonPrice', additionalPersonPrice);
-
-  const additionalPersonFee = additionalPersonPrice
-    ? [
-        {
-          code: 'line-item/additional-people',
-          unitPrice: additionalPersonPrice,
-          quantity: people,
-          includeFor: ['customer', 'provider'],
-        },
-      ]
-    : [];
-
-  // const providerCommission = {
-  //   code: 'line-item/provider-commission',
-  //   // unitPrice: calculateTotalFromLineItems([booking]),
-  //   unitPrice: calculateTotalFromLineItems([...additionalPersonFee]),
-  //   percentage: PROVIDER_COMMISSION_PERCENTAGE,
-  //   includeFor: ['provider'],
+  //  We don't use booking becuase everything is based upon the pricing attribute (since we can have mltiple people)
+  // All of our "add ons" create the price, we have no base price
+  // const booking = {
+  //   code: bookingUnitType,
+  //   unitPrice,
+  //   quantity: 1,
+  //   includeFor: ['customer', 'provider'],
   // };
 
-  const lineItems = [booking, ...additionalPersonFee];
+  // const additionalPersonPrice = resolvePersonCost(pricing, people);
+
+  // const additionalPersonFee = additionalPersonPrice
+  //   ? [
+  // {
+  //   code: 'line-item/additional-people',
+  //   unitPrice: additionalPersonPrice,
+  //   quantity: people,
+  //   includeFor: ['customer', 'provider'],
+  // },
+  //     ]
+  //   : [];
+
+  const personFees = pricing.filter(price => price.people <= people);
+
+  const additionalPersonFee = personFees.map(lineItem => {
+    return {
+      code: `line-item/person-${lineItem.people}`,
+      unitPrice: new Money(lineItem.price.amount, 'USD'),
+      quantity: 1,
+      includeFor: ['customer', 'provider'],
+    };
+  });
+
+  const providerCommission = {
+    code: 'line-item/provider-commission',
+    unitPrice: calculateTotalFromLineItems([...additionalPersonFee]),
+    percentage: PROVIDER_COMMISSION_PERCENTAGE,
+    includeFor: ['provider'],
+  };
+
+  const lineItems = [providerCommission, ...additionalPersonFee];
   // const lineItems = [booking, ...additionalPersonFee, providerCommission];
 
   return lineItems;

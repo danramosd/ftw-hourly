@@ -316,6 +316,8 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
     people: orderParams.people,
   };
 
+  console.log('duckky!', bookingData);
+
   const params = {
     ...orderParams,
     cardToken: 'CheckoutPage_speculative_card_token',

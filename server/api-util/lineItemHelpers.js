@@ -210,7 +210,6 @@ exports.calculateTotalForCustomer = lineItems => {
 exports.constructValidLineItems = lineItems => {
   const lineItemsWithTotals = lineItems.map(lineItem => {
     const { code, quantity, percentage } = lineItem;
-
     if (!/^line-item\/.+/.test(code)) {
       throw new Error(`Invalid line item code: ${code}`);
     }

@@ -80,6 +80,8 @@ const paymentFlow = (selectedPaymentMethod, saveAfterOnetimePayment) => {
 const initializeOrderPage = (initialValues, routes, dispatch) => {
   const OrderPage = findRouteByRouteName('OrderDetailsPage', routes);
 
+  console.log('initialValues', initialValues);
+
   // Transaction is already created, but if the initial message
   // sending failed, we tell it to the OrderDetailsPage.
   dispatch(OrderPage.setInitialValues(initialValues));
@@ -186,6 +188,8 @@ export class CheckoutPageComponent extends Component {
       const { bookingStart, bookingEnd } = pageData.bookingDates;
       const { people } = pageData.bookingData;
 
+      console.log('people!', pageData.bookingData);
+
       // Fetch speculated transaction for showing price in booking breakdown
       // NOTE: if unit type is line-item/units, quantity needs to be added.
       // The way to pass it to checkout page is through pageData.bookingData
@@ -244,7 +248,7 @@ export class CheckoutPageComponent extends Component {
 
     // Step 1: initiate order by requesting payment from Marketplace API
     const fnRequestPayment = fnParams => {
-      // fnParams should be { listingId, bookingStart, bookingEnd }
+      // fnParams should be { listingId, bookingStart, bookingEnd, people }
       const hasPaymentIntents =
         storedTx.attributes.protectedData && storedTx.attributes.protectedData.stripePaymentIntents;
 
@@ -378,6 +382,7 @@ export class CheckoutPageComponent extends Component {
       bookingStart: tx.booking.attributes.start,
       bookingEnd: tx.booking.attributes.end,
       quantity: pageData.bookingData ? pageData.bookingData.quantity : null,
+      people: pageData.bookingData.people,
       ...optionalPaymentParams,
     };
 
@@ -505,6 +510,8 @@ export class CheckoutPageComponent extends Component {
       retrievePaymentIntentError,
       stripeCustomerFetched,
     } = this.props;
+
+    console.log('render props', this.props);
 
     // Since the listing data is already given from the ListingPage
     // and stored to handle refreshes, it might not have the possible
@@ -750,7 +757,6 @@ export class CheckoutPageComponent extends Component {
     // e.g. {country: 'FI'}
 
     const initalValuesForStripePayment = { name: userName };
-
     return (
       <Page {...pageProps}>
         {topbar}
@@ -835,7 +841,7 @@ export class CheckoutPageComponent extends Component {
             </div>
             <div className={css.detailsHeadings}>
               <h2 className={css.detailsTitle}>{listingTitle}</h2>
-              <p className={css.detailsSubtitle}>{detailsSubTitle}</p>
+              {/* <p className={css.detailsSubtitle}>{detailsSubTitle}</p> */}
             </div>
             {speculateTransactionErrorMessage}
             {breakdown}

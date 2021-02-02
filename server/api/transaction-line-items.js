@@ -6,6 +6,7 @@ module.exports = (req, res) => {
   console.log('got data', req.body);
 
   const { isOwnListing, listingId, bookingData } = req.body;
+  console.log('booking data', bookingData);
 
   const sdk = getSdk(req, res);
 

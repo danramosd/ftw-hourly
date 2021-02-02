@@ -49,7 +49,6 @@ export const BookingBreakdownComponent = props => {
   });
 
   const classes = classNames(rootClassName || css.root, className);
-  console.log('props from breakdown', props);
 
   /**
    * BookingBreakdown contains different line items:

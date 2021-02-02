@@ -484,7 +484,7 @@ class StripePaymentForm extends Component {
             disabled={submitDisabled}
           >
             {billingDetailsNeeded ? (
-              <FormattedMessage id="StripePaymentForm.submitPaymentInfo" />
+              'Send request'
             ) : (
               <FormattedMessage id="StripePaymentForm.submitConfirmPaymentInfo" />
             )}

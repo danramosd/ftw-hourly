@@ -26,6 +26,15 @@ You can find the bank account formats from https://stripe.com/docs/connect/payou
 
 export const stripeCountryDetails = [
   {
+    // United States
+    code: 'US',
+    currency: 'USD',
+    accountConfig: {
+      routingNumber: true,
+      accountNumber: true,
+    },
+  },
+  {
     //Australia
     code: 'AU',
     currency: 'AUD',
@@ -315,15 +324,6 @@ export const stripeCountryDetails = [
     currency: 'GBP',
     accountConfig: {
       sortCode: true,
-      accountNumber: true,
-    },
-  },
-  {
-    // United States
-    code: 'US',
-    currency: 'USD',
-    accountConfig: {
-      routingNumber: true,
       accountNumber: true,
     },
   },

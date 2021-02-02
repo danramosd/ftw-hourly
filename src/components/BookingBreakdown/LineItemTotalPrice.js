@@ -9,6 +9,7 @@ import css from './BookingBreakdown.module.css';
 
 const LineItemUnitPrice = props => {
   const { transaction, isProvider, intl } = props;
+  console.log('props!', props);
 
   let providerTotalMessageId = 'BookingBreakdown.providerTotalDefault';
   if (txIsDelivered(transaction)) {
