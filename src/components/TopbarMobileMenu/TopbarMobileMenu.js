@@ -17,6 +17,7 @@ import {
   OwnListingLink,
 } from '../../components';
 
+import get from 'lodash/get';
 import css from './TopbarMobileMenu.module.css';
 
 const TopbarMobileMenu = props => {
@@ -32,6 +33,7 @@ const TopbarMobileMenu = props => {
   } = props;
 
   const user = ensureCurrentUser(currentUser);
+  const isGuide = get(currentUser, 'attributes.profile.publicData.isGuide', false);
 
   if (!isAuthenticated) {
     const signup = (
@@ -93,34 +95,39 @@ const TopbarMobileMenu = props => {
           <FormattedMessage id="TopbarMobileMenu.logoutLink" />
         </InlineTextButton>
 
-        <NamedLink
-          className={classNames(css.inbox, currentPageClass('InboxPage'))}
-          name="InboxPage"
-          params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
-        >
-          <FormattedMessage id="TopbarMobileMenu.inboxLink" />
-          {notificationCountBadge}
-        </NamedLink>
-        <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('NewListingPage'))}
-          name="NewListingPage"
-        >
-          <FormattedMessage id="UserNav.newListing" />
-        </NamedLink>
+        {isGuide ? (
+          <>
+            <NamedLink
+              className={classNames(css.inbox, currentPageClass('InboxPage'))}
+              name="InboxPage"
+              params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
+            >
+              <FormattedMessage id="TopbarMobileMenu.inboxLink" />
+              {notificationCountBadge}
+            </NamedLink>
+            <NamedLink
+              className={classNames(css.navigationLink, currentPageClass('NewListingPage'))}
+              name="NewListingPage"
+            >
+              Create trip
+            </NamedLink>
 
-        <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('ManageListingsPage'))}
-          name="ManageListingsPage"
-        >
-          <FormattedMessage id="UserNav.yourTrips" />
-        </NamedLink>
+            <NamedLink
+              className={classNames(css.navigationLink, currentPageClass('ManageListingsPage'))}
+              name="ManageListingsPage"
+            >
+              <FormattedMessage id="UserNav.yourTrips" />
+            </NamedLink>
 
-        <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
-          name="ProfileSettingsPage"
-        >
-          <FormattedMessage id="TopbarMobileMenu.profileSettingsLink" />
-        </NamedLink>
+            <NamedLink
+              className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
+              name="ProfileSettingsPage"
+            >
+              <FormattedMessage id="TopbarMobileMenu.profileSettingsLink" />
+            </NamedLink>
+          </>
+        ) : null}
+
         <NamedLink
           className={classNames(css.navigationLink, currentPageClass('AccountSettingsPage'))}
           name="AccountSettingsPage"

@@ -42,10 +42,10 @@ const listingTab = (listing, selectedPageName) => {
 };
 
 const UserNav = props => {
-  const { className, rootClassName, selectedPageName, listing } = props;
+  const { className, rootClassName, selectedPageName, listing, isGuide } = props;
   const classes = classNames(rootClassName || css.root, className);
 
-  const tabs = [
+  const guideTabs = [
     {
       ...listingTab(listing, selectedPageName),
     },
@@ -82,8 +82,24 @@ const UserNav = props => {
     },
   ];
 
+  const anglerTabs = [
+    {
+      text: <FormattedMessage id="UserNav.contactDetailsPage" />,
+      selected: ACCOUNT_SETTINGS_PAGES.includes(selectedPageName),
+      disabled: false,
+      linkProps: {
+        name: 'ContactDetailsPage',
+      },
+    },
+  ];
+
   return (
-    <LinkTabNavHorizontal className={classes} tabRootClassName={css.tab} tabs={tabs} skin="dark" />
+    <LinkTabNavHorizontal
+      className={classes}
+      tabRootClassName={css.tab}
+      tabs={isGuide ? guideTabs : anglerTabs}
+      skin="dark"
+    />
   );
 };
 

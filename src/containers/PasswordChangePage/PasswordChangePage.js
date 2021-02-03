@@ -17,7 +17,7 @@ import {
 } from '../../components';
 import { PasswordChangeForm } from '../../forms';
 import { TopbarContainer } from '../../containers';
-
+import get from 'lodash/get';
 import { changePassword, changePasswordClear, resetPassword } from './PasswordChangePage.duck';
 import css from './PasswordChangePage.module.css';
 
@@ -53,6 +53,7 @@ export const PasswordChangePageComponent = props => {
     ) : null;
 
   const title = intl.formatMessage({ id: 'PasswordChangePage.title' });
+  const isGuide = get(currentUser, 'attributes.profile.publicData.isGuide', false);
 
   return (
     <Page title={title} scrollingDisabled={scrollingDisabled}>
@@ -63,9 +64,9 @@ export const PasswordChangePageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PasswordChangePage" />
+          <UserNav selectedPageName="PasswordChangePage" isGuide={isGuide} />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="PasswordChangePage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="PasswordChangePage" isGuide={isGuide} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>

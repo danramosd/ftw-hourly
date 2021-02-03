@@ -18,7 +18,7 @@ import {
 } from '../../components';
 import { ContactDetailsForm } from '../../forms';
 import { TopbarContainer } from '../../containers';
-
+import get from 'lodash/get';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
   saveContactDetails,
@@ -48,6 +48,7 @@ export const ContactDetailsPageComponent = props => {
   } = props;
 
   const user = ensureCurrentUser(currentUser);
+  const isGuide = get(user, 'attributes.profile.publicData.isGuide', false);
   const currentEmail = user.attributes.email || '';
   const protectedData = user.attributes.profile.protectedData || {};
   const currentPhoneNumber = protectedData.phoneNumber || '';
@@ -97,9 +98,13 @@ export const ContactDetailsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="ContactDetailsPage" listing={currentUserListing} />
+          <UserNav
+            selectedPageName="ContactDetailsPage"
+            listing={currentUserListing}
+            isGuide={isGuide}
+          />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" isGuide={isGuide} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>Contact details</h1>

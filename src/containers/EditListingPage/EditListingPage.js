@@ -23,7 +23,7 @@ import {
 } from '../../ducks/stripeConnectAccount.duck';
 import { EditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
 import { TopbarContainer } from '../../containers';
-
+import get from 'lodash/get';
 import {
   requestAddAvailabilityException,
   requestDeleteAvailabilityException,
@@ -95,7 +95,7 @@ export const EditListingPageComponent = props => {
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
-
+  const isGuide = get(currentUser, 'attributes.profile.publicData.isGuide', false);
   const listingId = page.submittedListingId || (id ? new UUID(id) : null);
   const listing = getOwnListing(listingId);
   const currentListing = ensureOwnListing(listing);
@@ -205,6 +205,7 @@ export const EditListingPageComponent = props => {
         <UserNav
           selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
           listing={listing}
+          isGuide={isGuide}
         />
         <EditListingWizard
           id="EditListingWizard"
@@ -275,6 +276,7 @@ export const EditListingPageComponent = props => {
         <UserNav
           selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
           listing={listing}
+          isGuide={isGuide}
         />
         <div className={css.placeholderWhileLoading} />
         <Footer />

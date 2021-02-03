@@ -22,7 +22,7 @@ import {
 import { TopbarContainer } from '../../containers';
 import { PaymentMethodsForm } from '../../forms';
 import { createStripeSetupIntent, stripeCustomer, loadData } from './PaymentMethodsPage.duck.js';
-
+import get from 'lodash/get';
 import css from './PaymentMethodsPage.module.css';
 
 const PaymentMethodsPageComponent = props => {
@@ -47,6 +47,7 @@ const PaymentMethodsPageComponent = props => {
     stripeCustomerFetched,
   } = props;
 
+  const isGuide = get(currentUser, 'attributes.profile.publicData.isGuide', false);
   const getClientSecret = setupIntent => {
     return setupIntent && setupIntent.attributes ? setupIntent.attributes.clientSecret : null;
   };
@@ -153,9 +154,9 @@ const PaymentMethodsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PaymentMethodsPage" />
+          <UserNav selectedPageName="PaymentMethodsPage" isGuide={isGuide} />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="PaymentMethodsPage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="PaymentMethodsPage" isGuide={isGuide} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>

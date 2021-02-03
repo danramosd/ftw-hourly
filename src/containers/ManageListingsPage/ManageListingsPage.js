@@ -18,7 +18,7 @@ import {
   Footer,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
-
+import get from 'lodash/get';
 import {
   closeListing,
   openListing,
@@ -60,7 +60,7 @@ export class ManageListingsPageComponent extends Component {
       scrollingDisabled,
       intl,
     } = this.props;
-
+    // const isGuide = get(user, 'attributes.profile.publicData.isGuide', false);
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
 
@@ -125,7 +125,7 @@ export class ManageListingsPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="ManageListingsPage" />
-            <UserNav selectedPageName="ManageListingsPage" />
+            <UserNav selectedPageName="ManageListingsPage" isGuide={true} />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             {queryInProgress ? loadingResults : null}

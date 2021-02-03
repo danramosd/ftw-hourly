@@ -17,6 +17,7 @@ import {
   OwnListingLink,
 } from '../../components';
 import { TopbarSearchForm } from '../../forms';
+import get from 'lodash/get';
 
 import css from './TopbarDesktop.module.css';
 
@@ -38,9 +39,13 @@ const TopbarDesktop = props => {
   } = props;
   const [mounted, setMounted] = useState(false);
 
+  const isGuide = get(currentUser, 'attributes.profile.publicData.isGuide', false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  console.log('props', props);
 
   const authenticatedOnClientSide = mounted && isAuthenticated;
   const isAuthenticatedOrJustHydrated = isAuthenticated || !mounted;
@@ -100,24 +105,32 @@ const TopbarDesktop = props => {
           </OwnListingLink>
         </MenuItem> */}
 
-        <MenuItem key="ProfileSettingsPage">
-          <NamedLink
-            className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
-            name="ProfileSettingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
-          </NamedLink>
-        </MenuItem>
-        <MenuItem key="ManageListingsPage">
-          <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
-            name="ManageListingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            Manage trips
-          </NamedLink>
-        </MenuItem>
+        {isGuide ? (
+          <MenuItem key="ProfileSettingsPage">
+            <NamedLink
+              className={classNames(
+                css.profileSettingsLink,
+                currentPageClass('ProfileSettingsPage')
+              )}
+              name="ProfileSettingsPage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
+            </NamedLink>
+          </MenuItem>
+        ) : null}
+        {isGuide ? (
+          <MenuItem key="ManageListingsPage">
+            <NamedLink
+              className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
+              name="ManageListingsPage"
+            >
+              <span className={css.menuItemBorder} />
+              Manage trips
+            </NamedLink>
+          </MenuItem>
+        ) : null}
+
         <MenuItem key="AccountSettingsPage">
           <NamedLink
             className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}

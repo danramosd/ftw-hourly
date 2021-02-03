@@ -24,7 +24,7 @@ const scrollToTab = currentTab => {
 };
 
 const LayoutWrapperAccountSettingsSideNavComponent = props => {
-  const { currentTab, viewport } = props;
+  const { currentTab, viewport, isGuide } = props;
 
   let hasScrolledToTab = false;
 
@@ -42,7 +42,7 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
     hasScrolledToTab = true;
   }
 
-  const tabs = [
+  const guideTabs = [
     {
       text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.contactDetailsTabTitle" />,
       selected: currentTab === 'ContactDetailsPage',
@@ -76,8 +76,34 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
       },
     },
   ];
+  const anglerTabs = [
+    {
+      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.contactDetailsTabTitle" />,
+      selected: currentTab === 'ContactDetailsPage',
+      id: 'ContactDetailsPageTab',
+      linkProps: {
+        name: 'ContactDetailsPage',
+      },
+    },
+    {
+      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.passwordTabTitle" />,
+      selected: currentTab === 'PasswordChangePage',
+      id: 'PasswordChangePageTab',
+      linkProps: {
+        name: 'PasswordChangePage',
+      },
+    },
+    {
+      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentMethodsTabTitle" />,
+      selected: currentTab === 'PaymentMethodsPage',
+      id: 'PaymentMethodsPageTab',
+      linkProps: {
+        name: 'PaymentMethodsPage',
+      },
+    },
+  ];
 
-  return <LayoutWrapperSideNav tabs={tabs} />;
+  return <LayoutWrapperSideNav tabs={isGuide ? guideTabs : anglerTabs} />;
 };
 
 LayoutWrapperAccountSettingsSideNavComponent.defaultProps = {

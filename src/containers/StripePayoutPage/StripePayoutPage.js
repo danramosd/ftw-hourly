@@ -9,6 +9,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
+import get from 'lodash/get';
 import {
   stripeAccountClearError,
   getStripeConnectAccountLink,
@@ -96,6 +97,7 @@ export const StripePayoutPageComponent = props => {
   } = props;
 
   const { returnURLType } = params;
+  const isGuide = get(currentUser, 'attributes.profile.publicData.isGuide', false);
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
   const currentUserLoaded = !!ensuredCurrentUser.id;
   const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
@@ -151,9 +153,9 @@ export const StripePayoutPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="StripePayoutPage" />
+          <UserNav selectedPageName="StripePayoutPage" isGuide={isGuide} />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="StripePayoutPage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="StripePayoutPage" isGuide={isGuide} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>
