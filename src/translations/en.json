@@ -437,7 +437,7 @@
   "ListingPage.rulesTitle": "Studio policies",
   "ListingPage.schemaTitle": "{title} - {price} | LocalFishingGuide",
   "ListingPage.viewImagesButton": "View photos ({count})",
-  "ListingPage.yourHostHeading": "Your host",
+  "ListingPage.yourHostHeading": "Your guide",
   "LocationAutocompleteInput.currentLocation": "Current location",
   "LocationSearchForm.placeholder": "Search fishing guides...",
   "LoginForm.emailInvalid": "A valid email address is required",

@@ -222,19 +222,21 @@ class EditListingWizard extends Component {
 
     const stripeAccountData = stripeConnected ? getStripeAccountData(stripeAccount) : null;
 
-    const requirementsMissing =
-      stripeAccount &&
+    const requirementsMissing = false;
+    stripeAccount &&
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
-    if (stripeConnected && !requirementsMissing) {
-      onPublishListingDraft(id);
-    } else {
-      this.setState({
-        draftId: id,
-        showPayoutDetails: true,
-      });
-    }
+    // TEMP TODO: TURNED OFF ACCOUNT LINKING WHILE CREATING TRIP, NEED TO PUT THIS ELSE WEHRE
+    onPublishListingDraft(id);
+    // if (stripeConnected && !requirementsMissing) {
+    //   onPublishListingDraft(id);
+    // } else {
+    //   this.setState({
+    //     draftId: id,
+    //     showPayoutDetails: true,
+    //   });
+    // }
   }
 
   handlePayoutModalClose() {
