@@ -117,6 +117,8 @@ exports.render = function(requestUrl, context, preloadedState) {
   // See: https://developers.google.com/analytics/devguides/collection/analyticsjs/#alternative_async_tracking_snippet
   const googleAnalyticsScript = process.env.REACT_APP_GOOGLE_ANALYTICS_ID
     ? `
+    <meta name="verifyownership"
+ content="886b50ee6755af158b321d5787cd8e47"/>
         <script>
           window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
           ga('create', '${process.env.REACT_APP_GOOGLE_ANALYTICS_ID}', 'auto');
